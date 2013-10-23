@@ -7,6 +7,7 @@ class Transcription {
         returnDate nullable: true
         transcript nullable: true
         status nullable: false
+        twr nullable: true
     }
 
     static hasMany = [
@@ -19,5 +20,9 @@ class Transcription {
     Date returnDate
     TranscriptionStatus status
 
-    String transcript
+
+    // results
+    Integer twr
+//    String timings
+    String transcript // is the timings file
 }

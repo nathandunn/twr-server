@@ -40,8 +40,14 @@
 					
 						<td>${fieldValue(bean: processingQueueInstance, field: "status")}</td>
 					
-						<td>${fieldValue(bean: processingQueueInstance, field: "transcription")}</td>
-					
+						%{--<td>${fieldValue(bean: processingQueueInstance, field: "transcription")}</td>--}%
+                        <td>
+                        %{--${fieldValue(bean: processingQueueInstance, field: "transcription")}--}%
+                        <g:link action="show" controller="transcription" id="${processingQueueInstance.transcription.id}">
+                            ${processingQueueInstance.transcription.fileName}
+                        </g:link>
+                    </td>
+
 					</tr>
 				</g:each>
 				</tbody>

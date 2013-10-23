@@ -2,6 +2,11 @@ package edu.uoregon.secondlook
 
 class TotalWordReadService {
 
+    // TODO: use an actual method
+    Integer calculateTotalWordsRead(String transcript){
+        return transcript.split(" ").length
+//        return 125
+    }
 
 //    public void parseTranscripts() {
 //

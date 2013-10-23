@@ -91,6 +91,15 @@
                         bean="${transcriptionInstance}" field="transcript"/></span>
 
             </li>
+
+            <li class="fieldcontain">
+                <span id="twr-label" class="property-label"><g:message code="twrion.twr.label"
+                                                                              default="TWR"/></span>
+
+                <span class="property-value" aria-labelledby="twr-label"><g:fieldValue
+                        bean="${transcriptionInstance}" field="twr"/></span>
+
+            </li>
         </g:if>
 
 <g:if test="${transcriptionInstance?.processingQueues}">
