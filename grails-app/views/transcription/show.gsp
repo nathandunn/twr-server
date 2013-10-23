@@ -27,18 +27,6 @@
     </g:if>
     <ol class="property-list transcription">
 
-        <g:if test="${transcriptionInstance?.audioData}">
-            <li class="fieldcontain">
-                <span id="audioData-label" class="property-label"><g:message code="transcription.audioData.label"
-                                                                             default="Audio Data"/>
-                </span>
-                <span class="property-value" aria-labelledby="audioData-label">
-                    <g:formatNumber number="${transcriptionInstance.audioData.length / 1E6}" type="number"/> MB
-                </span>
-
-            </li>
-        </g:if>
-
         <g:if test="${transcriptionInstance?.fileName}">
             <li class="fieldcontain">
                 <span id="fileName-label" class="property-label"><g:message code="transcription.fileName.label"
@@ -49,6 +37,28 @@
 
             </li>
         </g:if>
+
+        <li class="fieldcontain">
+            <span id="status-label" class="property-label"><g:message code="transcription.status.label"
+                                                                        default="File Name"/></span>
+
+            <span class="property-value" aria-labelledby="status-label"><g:fieldValue
+                    bean="${transcriptionInstance}" field="status"/></span>
+
+        </li>
+
+        <g:if test="${transcriptionInstance?.audioData}">
+            <li class="fieldcontain">
+                <span id="audioData-label" class="property-label"><g:message code="transcription.audioData.label"
+                                                                             default="Audio Data"/>
+                </span>
+                <span class="property-value" aria-labelledby="audioData-label">
+                    <g:formatNumber number="${transcriptionInstance.audioData.length / 1E6}" type="number"/> MB
+                    <a href="">Download</a>
+                </span>
+            </li>
+        </g:if>
+
 
         <g:if test="${transcriptionInstance?.requestDate}">
             <li class="fieldcontain">
@@ -83,10 +93,28 @@
             </li>
         </g:if>
 
+        <li class="fieldcontain">
+            <span id="processingQueue-label" class="property-label"><g:message code="processingQueue.processingQueue.label"
+                                                                          default="Transcript"/></span>
+
+            <span class="property-value" aria-labelledby="processingQueue-label">
+                <g:each in="${transcriptionInstance.processingQueues}" var="processingQueue">
+                    <g:link action="show" controller="processingQueue" id="${processingQueue.id}">Queue Details</g:link>
+                </g:each>
+            </span>
+
+        </li>
+
     </ol>
+
+
     <g:form>
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${transcriptionInstance?.id}"/>
+            <g:link action="submitTranscript"  controller="processingQueue" id="${transcriptionInstance.id}" >
+                Submit Transcript
+            </g:link>
+
             <g:link class="edit" action="edit" id="${transcriptionInstance?.id}"><g:message
                     code="default.button.edit.label" default="Edit"/></g:link>
             <g:actionSubmit class="delete" action="delete"

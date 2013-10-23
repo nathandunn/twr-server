@@ -1,6 +1,7 @@
 package edu.uoregon.secondlook
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 class TranscriptionController {
 
@@ -20,7 +21,14 @@ class TranscriptionController {
     }
 
     def save() {
-        def transcriptionInstance = new Transcription(params)
+
+        CommonsMultipartFile uploadedFile = request.getFile('audioData')
+        String fileName = uploadedFile.originalFilename
+
+        Transcription transcriptionInstance = new Transcription(params)
+        transcriptionInstance.fileName = fileName
+        transcriptionInstance.requestDate = new Date()
+        transcriptionInstance.status = TranscriptionStatus.RECEIVED
         if (!transcriptionInstance.save(flush: true)) {
             render(view: "create", model: [transcriptionInstance: transcriptionInstance])
             return

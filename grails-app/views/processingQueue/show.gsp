@@ -45,7 +45,7 @@
 				<li class="fieldcontain">
 					<span id="transcription-label" class="property-label"><g:message code="processingQueue.transcription.label" default="Transcription" /></span>
 					
-						<span class="property-value" aria-labelledby="transcription-label"><g:link controller="transcription" action="show" id="${processingQueueInstance?.transcription?.id}">${processingQueueInstance?.transcription?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="transcription-label"><g:link controller="transcription" action="show" id="${processingQueueInstance?.transcription?.id}">${processingQueueInstance?.transcription?.fileName}</g:link></span>
 					
 				</li>
 				</g:if>

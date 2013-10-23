@@ -6,6 +6,8 @@ class ProcessingQueueController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def processingQueueService
+
     def index() {
         redirect(action: "list", params: params)
     }
@@ -98,5 +100,13 @@ class ProcessingQueueController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'processingQueue.label', default: 'ProcessingQueue'), id])
             redirect(action: "show", id: id)
         }
+    }
+
+    def submitTranscript(Integer id) {
+        processingQueueService.submitTranscript(id)
+
+
+        redirect(action: "show", id: id,controller: "transcription")
+
     }
 }

@@ -1,16 +1,16 @@
-package twr.server
+package edu.uoregon.secondlook
 
-import edu.uoregon.secondlook.Transcription
+import edu.uoregon.secondlook.ProcessingQueue
 import grails.test.mixin.*
 import org.junit.*
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(Transcription)
-class TranscriptionTests {
+@TestFor(ProcessingQueue)
+class ProcessingQueueTests {
 
     void testSomething() {
-       fail "Implement me"
+        fail "Implement me"
     }
 }
