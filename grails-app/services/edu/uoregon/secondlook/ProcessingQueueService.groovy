@@ -54,9 +54,23 @@ class ProcessingQueueService {
     def processTranscript(ProcessingQueue processingQueue) {
 
         byte[] audioData = processingQueue.transcription.audioData;
+
+        // TODO: get directory from configuration
+
+
+        // TODO: create directory using transcript unique name
+
+
         // TODO: write audio data to disk
 
-        // TODO: exec processes go here
+
+        // ??
+        // TODO: use SOX/LAME convert from android multimedia 44kHz.wav Mono to 16Hz Mono WAV file
+        // TODO: use SOX/LAME convert from android multimedia .amr to 16kHz Mono WAV file
+
+
+
+        // TODO: exec processes go here . . . tell it where to write stuff
 
         println "STARTED doing some exec process for 20 seconds"
 
