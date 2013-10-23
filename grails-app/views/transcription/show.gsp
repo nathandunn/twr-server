@@ -1,4 +1,4 @@
-<%@ page import="edu.uoregon.secondlook.Transcription" %>
+<%@ page import="edu.uoregon.secondlook.TranscriptionStatus; edu.uoregon.secondlook.Transcription" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +40,7 @@
 
         <li class="fieldcontain">
             <span id="status-label" class="property-label"><g:message code="transcription.status.label"
-                                                                        default="File Name"/></span>
+                                                                      default="File Name"/></span>
 
             <span class="property-value" aria-labelledby="status-label"><g:fieldValue
                     bean="${transcriptionInstance}" field="status"/></span>
@@ -93,9 +93,11 @@
             </li>
         </g:if>
 
+<g:if test="${transcriptionInstance?.processingQueues}">
         <li class="fieldcontain">
-            <span id="processingQueue-label" class="property-label"><g:message code="processingQueue.processingQueue.label"
-                                                                          default="Transcript"/></span>
+            <span id="processingQueue-label" class="property-label"><g:message
+                    code="processingQueue.processingQueue.label"
+                    default="Processing Queue"/></span>
 
             <span class="property-value" aria-labelledby="processingQueue-label">
                 <g:each in="${transcriptionInstance.processingQueues}" var="processingQueue">
@@ -104,6 +106,7 @@
             </span>
 
         </li>
+    </g:if>
 
     </ol>
 
@@ -111,9 +114,11 @@
     <g:form>
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${transcriptionInstance?.id}"/>
-            <g:link action="submitTranscript"  controller="processingQueue" id="${transcriptionInstance.id}" >
-                Submit Transcript
-            </g:link>
+            <g:if test="${transcriptionInstance.status == TranscriptionStatus.RECEIVED}">
+                <g:link action="submitTranscript" controller="processingQueue" id="${transcriptionInstance.id}">
+                    Submit Transcript
+                </g:link>
+            </g:if>
 
             <g:link class="edit" action="edit" id="${transcriptionInstance?.id}"><g:message
                     code="default.button.edit.label" default="Edit"/></g:link>
