@@ -1,6 +1,17 @@
 package edu.uoregon.secondlook
 
+import groovy.transform.CompileStatic
+
+@CompileStatic
 class TotalWordReadService {
+
+    private TreeMap<String, String> rawTimings = new TreeMap<String, String>();
+    private TreeMap<String, String[]> studentTimings = new TreeMap<String, String[]>();
+
+    private TreeMap<String, String> studentResults = new TreeMap<String, String>();
+    private static String[] intResults = ["02","05","06","07","08","09","11","12","13","15","16","19","23","24","25","33","38","45","47","48","52","55","56","57","61","62","66","68","70","73","76","77","79","81","87","89","91","92","94","97","100","101","102","104","113"]
+
+
 
     // TODO: use an actual method
     Integer calculateTotalWordsRead(Transcription transcription){
@@ -13,15 +24,13 @@ class TotalWordReadService {
 
     public Integer parseTimings(String transcript,String passage) {
 
-        Map<String,Integer> rawTimings = new HashMap<>()
-
         //timing file that contains output for all gina students.
         try{
             float offset = 60.0f;
 
-            transcript.splitEachLine(){ line ->
+            transcript.eachLine { String line ->
 //            while( line != null ){
-                String[] parts = line.split(" ");
+                String[] parts = line.split(" ")
 
                 String wordsSoFar = rawTimings.get(parts[0]);
 
