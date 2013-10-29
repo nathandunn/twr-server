@@ -8,6 +8,7 @@ class Transcription {
         transcript nullable: true
         status nullable: false
         twr nullable: true
+        externalId nullable: true
     }
 
     static hasMany = [
@@ -20,6 +21,8 @@ class Transcription {
     Date returnDate
     TranscriptionStatus status
     String externalId
+
+    Passage passage
 
 
     // results

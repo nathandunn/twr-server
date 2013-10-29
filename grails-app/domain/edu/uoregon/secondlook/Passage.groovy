@@ -5,6 +5,10 @@ class Passage {
     static constraints = {
     }
 
+    static hasMany = [
+            transcriptions: Transcription
+    ]
+
     static mapping = {
         text type: "text"
     }

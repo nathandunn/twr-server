@@ -82,6 +82,18 @@
             </li>
         </g:if>
 
+        <li class="fieldcontain">
+            <span id="passage-label" class="property-label"><g:message code="transcription.passage.label"
+                                                                          default="Passage"/></span>
+
+            <span class="property-value" aria-labelledby="passage-label">
+                <g:link action="show" controller="passage" id="${transcriptionInstance.passage.id}">
+                    ${transcriptionInstance.passage.name}
+                </g:link>
+            </span>
+
+        </li>
+
         <g:if test="${transcriptionInstance?.transcript}">
             <li class="fieldcontain">
                 <span id="transcript-label" class="property-label"><g:message code="transcription.transcript.label"
