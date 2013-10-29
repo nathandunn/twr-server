@@ -19,6 +19,7 @@ class Transcription {
     Date requestDate
     Date returnDate
     TranscriptionStatus status
+    String externalId
 
 
     // results
