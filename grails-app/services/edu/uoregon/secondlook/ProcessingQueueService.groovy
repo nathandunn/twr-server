@@ -35,7 +35,7 @@ class ProcessingQueueService {
             resultOutput = processTranscript(processingQueue)
             Transcription transcription = processingQueue.transcription
             transcription.transcript = resultOutput
-            transcription.twr = totalWordReadService.calculateTotalWordsRead(processingQueue.transcription.transcript)
+            transcription.twr = totalWordReadService.calculateTotalWordsRead(processingQueue.transcription)
             processingQueue.status = ProcessingStatus.FINISHED
             transcription.status = TranscriptionStatus.FINISHED
 

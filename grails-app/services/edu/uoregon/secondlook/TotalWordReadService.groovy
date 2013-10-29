@@ -3,10 +3,69 @@ package edu.uoregon.secondlook
 class TotalWordReadService {
 
     // TODO: use an actual method
-    Integer calculateTotalWordsRead(String transcript){
-        return transcript.split(" ").length
+    Integer calculateTotalWordsRead(Transcription transcription){
+        String transcript = transcription.transcript
+        String passage = transcription.passage.text
+
+        return parseTimings(transcript,passage)
 //        return 125
     }
+
+    public Integer parseTimings(String transcript,String passage) {
+
+        Map<String,Integer> rawTimings = new HashMap<>()
+
+        //timing file that contains output for all gina students.
+        try{
+            float offset = 60.0f;
+
+            transcript.splitEachLine(){ line ->
+//            while( line != null ){
+                String[] parts = line.split(" ");
+
+                String wordsSoFar = rawTimings.get(parts[0]);
+
+                //First time seeing this student so reset the offset.
+                if( wordsSoFar == null ){
+                    wordsSoFar = "";
+                    offset = 60.0f;
+                }
+
+                if( Float.parseFloat(parts[2]) < (61.0+offset) && parts[4].charAt(0) != '<' && parts[4].charAt(0) != '-' ){
+
+                    if( offset > Float.parseFloat(parts[2]) ) offset = Float.parseFloat(parts[2]);
+
+                    wordsSoFar += parts[4]+" ";
+                    rawTimings.put(parts[0], wordsSoFar);
+                }
+
+//                line = transcript.readLine().trim();
+            }
+
+//            transcript.close();
+
+        }catch(Exception e){}
+
+
+        Iterator<String> keys = rawTimings.keySet().iterator();
+        while( keys.hasNext() ){
+
+            String key = keys.next();
+
+            //Only look at students with good audio
+            String studentid = key.split("\\.")[0];
+            if( Arrays.asList(intResults).contains(studentid) ){
+
+                String words = rawTimings.get(key);
+
+                studentTimings.put(key, words.trim().split(" "));
+            }
+
+        }
+
+
+
+    } //method: parseTimings
 
 //    public void parseTranscripts() {
 //
