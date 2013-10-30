@@ -4,6 +4,11 @@ class ProcessingQueueService {
 
     def totalWordReadService
 
+//    String baseProcessingDirectory ="/usr/share/tomcat/temp"
+    String baseProcessingDirectory =System.getenv("CATALINA_TEMP") ?: "/usr/share/tomcat/temp"
+    String decodeBinary = "/usr/share/kaldi-decode-childspeech/childspeech/s5/run_decode.sh"
+    String timingsFile = "timings.all.txt"
+
     def submitTranscript(Integer id) {
         Transcription transcription = Transcription.get(id)
         println "got transcript ${transcription}"
@@ -53,15 +58,26 @@ class ProcessingQueueService {
 
     def processTranscript(ProcessingQueue processingQueue) {
 
-        byte[] audioData = processingQueue.transcription.audioData;
 
         // TODO: get directory from configuration
+        Transcription transcription = processingQueue.transcription
 
 
         // TODO: create directory using transcript unique name
+        String uniqueId = transcription.externalId
+        String processingDirectory = baseProcessingDirectory + "/"+uniqueId+"/"
+        File file = new File(processingDirectory)
+        if(file.mkdir())
+        assert file.exists()
+        assert file.isDirectory()
 
 
         // TODO: write audio data to disk
+        byte[] audioData = transcription.audioData;
+        String decodeFile = processingDirectory+"/decodable.wav"
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(decodeFile))
+        fileOutputStream.write(audioData)
+        fileOutputStream.close()
 
 
         // ??
@@ -70,17 +86,36 @@ class ProcessingQueueService {
 
 
 
-        // TODO: exec processes go here . . . tell it where to write stuff
 
         println "STARTED doing some exec process for 20 seconds"
 
-        sleep 20000
+        // TODO: exec processes go here . . . tell it where to write stuff
+//        String command = """${decodeBinary} mono0a ${processingDirectory}"""
+//        def proc = command.execute()                 // Call *execute* on the string
+        String execString = [decodeBinary,processingDirectory].join(" ")
+//        String execString = ["ls"].join(" ")
+        println "execString ${execString}"
+        Process proc = execString.execute()
+        println "output ${proc.in.text}"
+        println "error ${proc.err.text}"
+//        println "process ${proc}"
+//        def command = """executable arg1 arg2 arg3"""// Create the String
+        int status = proc.waitFor()
+        println "finished with status ${status}"
+
+
+//        sleep 20000
 
         println "FINISHED some exec process for 20 seconds"
 
-//        Transcription transcription = processingQueue.transcription
-        return "You have observed an Osprey goo grr pop click"
-
-
+        String timingResultFile = processingDirectory+"/"+timingsFile
+        File resultFile = new File(timingResultFile)
+        if(resultFile.exists()){
+            return file.text
+        }
+        else{
+            println "Timings file does not exist ${timingResultFile}"
+            return ""
+        }
     }
 }

@@ -12,7 +12,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'passage', 'error')} ">
     <label for="passage">
-        <g:message code="transcription.passage.label" default="File Name"/>
+        <g:message code="transcription.passage.label" default="Passage Name"/>
 
     </label>
     %{--<g:textField name="passage" value="${transcriptionInstance?.passage}"/>--}%
@@ -21,6 +21,14 @@
               value="${transcriptionInstance.passage}"
               optionValue="name" optionKey="id"/>
 
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'externalId', 'error')} ">
+<label for="externalId">
+<g:message code="transcription.externalId.label" default="External ID" />
+
+</label>
+<g:textField name="externalId" value="${transcriptionInstance?.externalId}"/>
 </div>
 
 %{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'fileName', 'error')} ">--}%
