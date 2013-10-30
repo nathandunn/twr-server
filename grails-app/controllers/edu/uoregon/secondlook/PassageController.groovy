@@ -99,4 +99,10 @@ class PassageController {
             redirect(action: "show", id: id)
         }
     }
+
+    // REST POST
+    def sendPassage(String externalPassageId,String text){
+        Passage.findOrSaveByExternalIdAndText(externalPassageId,text)
+        render "OK"
+    }
 }

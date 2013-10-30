@@ -8,7 +8,7 @@ class Transcription {
         transcript nullable: true
         status nullable: false
         twr nullable: true
-        externalId nullable: true
+        externalStudentId nullable: true
     }
 
     static hasMany = [
@@ -20,7 +20,7 @@ class Transcription {
     Date requestDate
     Date returnDate
     TranscriptionStatus status
-    String externalId
+    String externalStudentId
 
     Passage passage
 

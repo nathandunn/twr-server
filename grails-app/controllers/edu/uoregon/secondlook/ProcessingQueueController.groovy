@@ -102,7 +102,21 @@ class ProcessingQueueController {
         }
     }
 
-    def submitTranscript(Integer id) {
+
+    // REST POST
+    def sendTranscript(String externalStudentId,String externalPassageId,byte[] audio){
+        Passage passage = Passage.findByExternalId(externalPassageId)
+        Transcription transcription = new Transcription(
+                passage: passage
+                ,externalStudentId: externalStudentId
+                ,audioData: audio
+        ).save(insert: true,flush: true)
+        submitTranscript(transcription.id)
+
+        render "OK"
+    }
+
+    def submitTranscript(Long id) {
         processingQueueService.submitTranscript(id)
 
 
