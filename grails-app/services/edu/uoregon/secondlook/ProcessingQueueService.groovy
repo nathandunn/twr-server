@@ -13,6 +13,7 @@ class ProcessingQueueService {
         Transcription transcription = Transcription.get(id)
         println "got transcript ${transcription}"
 
+
         if (transcription) {
             ProcessingQueue processingQueue = ProcessingQueue.findByTranscription(transcription)
             if (!processingQueue) {

@@ -61,6 +61,7 @@ grails.project.dependency.resolution = {
 
         compile ':cache:1.0.1'
         compile ":executor:0.3"
+        compile ":rest-client-builder:1.0.3"
 
     }
 }
