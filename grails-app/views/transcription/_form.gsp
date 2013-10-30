@@ -23,12 +23,12 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'externalId', 'error')} ">
-<label for="externalId">
-<g:message code="transcription.externalId.label" default="External ID" />
+<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'externalStudentId', 'error')} ">
+<label for="externalStudentId">
+<g:message code="transcription.externalStudentId.label" default="External Student ID" />
 
 </label>
-<g:textField name="externalId" value="${transcriptionInstance?.externalId}"/>
+<g:textField name="externalStudentId" value="${transcriptionInstance?.externalStudentId}"/>
 </div>
 
 %{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'fileName', 'error')} ">--}%

@@ -59,6 +59,17 @@
             </li>
         </g:if>
 
+        <g:if test="${transcriptionInstance?.externalStudentId}">
+            <li class="fieldcontain">
+                <span id="externalStudentId-label" class="property-label"><g:message code="transcription.externalStudentId.label"
+                                                                               default="External Student ID"/></span>
+
+                <span class="property-value" aria-labelledby="externalStudentId-label">
+                    ${transcriptionInstance.externalStudentId}
+                </span>
+
+            </li>
+        </g:if>
 
         <g:if test="${transcriptionInstance?.requestDate}">
             <li class="fieldcontain">

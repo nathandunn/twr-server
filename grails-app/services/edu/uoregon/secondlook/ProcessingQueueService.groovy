@@ -9,7 +9,7 @@ class ProcessingQueueService {
     String decodeBinary = "/usr/share/kaldi-decode-childspeech/childspeech/s5/run_decode.sh"
     String timingsFile = "timings.all.txt"
 
-    def submitTranscript(Integer id) {
+    def submitTranscript(Long id) {
         Transcription transcription = Transcription.get(id)
         println "got transcript ${transcription}"
 
