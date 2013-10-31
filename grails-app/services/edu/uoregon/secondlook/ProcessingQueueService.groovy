@@ -69,9 +69,12 @@ class ProcessingQueueService {
         // TODO: get directory from configuration
         Transcription transcription = processingQueue.transcription
 
+        println "got transcript ${transcription.fileName}"
 
         // TODO: create directory using transcript unique name
+        println "passage ${transcription.passage}"
         String uniqueId = transcription.externalStudentId + transcription.passage.externalId
+        println "unique ID: ${uniqueId}"
         String processingDirectory = baseProcessingDirectory + "/"+uniqueId+"/"
 
         println "processing directory ${processingDirectory}"
