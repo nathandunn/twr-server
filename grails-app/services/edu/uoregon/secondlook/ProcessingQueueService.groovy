@@ -12,6 +12,7 @@ class ProcessingQueueService {
     def submitTranscript(Long id) {
         Transcription transcription = Transcription.get(id)
         println "got transcript ${transcription}"
+        println "processing in directory ${baseProcessingDirectory}"
 
 
         if (transcription) {
@@ -28,7 +29,9 @@ class ProcessingQueueService {
             transcription.save(flush: true)
 //            return transcription.status
 
+            println "Pre-processing transcript"
             processTranscriptAsync(processingQueue)
+            println "POST-processing transcript"
 
         } else {
             return null
@@ -38,7 +41,9 @@ class ProcessingQueueService {
     def processTranscriptAsync(ProcessingQueue processingQueue) {
         def resultOutput
         runAsync{
+            println "start ASync processing"
             resultOutput = processTranscript(processingQueue)
+            println "after ASync processing"
             Transcription transcription = processingQueue.transcription
             transcription.transcript = resultOutput
             transcription.twr = totalWordReadService.calculateTotalWordsRead(processingQueue.transcription)
@@ -59,14 +64,18 @@ class ProcessingQueueService {
 
     def processTranscript(ProcessingQueue processingQueue) {
 
+        println "starting on Transcript ${processingQueue.transcription.fileName}"
 
         // TODO: get directory from configuration
         Transcription transcription = processingQueue.transcription
 
 
         // TODO: create directory using transcript unique name
-        String uniqueId = transcription.externalId
+        String uniqueId = transcription.externalStudentId + transcription.passage.externalId
         String processingDirectory = baseProcessingDirectory + "/"+uniqueId+"/"
+
+        println "processing directory ${processingDirectory}"
+
         File file = new File(processingDirectory)
         if(file.mkdir())
         assert file.exists()
@@ -96,7 +105,12 @@ class ProcessingQueueService {
         String execString = [decodeBinary,processingDirectory].join(" ")
 //        String execString = ["ls"].join(" ")
         println "execString ${execString}"
-        Process proc = execString.execute()
+        Process proc
+        try {
+            proc = execString.execute()
+        } catch (e) {
+            println "error ${e}"
+        }
         println "output ${proc.in.text}"
         println "error ${proc.err.text}"
 //        println "process ${proc}"

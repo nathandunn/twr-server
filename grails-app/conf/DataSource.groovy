@@ -3,9 +3,9 @@ dataSource {
 //    driverClassName = "org.h2.Driver"
     driverClassName = "com.mysql.jdbc.Driver"
 //    username = "sa"
-    password = ""
+//    password = ""
     username = "ubuntu"
-//    password = "Vq9NvDXS"
+    password = "Vq9NvDXS"
     dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
 }
 hibernate {
