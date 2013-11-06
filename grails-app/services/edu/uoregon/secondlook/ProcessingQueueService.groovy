@@ -69,11 +69,16 @@ class ProcessingQueueService {
         // TODO: get directory from configuration
         Transcription transcription = processingQueue.transcription
 
-        println "got transcript for filename ${transcription.fileName}"
+        println "got transcript for filename diggity ${transcription.fileName}"
+
+
+        // Passage passage = transcription.passage
+        Passage passage = Passage.executeQuery("select p from Transcription t join t.passage p where t=:transcript",[transcript: transcription],[max:1])?.get(0)
 
         // TODO: create directory using transcript unique name
-        println "passage ${transcription?.passage?.name}"
-        String uniqueId = transcription.externalStudentId + transcription.passage.externalId
+        println "passage to get? "
+        println "passage ${passage?.name}"
+        String uniqueId = transcription.externalStudentId + passage.externalId
         println "unique ID: ${uniqueId}"
         String processingDirectory = baseProcessingDirectory + "/"+uniqueId+"/"
 
