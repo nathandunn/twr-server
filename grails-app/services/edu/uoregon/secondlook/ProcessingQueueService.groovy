@@ -11,7 +11,7 @@ class ProcessingQueueService {
 
     def submitTranscript(Long id) {
         Transcription transcription = Transcription.get(id)
-        println "got transcript ${transcription}"
+        println "got transcription value ${transcription}"
         println "processing in directory ${baseProcessingDirectory}"
 
 
@@ -69,7 +69,7 @@ class ProcessingQueueService {
         // TODO: get directory from configuration
         Transcription transcription = processingQueue.transcription
 
-        println "got transcript ${transcription.fileName}"
+        println "got transcript for filename ${transcription.fileName}"
 
         // TODO: create directory using transcript unique name
         println "passage ${transcription.passage}"
