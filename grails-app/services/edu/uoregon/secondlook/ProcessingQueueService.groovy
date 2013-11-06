@@ -134,7 +134,8 @@ class ProcessingQueueService {
         String timingResultFile = processingDirectory+"/"+timingsFile
         File resultFile = new File(timingResultFile)
         if(resultFile.exists()){
-            return file.text
+             println "returnign file ${resultFile.path}"
+            return resultFile.text
         }
         else{
             println "Timings file does not exist ${timingResultFile}"
