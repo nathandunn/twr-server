@@ -71,8 +71,8 @@ class TranscriptionController {
         if (version != null) {
             if (transcriptionInstance.version > version) {
                 transcriptionInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'transcription.label', default: 'Transcription')] as Object[],
-                          "Another user has updated this Transcription while you were editing")
+                        [message(code: 'transcription.label', default: 'Transcription')] as Object[],
+                        "Another user has updated this Transcription while you were editing")
                 render(view: "edit", model: [transcriptionInstance: transcriptionInstance])
                 return
             }
@@ -108,16 +108,31 @@ class TranscriptionController {
         }
     }
 
-	private String fileName(String fileName){
-	 if(fileName.endsWith(".wav")){
-	   fileName = fileName.substring(0,fileName.length()-4)
-	   fileName += ".timings.txt"
-	}
+    private String fileName(String fileName) {
+        if (fileName.endsWith(".wav")) {
+            fileName = fileName.substring(0, fileName.length() - 4)
+            fileName += ".timings.txt"
+        }
 
-	return fileName
-	}
+        return fileName
+    }
 
-  def download(Integer id) {
+    def recalculateTwr(Long id) {
+        Transcription transcription = Transcription.get(id)
+        if (!transcription) {
+            response.status = 404
+            return
+        }
+        Passage passage = transcription.passage
+        Integer oldTwr = transcription.twr
+        Integer twr = TWR.findTWR(passage.text,transcription.transcript)
+        transcription.twr = twr
+        transcription.save(flush: true,insert: false)
+        flash.message = "Recalculated TWR ${oldTwr} -> ${transcription.twr} for Transcrption ${transcription.fileName}"
+        redirect(action: "show", id: transcription.id)
+    }
+
+    def download(Integer id) {
         Transcription transcription = Transcription.get(id)
         if (!transcription) {
             response.status = 404
