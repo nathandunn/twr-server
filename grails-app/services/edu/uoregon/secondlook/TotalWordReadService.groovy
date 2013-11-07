@@ -2,7 +2,7 @@ package edu.uoregon.secondlook
 
 import groovy.transform.CompileStatic
 
-@CompileStatic
+//@CompileStatic
 class TotalWordReadService {
 
     private TreeMap<String, String> rawTimings = new TreeMap<String, String>();
@@ -15,9 +15,13 @@ class TotalWordReadService {
 
     // TODO: use an actual method
     Integer calculateTotalWordsRead(Transcription transcription){
+        println "calc twr ${transcription}" 
         String transcript = transcription.transcript
-        String passage = transcription.passage.text
-        return TWR.findTWR(passage,transcript)
+        println "transcript ${transcript.size()}" 
+        Passage passage = Passage.executeQuery("select p from Transcription t join t.passage p where t=:transcript",[transcript: transcription],[max:1])?.get(0)
+        String passageText = passage.text
+        println "passage ${passageText}" 
+        return TWR.findTWR(passageText,transcript)
 //        return parseTimings(transcript,passage)
 //        return 125
     }
