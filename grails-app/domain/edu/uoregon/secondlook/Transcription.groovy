@@ -15,6 +15,10 @@ class Transcription {
             processingQueues: ProcessingQueue
     ]
 
+    static mapping = {
+        transcript type: "text"
+    }
+
     byte[] audioData
     String fileName
     Date requestDate

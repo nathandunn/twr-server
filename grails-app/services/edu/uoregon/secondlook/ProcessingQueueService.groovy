@@ -45,8 +45,11 @@ class ProcessingQueueService {
             resultOutput = processTranscript(processingQueue)
             println "after ASync processing"
             Transcription transcription = processingQueue.transcription
+println "got transcrpton "
             transcription.transcript = resultOutput
-            transcription.twr = totalWordReadService.calculateTotalWordsRead(processingQueue.transcription)
+println "set trancript ${resultOutput.size()}"
+            transcription.twr = totalWordReadService.calculateTotalWordsRead(transcription)
+println "calc words read ${transcription.twr}"
             processingQueue.status = ProcessingStatus.FINISHED
             transcription.status = TranscriptionStatus.FINISHED
 
@@ -110,6 +113,7 @@ class ProcessingQueueService {
         // TODO: exec processes go here . . . tell it where to write stuff
 //        String command = """${decodeBinary} mono0a ${processingDirectory}"""
 //        def proc = command.execute()                 // Call *execute* on the string
+        //String execString = [decodeBinary,processingDirectory,8].join(" ")
         String execString = [decodeBinary,processingDirectory].join(" ")
 //        String execString = ["ls"].join(" ")
         println "execString ${execString}"
