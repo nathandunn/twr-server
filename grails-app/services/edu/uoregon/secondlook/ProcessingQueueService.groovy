@@ -5,7 +5,7 @@ class ProcessingQueueService {
     def totalWordReadService
 
 //    String baseProcessingDirectory ="/usr/share/tomcat/temp"
-    String baseProcessingDirectory =System.getenv("CATALINA_TEMP") ?: "/usr/share/tomcat/temp"
+    String baseProcessingDirectory = System.getenv("CATALINA_TEMP") ?: "/usr/share/tomcat/temp"
     String decodeBinary = "/usr/share/kaldi-decode-childspeech/childspeech/s5/run_decode.sh"
     String timingsFile = "timings.all.txt"
 
@@ -40,16 +40,16 @@ class ProcessingQueueService {
 
     def processTranscriptAsync(ProcessingQueue processingQueue) {
         def resultOutput
-        runAsync{
+        runAsync {
             println "start ASync processing"
             resultOutput = processTranscript(processingQueue)
             println "after ASync processing"
             Transcription transcription = processingQueue.transcription
-println "got transcrpton "
+            println "got transcrpton "
             transcription.transcript = resultOutput
-println "set trancript ${resultOutput.size()}"
+            println "set trancript ${resultOutput.size()}"
             transcription.twr = totalWordReadService.calculateTotalWordsRead(transcription)
-println "calc words read ${transcription.twr}"
+            println "calc words read ${transcription.twr}"
             processingQueue.status = ProcessingStatus.FINISHED
             transcription.status = TranscriptionStatus.FINISHED
 
@@ -60,7 +60,6 @@ println "calc words read ${transcription.twr}"
 //        def future = callAsync {
 //            processTranscript(processingQueue)
 //        }
-
 
 //        def resultOutput = future.get()
     }
@@ -74,38 +73,33 @@ println "calc words read ${transcription.twr}"
 
         println "got transcript for filename diggity ${transcription.fileName}"
 
-
         // Passage passage = transcription.passage
-        Passage passage = Passage.executeQuery("select p from Transcription t join t.passage p where t=:transcript",[transcript: transcription],[max:1])?.get(0)
+        Passage passage = Passage.executeQuery("select p from Transcription t join t.passage p where t=:transcript", [transcript: transcription], [max: 1])?.get(0)
 
         // TODO: create directory using transcript unique name
         println "passage to get? "
         println "passage ${passage?.name}"
         String uniqueId = transcription.externalStudentId + passage.externalId
         println "unique ID: ${uniqueId}"
-        String processingDirectory = baseProcessingDirectory + "/"+uniqueId+"/"
+        String processingDirectory = baseProcessingDirectory + "/" + uniqueId + "/"
 
         println "processing directory ${processingDirectory}"
 
         File file = new File(processingDirectory)
-        if(file.mkdir())
-        assert file.exists()
+        if (file.mkdir())
+            assert file.exists()
         assert file.isDirectory()
-
 
         // TODO: write audio data to disk
         byte[] audioData = transcription.audioData;
-        String decodeFile = processingDirectory+"/decodable.wav"
+        String decodeFile = processingDirectory + "/decodable.wav"
         FileOutputStream fileOutputStream = new FileOutputStream(new File(decodeFile))
         fileOutputStream.write(audioData)
         fileOutputStream.close()
 
-
         // ??
         // TODO: use SOX/LAME convert from android multimedia 44kHz.wav Mono to 16Hz Mono WAV file
         // TODO: use SOX/LAME convert from android multimedia .amr to 16kHz Mono WAV file
-
-
 
 
         println "STARTED doing some exec process for 20 seconds"
@@ -114,7 +108,7 @@ println "calc words read ${transcription.twr}"
 //        String command = """${decodeBinary} mono0a ${processingDirectory}"""
 //        def proc = command.execute()                 // Call *execute* on the string
         //String execString = [decodeBinary,processingDirectory,8].join(" ")
-        String execString = [decodeBinary,processingDirectory].join(" ")
+        String execString = [decodeBinary, processingDirectory].join(" ")
 //        String execString = ["ls"].join(" ")
         println "execString ${execString}"
         Process proc
@@ -130,18 +124,16 @@ println "calc words read ${transcription.twr}"
         int status = proc.waitFor()
         println "finished with status ${status}"
 
-
 //        sleep 20000
 
         println "FINISHED some exec process for 20 seconds"
 
-        String timingResultFile = processingDirectory+"/"+timingsFile
+        String timingResultFile = processingDirectory + "/" + timingsFile
         File resultFile = new File(timingResultFile)
-        if(resultFile.exists()){
-             println "returnign file ${resultFile.path}"
+        if (resultFile.exists()) {
+            println "returnign file ${resultFile.path}"
             return resultFile.text
-        }
-        else{
+        } else {
             println "Timings file does not exist ${timingResultFile}"
             return ""
         }
