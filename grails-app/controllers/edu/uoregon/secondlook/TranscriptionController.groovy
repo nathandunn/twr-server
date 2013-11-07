@@ -124,8 +124,11 @@ class TranscriptionController {
             return
         }
         Passage passage = transcription.passage
+        String passageText = passage.text
+//        passageText = passageText.replaceAll("\n"," ")
+        passageText = passageText.replaceAll("\\s{2,}"," ")
         Integer oldTwr = transcription.twr
-        Integer twr = TWR.findTWR(passage.text,transcription.transcript)
+        Integer twr = TWR.findTWR(passageText,transcription.transcript)
         transcription.twr = twr
         transcription.save(flush: true,insert: false)
         flash.message = "Recalculated TWR ${oldTwr} -> ${transcription.twr} for Transcrption ${transcription.fileName}"
