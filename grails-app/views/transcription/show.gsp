@@ -106,14 +106,6 @@
         </li>
 
         <g:if test="${transcriptionInstance?.transcript}">
-            <li class="fieldcontain">
-                <span id="transcript-label" class="property-label"><g:message code="transcription.transcript.label"
-                                                                              default="Transcript"/></span>
-
-                <span class="property-value" aria-labelledby="transcript-label"><g:fieldValue
-                        bean="${transcriptionInstance}" field="transcript"/></span>
-
-            </li>
 
             <li class="fieldcontain">
                 <span id="twr-label" class="property-label"><g:message code="twrion.twr.label"
@@ -123,6 +115,19 @@
                         bean="${transcriptionInstance}" field="twr"/></span>
 
             </li>
+
+            <li class="fieldcontain">
+                <span id="transcript-label" class="property-label"><g:message code="transcription.transcript.label"
+                                                                              default="Transcript"/></span>
+
+                <span class="property-value" aria-labelledby="transcript-label">
+<g:link action="download" id="${transcriptionInstance.id}">
+Download timings file
+</g:link>
+ ${transcriptionInstance?.transcript?.size()} characters
+
+            </li>
+
         </g:if>
 
         <g:if test="${transcriptionInstance?.processingQueues}">

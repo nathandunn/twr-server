@@ -107,4 +107,25 @@ class TranscriptionController {
             redirect(action: "show", id: id)
         }
     }
+
+	private String fileName(String fileName){
+	 if(fileName.endsWith(".wav")){
+	   fileName = fileName.substring(0,fileName.length()-4)
+	   fileName += ".timings.txt"
+	}
+
+	return fileName
+	}
+
+  def download(Integer id) {
+        Transcription transcription = Transcription.get(id)
+        if (!transcription) {
+            response.status = 404
+            return
+        }
+        if (transcription.transcript) {
+            response.setHeader("Content-Disposition", "attachment; filename=" + fileName(transcription.fileName))
+            render(text: transcription.transcript, contentType: "application/download", encoding: "UTF-8")
+        }
+    }
 }
