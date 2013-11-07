@@ -61,8 +61,9 @@
 
         <g:if test="${transcriptionInstance?.externalStudentId}">
             <li class="fieldcontain">
-                <span id="externalStudentId-label" class="property-label"><g:message code="transcription.externalStudentId.label"
-                                                                               default="External Student ID"/></span>
+                <span id="externalStudentId-label" class="property-label"><g:message
+                        code="transcription.externalStudentId.label"
+                        default="External Student ID"/></span>
 
                 <span class="property-value" aria-labelledby="externalStudentId-label">
                     ${transcriptionInstance.externalStudentId}
@@ -121,10 +122,10 @@
                                                                               default="Transcript"/></span>
 
                 <span class="property-value" aria-labelledby="transcript-label">
-<g:link action="download" id="${transcriptionInstance.id}">
-Download timings file
-</g:link>
- ${transcriptionInstance?.transcript?.size()} characters
+                    <g:link action="download" id="${transcriptionInstance.id}">
+                        Download timings file
+                    </g:link>
+                    ${transcriptionInstance?.transcript?.size()} characters
 
             </li>
 
@@ -160,6 +161,10 @@ Download timings file
             <g:else>
                 <g:link action="submitTranscript" controller="processingQueue" id="${transcriptionInstance.id}">
                     Submit Again
+                </g:link>
+
+                <g:link action="recalculateTwr" controller="transcription" id="${transcriptionInstance.id}">
+                    Recalculate Twr
                 </g:link>
             </g:else>
 
