@@ -1,7 +1,4 @@
 package edu.uoregon.secondlook
-
-import groovy.transform.CompileStatic
-
 //@CompileStatic
 class TotalWordReadService {
 
@@ -17,7 +14,7 @@ class TotalWordReadService {
     Integer calculateTotalWordsRead(Transcription transcription){
         println "calc twr ${transcription}" 
         String transcript = transcription.transcript
-        println "transcript ${transcript.size()}" 
+        println "transcript ${transcript.size()}"
         Passage passage = Passage.executeQuery("select p from Transcription t join t.passage p where t=:transcript",[transcript: transcription],[max:1])?.get(0)
         String passageText = passage.text
         println "passage ${passageText}" 
