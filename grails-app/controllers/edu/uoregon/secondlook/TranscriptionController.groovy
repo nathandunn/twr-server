@@ -135,7 +135,19 @@ class TranscriptionController {
         redirect(action: "show", id: transcription.id)
     }
 
-    def download(Integer id) {
+    def downloadBinary(Integer id) {
+        Transcription transcription = Transcription.get(id)
+        if (!transcription) {
+            response.status = 404
+            return
+        }
+        if (transcription.transcript) {
+            response.setHeader("Content-Disposition", "attachment; filename=" + fileName(transcription.fileName+".wav"))
+            render(file: transcription.audioData, contentType: "application/download", encoding: "UTF-8")
+        }
+    }
+
+    def downloadTranscript(Integer id) {
         Transcription transcription = Transcription.get(id)
         if (!transcription) {
             response.status = 404
