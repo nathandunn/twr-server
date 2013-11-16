@@ -54,7 +54,7 @@
                 </span>
                 <span class="property-value" aria-labelledby="audioData-label">
                     <g:formatNumber number="${transcriptionInstance.audioData.length / 1E6}" type="number"/> MB
-                    <g:link action="download" id="${transcriptionInstance.id}">Download</g:link>
+                    <g:link action="downloadBinary" id="${transcriptionInstance.id}">Download</g:link>
                 </span>
             </li>
         </g:if>
@@ -122,7 +122,7 @@
                                                                               default="Transcript"/></span>
 
                 <span class="property-value" aria-labelledby="transcript-label">
-                    <g:link action="download" id="${transcriptionInstance.id}">
+                    <g:link action="downloadTranscript" id="${transcriptionInstance.id}">
                         Download timings file
                     </g:link>
                     ${transcriptionInstance?.transcript?.size()} characters
