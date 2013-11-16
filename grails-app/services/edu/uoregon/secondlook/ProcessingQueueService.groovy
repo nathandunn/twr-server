@@ -8,6 +8,7 @@ class ProcessingQueueService {
     String baseProcessingDirectory = System.getenv("CATALINA_TEMP") ?: "/usr/share/tomcat/temp"
     String decodeBinary = "/usr/share/kaldi-decode-childspeech/childspeech/s5/run_decode.sh"
     String timingsFile = "timings.all.txt"
+    String soxBinary = "sox"
 
     def submitTranscript(Long id) {
         Transcription transcription = Transcription.get(id)
@@ -92,8 +93,8 @@ class ProcessingQueueService {
 
         // TODO: write audio data to disk
         byte[] audioData = transcription.audioData;
-        String decodeFile = processingDirectory + "/decodable.wav"
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(decodeFile))
+        String inputFile = processingDirectory + "/input.wav"
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(inputFile))
         fileOutputStream.write(audioData)
         fileOutputStream.close()
 
@@ -101,6 +102,21 @@ class ProcessingQueueService {
         // TODO: use SOX/LAME convert from android multimedia 44kHz.wav Mono to 16Hz Mono WAV file
         // TODO: use SOX/LAME convert from android multimedia .amr to 16kHz Mono WAV file
 
+        String decodeFile = processingDirectory + "/decodable.wav"
+        String execSox = [soxBinary, inputFile,"-b","16",decodeFile,"channels","1","rate","16k"].join(" ")
+        Process procSox
+        try {
+            procSox = execSox.execute()
+        } catch (e) {
+            println "error doing SOX ${e}"
+        }
+
+        println "output ${procSox.in.text}"
+        println "error ${procSox.err.text}"
+//        println "process ${proc}"
+//        def command = """executable arg1 arg2 arg3"""// Create the String
+        int statusSox = procSox.waitFor()
+        println "sox finish with status ${statusSox}"
 
         println "STARTED doing some exec process for 20 seconds"
 
