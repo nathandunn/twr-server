@@ -54,7 +54,7 @@
                 </span>
                 <span class="property-value" aria-labelledby="audioData-label">
                     <g:formatNumber number="${transcriptionInstance.audioData.length / 1E6}" type="number"/> MB
-                    <a href="">Download</a>
+                    <g:link action="download" id="${transcriptionInstance.id}">Download</g:link>
                 </span>
             </li>
         </g:if>
