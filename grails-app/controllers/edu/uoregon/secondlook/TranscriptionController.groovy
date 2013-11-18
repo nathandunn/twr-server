@@ -142,8 +142,9 @@ class TranscriptionController {
             return
         }
         if (transcription.audioData) {
-            response.setHeader("Content-Disposition", "attachment; filename=" + fileName(transcription.fileName+".wav"))
-            render(file: transcription.audioData, contentType: "application/download", encoding: "UTF-8")
+            response.setHeader("Content-Disposition", "attachment; filename=" + transcription.fileName)
+            response.outputStream << transcription.audioData
+//            render(file: transcription.audioData, contentType: "application/download", encoding: "UTF-8")
         }
     }
 

@@ -93,8 +93,8 @@ class ProcessingQueueService {
 
         // TODO: write audio data to disk
         byte[] audioData = transcription.audioData;
-        String inputFile = processingDirectory + "/input.wav"
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(inputFile))
+        String inputFilePath = processingDirectory + "/input.wav"
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(inputFilePath))
         fileOutputStream.write(audioData)
         fileOutputStream.close()
 
@@ -103,20 +103,34 @@ class ProcessingQueueService {
         // TODO: use SOX/LAME convert from android multimedia .amr to 16kHz Mono WAV file
 
         String decodeFile = processingDirectory + "/decodable.wav"
-        String execSox = [soxBinary, inputFile,"-b","16",decodeFile,"channels","1","rate","16k"].join(" ")
-        Process procSox
-        try {
-            procSox = execSox.execute()
-        } catch (e) {
-            println "error doing SOX ${e}"
-        }
+        if(new File(soxBinary).exists()){
+            String execSox = [soxBinary, inputFilePath,"-b","16",decodeFile,"channels","1","rate","16k"].join(" ")
+            Process procSox
+            try {
+                procSox = execSox.execute()
+            } catch (e) {
+                println "error doing SOX ${e}"
+            }
 
-        println "output ${procSox.in.text}"
-        println "error ${procSox.err.text}"
+            println "output ${procSox.in.text}"
+            println "error ${procSox.err.text}"
 //        println "process ${proc}"
 //        def command = """executable arg1 arg2 arg3"""// Create the String
-        int statusSox = procSox.waitFor()
-        println "sox finish with status ${statusSox}"
+            int statusSox = procSox.waitFor()
+            println "sox finish with status ${statusSox}"
+        }
+        else{
+            log.error "SOX NOT Found, just copying! "
+            File inputFile = new File(inputFilePath)
+            File outputFile = new File(decodeFile)
+            def input = inputFile.newDataInputStream()
+            def output = outputFile.newDataOutputStream()
+
+            output << input
+
+            input.close()
+            output.close()
+        }
 
         println "STARTED doing some exec process for 20 seconds"
 
