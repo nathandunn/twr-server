@@ -11,6 +11,8 @@ grails.project.source.level = 1.6
 //   run: [maxMemory:1024, minMemory:64, debug:false, maxPerm:256]
 //]
 
+grails.project.dependency.resolver = "maven" // or ivy
+
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
@@ -55,6 +57,8 @@ grails.project.dependency.resolution = {
         build ':tomcat:7.0.42'
         // plugins needed at runtime but not for compilation
         runtime ':hibernate:3.6.10.2'
+        compile ":rest:0.8"
+
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
