@@ -159,4 +159,6 @@ class TranscriptionController {
             render(text: transcription.transcript, contentType: "application/download", encoding: "UTF-8")
         }
     }
+
+
 }
