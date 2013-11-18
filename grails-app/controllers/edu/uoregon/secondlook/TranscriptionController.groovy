@@ -141,7 +141,7 @@ class TranscriptionController {
             response.status = 404
             return
         }
-        if (transcription.transcript) {
+        if (transcription.audioData) {
             response.setHeader("Content-Disposition", "attachment; filename=" + fileName(transcription.fileName+".wav"))
             render(file: transcription.audioData, contentType: "application/download", encoding: "UTF-8")
         }
