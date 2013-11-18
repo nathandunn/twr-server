@@ -103,7 +103,7 @@ class ProcessingQueueService {
         // TODO: use SOX/LAME convert from android multimedia .amr to 16kHz Mono WAV file
 
         String decodeFile = processingDirectory + "/decodable.wav"
-        if(new File(soxBinary).exists()){
+//        if(new File(soxBinary).exists()){
             String execSox = [soxBinary, inputFilePath,"-b","16",decodeFile,"channels","1","rate","16k"].join(" ")
             Process procSox
             try {
@@ -118,19 +118,19 @@ class ProcessingQueueService {
 //        def command = """executable arg1 arg2 arg3"""// Create the String
             int statusSox = procSox.waitFor()
             println "sox finish with status ${statusSox}"
-        }
-        else{
-            log.error "SOX NOT Found, just copying! "
-            File inputFile = new File(inputFilePath)
-            File outputFile = new File(decodeFile)
-            def input = inputFile.newDataInputStream()
-            def output = outputFile.newDataOutputStream()
-
-            output << input
-
-            input.close()
-            output.close()
-        }
+//        }
+//        else{
+//            log.error "SOX NOT Found, just copying! "
+//            File inputFile = new File(inputFilePath)
+//            File outputFile = new File(decodeFile)
+//            def input = inputFile.newDataInputStream()
+//            def output = outputFile.newDataOutputStream()
+//
+//            output << input
+//
+//            input.close()
+//            output.close()
+//        }
 
         println "STARTED doing some exec process for 20 seconds"
 
