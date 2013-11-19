@@ -171,11 +171,16 @@ class TranscriptionController {
             return
         }
 
+        println "audio data ${audio.length}"
+
         Transcription transcription = new Transcription(
                 fileName: fileName
                 , audioData: audio
                 , passage: passage
                 , externalStudentId: studentId
+                ,requestDate: new Date()
+                ,status: TranscriptionStatus.RECEIVED
+
         ).save(insert: true, flush: true, failOnError: true)
 
         processingQueueService.submitTranscript(transcription.id)

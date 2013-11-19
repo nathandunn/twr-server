@@ -14,7 +14,6 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map />
-        <naming-strategy-map />
       </configuration>
     </facet>
   </component>
@@ -64,6 +63,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.3.2" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.3.2" level="application" />
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (twr-server-grailsPlugins)">

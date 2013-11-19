@@ -1,12 +1,8 @@
 package edu.uoregon.secondlook
 
-import grails.converters.JSON
-import groovyx.net.http.HTTPBuilder
+import grails.test.mixin.Mock
+import grails.test.mixin.TestFor
 import groovyx.net.http.RESTClient
-import org.junit.*
-import grails.test.mixin.*
-import static groovyx.net.http.ContentType.HTML
-
 
 @TestFor(TranscriptionController)
 @Mock(Transcription)
@@ -174,9 +170,22 @@ class TranscriptionControllerTests {
     void testRestSubmit(){
         RESTClient restClient = new RESTClient( 'http://localhost:8080/' )
         byte[] audioData = new byte[100];
-        def resp = restClient.post( path : 'twr-server/transcription/submit',
-                body: [ fileName: "bob123.wav" ,audioData:audioData ,passageId:1 ,studentId: "asdfadsf" ]
-        )
+        audioData[0] = 1
+        audioData[1] = 0
+        // TODO: audioData
+
+        Map<String,Object> postData = new HashMap<>()
+        postData.put("fileName","bob123.wav")
+        postData.put("audio",audioData)
+        postData.put("passageId",1)
+        postData.put("studentId","ASdf")
+        def resp = restClient.post( path : 'twr-server/transcription/submit'
+                , body: postData
+        ){
+                contentType "application/vnd.org.jfrog.artifactory.security.Group+json"
+//                body: [ fileName: "bob123.wav" ,audioData:audioData ,passageId:1 ,studentId: "asdfadsf" ]
+//                json "{ fileName: 'bob123.wav' ,audioData:${audioData} ,passageId:1 ,studentId: 'asdfadsf'  }"
+        }
         assert resp.status == 200
         assert resp.data == "SUBMITTED"
 
