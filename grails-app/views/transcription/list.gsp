@@ -57,12 +57,18 @@
 
                 <td>
                     %{--${fieldValue(bean: transcriptionInstance, field: "transcript")}--}%
-                    ${transcriptionInstance.twr}
-                    ${transcriptionInstance?.transcript?.size()} characters
+                    <g:if test="${transcriptionInstance.transcript}">
 
-                    <g:link action="downloadTranscript" id="${transcriptionInstance.id}">
-                        Download
-                    </g:link>
+                        ${transcriptionInstance.twr}
+                        ${transcriptionInstance?.transcript?.size()} characters
+
+                        <g:link action="downloadTranscript" id="${transcriptionInstance.id}">
+                            Download
+                        </g:link>
+                    </g:if>
+                    <g:else>
+                        Not generated
+                    </g:else>
 
                 </td>
 

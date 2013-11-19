@@ -85,6 +85,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="grails-2.3.2" level="application" />
+    <orderEntry type="module" module-name="twr-server-grailsPlugins" />
   </component>
 </module>
 
