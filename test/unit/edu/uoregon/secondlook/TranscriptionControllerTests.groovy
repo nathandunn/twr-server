@@ -169,4 +169,22 @@ class TranscriptionControllerTests {
         assert resp2.status == 200
         assert resp2.data == "NOT FOUND"
     }
+
+
+    void testRestSubmit(){
+        RESTClient restClient = new RESTClient( 'http://localhost:8080/' )
+        byte[] audioData = new byte[100];
+        def resp = restClient.post( path : 'twr-server/transcription/submit',
+                body: [ fileName: "bob123.wav" ,audioData:audioData ,passageId:1 ,studentId: "asdfadsf" ]
+        )
+        assert resp.status == 200
+        assert resp.data == "SUBMITTED"
+
+
+//        RESTClient restClient2 = new RESTClient( 'http://localhost:8080/' )
+//        def resp2 = restClient2.get( path : 'twr-server/transcription/status/5123123' )
+////        assert resp2.status == 404
+//        assert resp2.status == 200
+//        assert resp2.data == "NOT FOUND"
+    }
 }
