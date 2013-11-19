@@ -19,6 +19,12 @@ class TranscriptionRestControllerSpec {
 
     void testRestController(){
 
+        withRest(uri: "http://localhost:8080/twr-server/transcriptionRest/status/1") {
+            def response = get(path:"name")
+//            auth.basic model.username, model.password
+        }
+
+
     }
 
 }

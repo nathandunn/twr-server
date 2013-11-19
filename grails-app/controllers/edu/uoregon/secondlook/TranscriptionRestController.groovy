@@ -1,6 +1,8 @@
 package edu.uoregon.secondlook
 
-class TranscriptionRestController {
+import grails.rest.RestfulController
+
+class TranscriptionRestController extends RestfulController<Transcription>{
 
     def processingQueueService
 
