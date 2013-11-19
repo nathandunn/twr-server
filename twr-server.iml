@@ -23,7 +23,6 @@
           <unit-entry name="Gorm" />
           <unit-entry name="sessionFactory" />
         </datasource-map>
-        <naming-strategy-map />
       </configuration>
     </facet>
   </component>
@@ -86,6 +85,7 @@
     </orderEntry>
     <orderEntry type="library" name="grails-2.3.2" level="application" />
     <orderEntry type="module" module-name="twr-server-grailsPlugins" />
+    <orderEntry type="library" name="grails-2.3.2" level="application" />
   </component>
 </module>
 
