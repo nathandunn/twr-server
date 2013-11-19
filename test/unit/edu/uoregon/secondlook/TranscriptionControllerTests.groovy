@@ -152,4 +152,20 @@ class TranscriptionControllerTests {
         assert Transcription.get(transcription.id) == null
         assert response.redirectedUrl == '/transcription/list'
     }
+
+    void testRestController(){
+        withHttp(uri: "http://www.google.com") {
+            def html = get(path : '/search', query : [q:'Groovy'])
+            assert html.HEAD.size() == 1
+            assert html.BODY.size() == 1
+        }
+
+//        withHttp(uri: "http://localhost") {
+//            def html = get(port: 8080,path : '/twr-server/transcription/status/1', query : [q:''])
+//            assert html.HEAD.size() == 1
+//            assert html.BODY.size() == 1
+////            def response = get(path:"name")
+//            println "response ${html}"
+//        }
+    }
 }
