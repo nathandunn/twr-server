@@ -1,5 +1,6 @@
 package edu.uoregon.secondlook
 
+import grails.converters.JSON
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -189,7 +190,9 @@ class TranscriptionController {
             render transcription.status.name()
         }
         else{
-            render "Not Found"
+//            response.status = 404
+            render "NOT FOUND"
+//            render "NOT FOUND" as JSON
         }
     }
 

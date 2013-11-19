@@ -1,9 +1,12 @@
 package edu.uoregon.secondlook
 
-
-
+import grails.converters.JSON
+import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.RESTClient
 import org.junit.*
 import grails.test.mixin.*
+import static groovyx.net.http.ContentType.HTML
+
 
 @TestFor(TranscriptionController)
 @Mock(Transcription)
@@ -154,11 +157,40 @@ class TranscriptionControllerTests {
     }
 
     void testRestController(){
-        withHttp(uri: "http://www.google.com") {
-            def html = get(path : '/search', query : [q:'Groovy'])
-            assert html.HEAD.size() == 1
-            assert html.BODY.size() == 1
-        }
+//        withHttp(uri: "http://www.google.com", contentType : HTML) {
+//            def html = get(path : '/search', query : [q:'Groovy'])
+//            assert html.HEAD.size() == 1
+//            assert html.BODY.size() == 1
+//        }
+//        def http = new HTTPBuilder('http://www.google.com')
+//        def html = http.get( path : '/search', query : [q:'Groovy'] )
+//
+//        assert html instanceof groovy.util.slurpersupport.GPathResult
+//        assert html.HEAD.size() == 1
+//        assert html.BODY.size() == 1
+
+        RESTClient restClient = new RESTClient( 'http://localhost:8080/' )
+        def resp = restClient.get( path : 'twr-server/transcription/status/1' )
+        assert resp.status == 200
+        assert resp.data == "SUBMITTED"
+
+
+        RESTClient restClient2 = new RESTClient( 'http://localhost:8080/' )
+        def resp2 = restClient2.get( path : 'twr-server/transcription/status/5123123' )
+//        assert resp2.status == 404
+        assert resp2.status == 200
+        assert resp2.data == "NOT FOUND"
+//        println "resp ${resp.properties}"
+//        assert resp.contentType == JSON.toString()
+//        assert ( resp.data instanceof net.sf.json.JSON )
+//        assert resp.data.status.size() > 0
+
+//        withHttp(uri: "http://www.google.com", contentType : HTML) {
+//            def html = get(path : '/search', query : [q:'Groovy'])
+//            assert html.HEAD.size() == 1
+//            assert html.BODY.size() == 1
+//        }
+
 
 //        withHttp(uri: "http://localhost") {
 //            def html = get(port: 8080,path : '/twr-server/transcription/status/1', query : [q:''])
