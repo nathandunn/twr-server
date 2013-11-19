@@ -6,6 +6,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 class TranscriptionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    def processingQueueService
 
     def index() {
         redirect(action: "list", params: params)
@@ -160,5 +161,36 @@ class TranscriptionController {
         }
     }
 
+    def submit(String fileName, byte[] audio, String passageId, String studentId) {
+
+        Passage passage = Passage.findById(passageId as Long)
+
+        if (!passage) {
+            render "Passage not found "
+            return
+        }
+
+        Transcription transcription = new Transcription(
+                fileName: fileName
+                , audioData: audio
+                , passage: passage
+                , externalStudentId: studentId
+        ).save(insert: true, flush: true, failOnError: true)
+
+        processingQueueService.submitTranscript(transcription.id)
+
+        return transcription.id
+
+    }
+
+    def status(Long id) {
+        Transcription transcription = Transcription.findById(id)
+        if(transcription){
+            render transcription.status.name()
+        }
+        else{
+            render "Not Found"
+        }
+    }
 
 }

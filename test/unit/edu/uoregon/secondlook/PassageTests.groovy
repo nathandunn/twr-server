@@ -1,8 +1,9 @@
 package edu.uoregon.secondlook
 
+import grails.converters.JSON
 import grails.plugins.rest.client.RestBuilder
 import grails.test.mixin.TestFor
-import org.json.simple.JSONObject
+import org.codehaus.groovy.grails.web.json.JSONObject
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
@@ -11,7 +12,7 @@ import org.json.simple.JSONObject
 class PassageTests {
 
     void testRESTPassage() {
-        def rest = new RestBuilder(connectTimeout:1000, readTimeout:20000, proxy:['localhost':8888])
+        def rest = new RestBuilder(connectTimeout: 1000, readTimeout: 20000, proxy: ['localhost': 8888])
 
         //            auth System.getProperty("artifactory.user"), System.getProperty("artifactory.pass")
 
@@ -22,9 +23,9 @@ class PassageTests {
 //            json '{ externalId: "test123", text: "A temporary test group" }'
 //        }
 
-        resp.json instanceof JSONObject
+        resp instanceof JSONObject
 
-        println response.json
+        println resp as JSON
 
     }
 }
