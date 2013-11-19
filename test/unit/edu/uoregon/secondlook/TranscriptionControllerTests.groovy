@@ -169,12 +169,12 @@ class TranscriptionControllerTests {
 
     void testRestSubmit(){
         RESTClient restClient = new RESTClient( 'http://localhost:8080/' )
-        byte[] audioData = new byte[100];
-        audioData[0] = 1
-        audioData[1] = 0
         // TODO: audioData
 
         Map<String,Object> postData = new HashMap<>()
+        File file = new File("./test/test-data/531-2531/decodable.wav")
+        byte[] audioData = file.bytes
+        println "lenght of audio ${audioData.length}"
         postData.put("fileName","bob123.wav")
         postData.put("audio",audioData)
         postData.put("passageId",1)
@@ -182,7 +182,7 @@ class TranscriptionControllerTests {
         def resp = restClient.post( path : 'twr-server/transcription/submit'
                 , body: postData
         ){
-                contentType "application/vnd.org.jfrog.artifactory.security.Group+json"
+//                contentType "application/vnd.org.jfrog.artifactory.security.Group+json"
 //                body: [ fileName: "bob123.wav" ,audioData:audioData ,passageId:1 ,studentId: "asdfadsf" ]
 //                json "{ fileName: 'bob123.wav' ,audioData:${audioData} ,passageId:1 ,studentId: 'asdfadsf'  }"
         }
