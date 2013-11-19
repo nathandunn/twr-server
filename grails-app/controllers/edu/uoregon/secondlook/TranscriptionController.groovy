@@ -126,11 +126,11 @@ class TranscriptionController {
         Passage passage = transcription.passage
         String passageText = passage.text
 //        passageText = passageText.replaceAll("\n"," ")
-        passageText = passageText.replaceAll("\\s{2,}"," ")
+        passageText = passageText.replaceAll("\\s{2,}", " ")
         Integer oldTwr = transcription.twr
-        Integer twr = TWR.findTWR(passageText,transcription.transcript)
+        Integer twr = TWR.findTWR(passageText, transcription.transcript)
         transcription.twr = twr
-        transcription.save(flush: true,insert: false)
+        transcription.save(flush: true, insert: false)
         flash.message = "Recalculated TWR ${oldTwr} -> ${transcription.twr} for Transcrption ${transcription.fileName}"
         redirect(action: "show", id: transcription.id)
     }
@@ -150,7 +150,7 @@ class TranscriptionController {
 
     def downloadTranscript(Integer id) {
         Transcription transcription = Transcription.get(id)
-        if (!transcription) {
+        if (!transcription || !transcription.transcript) {
             response.status = 404
             return
         }
