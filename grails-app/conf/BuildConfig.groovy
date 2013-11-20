@@ -74,7 +74,9 @@ grails.project.dependency.resolution = {
         build ':tomcat:7.0.42'
         // plugins needed at runtime but not for compilation
         runtime ':hibernate:3.6.10.2'
-        compile ":rest:0.8"
+//        compile ":rest:0.8"
+
+        compile ":rest-client-builder:2.0.0"
 
 
         // Uncomment these (or add new ones) to enable additional resources capabilities

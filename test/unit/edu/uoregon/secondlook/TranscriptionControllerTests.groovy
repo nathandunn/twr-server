@@ -1,8 +1,13 @@
 package edu.uoregon.secondlook
 
+import grails.converters.JSON
+import grails.plugins.rest.client.RestBuilder
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
-import groovyx.net.http.RESTClient
+import grails.web.JSONBuilder
+//import groovyx.net.http.HTTPBuilder
+//import groovyx.net.http.Method
+//import groovyx.net.http.RESTClient
 
 @TestFor(TranscriptionController)
 @Mock(Transcription)
@@ -152,48 +157,66 @@ class TranscriptionControllerTests {
         assert response.redirectedUrl == '/transcription/list'
     }
 
-    void testRestStatus(){
-        RESTClient restClient = new RESTClient( 'http://localhost:8080/' )
-        def resp = restClient.get( path : 'twr-server/transcription/status/1' )
-        assert resp.status == 200
-        assert resp.data == "SUBMITTED"
-
-
-        RESTClient restClient2 = new RESTClient( 'http://localhost:8080/' )
-        def resp2 = restClient2.get( path : 'twr-server/transcription/status/5123123' )
-//        assert resp2.status == 404
-        assert resp2.status == 200
-        assert resp2.data == "NOT FOUND"
-    }
-
-
-    void testRestSubmit(){
-        RESTClient restClient = new RESTClient( 'http://localhost:8080/' )
-        // TODO: audioData
-
-        Map<String,Object> postData = new HashMap<>()
-        File file = new File("./test/test-data/531-2531/decodable.wav")
-        byte[] audioData = file.bytes
-        println "lenght of audio ${audioData.length}"
-        postData.put("fileName","bob123.wav")
-        postData.put("audio",audioData)
-        postData.put("passageId",1)
-        postData.put("studentId","ASdf")
-        def resp = restClient.post( path : 'twr-server/transcription/submit'
-                , body: postData
-        ){
-//                contentType "application/vnd.org.jfrog.artifactory.security.Group+json"
-//                body: [ fileName: "bob123.wav" ,audioData:audioData ,passageId:1 ,studentId: "asdfadsf" ]
-//                json "{ fileName: 'bob123.wav' ,audioData:${audioData} ,passageId:1 ,studentId: 'asdfadsf'  }"
+    void testRestStatus() {
+        RestBuilder rest = new RestBuilder()
+        def resp = rest.get("http://localhost:8080/twr-server/transcription/status/1") {
         }
         assert resp.status == 200
-        assert resp.data == "SUBMITTED"
+        assert resp.text == "SUBMITTED"
 
-
-//        RESTClient restClient2 = new RESTClient( 'http://localhost:8080/' )
-//        def resp2 = restClient2.get( path : 'twr-server/transcription/status/5123123' )
-////        assert resp2.status == 404
-//        assert resp2.status == 200
-//        assert resp2.data == "NOT FOUND"
+        resp = rest.get("http://localhost:8080/twr-server/transcription/status/112321") {
+        }
+        assert resp.status == 200
+        assert resp.text == "NOT FOUND"
     }
+
+    void testRestSubmit() {
+        RestBuilder rest = new RestBuilder()
+        String url = "http://localhost:8080/twr-server/transcription/submit"
+        File file = new File("./test/test-data/531-2531/decodable.wav")
+
+        def builder = new JSONBuilder()
+        JSON j = builder.build {
+            fileName = "bob123.wav"
+            passageId = "1"
+            studentId = "asdfa"
+//            audio = file.bytes
+        }
+
+        def resp = rest.post(url) {
+//            json "{ fileName: 'bob123.wav', passageId: 1,studentId:'asdfa' }"
+//            body j
+//            contentType "multipart/form-data"
+            contentType "multipart/form-data;charset=UTF-8;"
+            accept "text/json;text/plain;application/octet-stream"
+
+            body j
+
+//            fileName = "bob123.wav"
+//            studentId = "asdfa"
+//            passageId = "1"
+            audio = file
+        }
+
+        assert resp.status == 200
+        assert resp.text == "NOT FOUND"
+
+//        Map<String, Object> postData = new HashMap<>()
+//        byte[] audioData = file.bytes
+//        println "lenght of audio ${audioData.length}"
+//        postData.put("fileName", "bob123.wav")
+//        postData.put("audio", audioData)
+//        postData.put("passageId", 1)
+//        postData.put("studentId", "ASdf")
+
+////        def resp = restClient.post( path : 'twr-server/transcription/submit'
+//        def resp = restClient.post( 'twr-server/transcription/submit'){
+//                contentType "multipart/form-data"
+////                body: postData
+//            fileName
+//        }
+
+    }
+
+//
 }
