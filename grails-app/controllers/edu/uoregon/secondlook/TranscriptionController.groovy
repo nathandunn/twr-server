@@ -164,6 +164,7 @@ class TranscriptionController {
 
     def submit(String fileName, byte[] audio, String passageId, String studentId) {
 
+        println "passage Id ${passageId}"
         Passage passage = Passage.findById(passageId as Long)
 
         if (!passage) {
