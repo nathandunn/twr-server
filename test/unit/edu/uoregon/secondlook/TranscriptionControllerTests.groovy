@@ -177,12 +177,12 @@ class TranscriptionControllerTests {
         File file = new File("./test/test-data/531-2531/decodable.wav")
 
         def builder = new JSONBuilder()
-        JSON j = builder.build {
-            fileName = "bob123.wav"
-            passageId = "1"
-            studentId = "asdfa"
-            audioData = file.bytes
-        }
+//        JSON j = builder.build {
+//            fileName = "bob123.wav"
+//            passageId = "1"
+//            studentId = "asdfa"
+//            audioData = file.bytes
+//        }
 
         RestResponse resp = rest.post(url) {
 //            json "{ fileName: 'bob123.wav', passageId: 1,studentId:'asdfa' }"
