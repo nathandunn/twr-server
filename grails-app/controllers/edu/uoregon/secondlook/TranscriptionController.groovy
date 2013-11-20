@@ -176,7 +176,7 @@ class TranscriptionController {
 
         byte[] audioData = params.audioData.bytes
         def passageId = params.passageId
-//        println "params ${params}"
+        println "params ${params.keySet()}"
         println "passage Id ${passageId}"
         println "fileName ${fileName}"
         println "audioData ${audioData?.length}"
