@@ -181,9 +181,12 @@ class TranscriptionController {
         println "fileName ${fileName}"
         println "audioData ${audioData?.length}"
         println "externalStudentId ${params.studentId}"
-        Passage passage = Passage.findById(passageId as Long)
+        Long passageIdLong = passageId as Long
+        println "passage Id long ${passageIdLong}"
+        Passage passage = Passage.findById(passageIdLong)
 
         if (!passage) {
+            println "Passage not found ${passageId}"
             render "Passage not found "
             return
         }
