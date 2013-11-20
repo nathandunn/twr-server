@@ -93,8 +93,10 @@ class ProcessingQueueService {
 
         // TODO: write audio data to disk
         byte[] audioData = transcription.audioData;
-        String inputFilePath = processingDirectory + "/input.wav"
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(inputFilePath))
+        String inputFilePath = processingDirectory + "input.wav"
+        File inputFile = new File(inputFilePath)
+        println "Removing old file ${inputFile.delete()}"
+        FileOutputStream fileOutputStream = new FileOutputStream(inputFile)
         fileOutputStream.write(audioData)
         fileOutputStream.close()
 
@@ -102,22 +104,25 @@ class ProcessingQueueService {
         // TODO: use SOX/LAME convert from android multimedia 44kHz.wav Mono to 16Hz Mono WAV file
         // TODO: use SOX/LAME convert from android multimedia .amr to 16kHz Mono WAV file
 
-        String decodeFile = processingDirectory + "/decodable.wav"
-//        if(new File(soxBinary).exists()){
-            String execSox = [soxBinary, inputFilePath,"-b","16",decodeFile,"channels","1","rate","16k"].join(" ")
-            Process procSox
-            try {
-                procSox = execSox.execute()
-            } catch (e) {
-                println "error doing SOX ${e}"
-            }
+        String decodeFilePath = processingDirectory + "decodable.wav"
+        File decodeFile = new File(decodeFilePath)
+        println "removing old output file ${decodeFile.delete()}"
 
-            println "output ${procSox.in.text}"
-            println "error ${procSox.err.text}"
+//        if(new File(soxBinary).exists()){
+        String execSox = [soxBinary, inputFilePath, "-b", "16", decodeFilePath, "channels", "1", "rate", "16k"].join(" ")
+        Process procSox
+        try {
+            procSox = execSox.execute()
+        } catch (e) {
+            println "error doing SOX ${e}"
+        }
+
+        println "output ${procSox.in.text}"
+        println "error ${procSox.err.text}"
 //        println "process ${proc}"
 //        def command = """executable arg1 arg2 arg3"""// Create the String
-            int statusSox = procSox.waitFor()
-            println "sox finish with status ${statusSox}"
+        int statusSox = procSox.waitFor()
+        println "sox finish with status ${statusSox}"
 //        }
 //        else{
 //            log.error "SOX NOT Found, just copying! "
