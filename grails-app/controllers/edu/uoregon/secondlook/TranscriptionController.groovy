@@ -24,6 +24,7 @@ class TranscriptionController {
 
     def save() {
 
+        // audioFile is bound on params, so don't need to do anything
         CommonsMultipartFile uploadedFile = request.getFile('audioData')
         String fileName = uploadedFile.originalFilename
 
@@ -162,8 +163,20 @@ class TranscriptionController {
         }
     }
 
-    def submit(String fileName, byte[] audio, String passageId, String studentId) {
+    def submit() {
+//        def submit(String fileName, String passageId, String studentId,byte[] audioData) {
 
+
+        CommonsMultipartFile uploadedFile = request.getFile('audioData')
+        def fileName = params.fileName ?: uploadedFile.originalFilename
+//        uploadedFile.bytes
+//        byte[] audio = uploadedFile.bytes
+
+//        String fileName = uploadedFile.originalFilename
+
+        byte[] audioData = params.audioData.bytes
+        def passageId = params.passageId
+        println "params ${params}"
         println "passage Id ${passageId}"
         Passage passage = Passage.findById(passageId as Long)
 
@@ -172,13 +185,13 @@ class TranscriptionController {
             return
         }
 
-        println "audio data ${audio.length}"
+        println "audio data ${audioData.length}"
 
         Transcription transcription = new Transcription(
                 fileName: fileName
-                , audioData: audio
+                , audioData: audioData
                 , passage: passage
-                , externalStudentId: studentId
+                , externalStudentId: params.studentId
                 ,requestDate: new Date()
                 ,status: TranscriptionStatus.RECEIVED
 
@@ -186,8 +199,7 @@ class TranscriptionController {
 
         processingQueueService.submitTranscript(transcription.id)
 
-        return transcription.id
-
+        render "{submitted: ${transcription.id} }"
     }
 
     def status(Long id) {

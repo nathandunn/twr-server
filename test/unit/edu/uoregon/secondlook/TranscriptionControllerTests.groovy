@@ -2,6 +2,7 @@ package edu.uoregon.secondlook
 
 import grails.converters.JSON
 import grails.plugins.rest.client.RestBuilder
+import grails.plugins.rest.client.RestResponse
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import grails.web.JSONBuilder
@@ -180,26 +181,28 @@ class TranscriptionControllerTests {
             fileName = "bob123.wav"
             passageId = "1"
             studentId = "asdfa"
-//            audio = file.bytes
+            audioData = file.bytes
         }
 
-        def resp = rest.post(url) {
+        RestResponse resp = rest.post(url) {
 //            json "{ fileName: 'bob123.wav', passageId: 1,studentId:'asdfa' }"
 //            body j
-//            contentType "multipart/form-data"
-            contentType "multipart/form-data;charset=UTF-8;"
-            accept "text/json;text/plain;application/octet-stream"
+            contentType "multipart/form-data"
+//            contentType "multipart/form-data;charset=UTF-8;"
+//            accept "text/json;text/plain;application/octet-stream"
 
-            body j
+//            body j
 
 //            fileName = "bob123.wav"
-//            studentId = "asdfa"
-//            passageId = "1"
-            audio = file
+            studentId = "asdfa"
+            passageId = "1"
+            audioData = file
         }
 
         assert resp.status == 200
-        assert resp.text == "NOT FOUND"
+//        println "return vlue ${resp.json.submitted}"
+        assert resp.json.submitted!=null
+//        assert resp.text == "NOT FOUND"
 
 //        Map<String, Object> postData = new HashMap<>()
 //        byte[] audioData = file.bytes
