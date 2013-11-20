@@ -195,7 +195,7 @@ class TranscriptionControllerTests {
 
 //            fileName = "bob123.wav"
             studentId = "asdfa"
-            passageId = "1"
+            passageId = "cut1-external"
             audioData = file
         }
 
