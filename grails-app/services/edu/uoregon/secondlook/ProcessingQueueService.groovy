@@ -123,6 +123,16 @@ class ProcessingQueueService {
 //        def command = """executable arg1 arg2 arg3"""// Create the String
         int statusSox = procSox.waitFor()
         println "sox finish with status ${statusSox}"
+
+        /**
+         * Move and replace the file back
+         */
+        DataOutputStream dataOutputStream = inputFile.newDataOutputStream()
+        DataInputStream dataInputStream = decodeFile.newDataInputStream()
+        dataOutputStream << dataInputStream
+        dataOutputStream.close()
+        dataInputStream.close()
+
 //        }
 //        else{
 //            log.error "SOX NOT Found, just copying! "
