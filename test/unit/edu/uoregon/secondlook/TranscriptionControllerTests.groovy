@@ -158,14 +158,17 @@ class TranscriptionControllerTests {
         assert response.redirectedUrl == '/transcription/list'
     }
 
+//    String remoteTestServer = "https://shadowdds.cs.uoregon.edu:8080/twr"
+    String remoteTestServer = "http://localhost:8080/twr-server"
+
     void testRestStatus() {
         RestBuilder rest = new RestBuilder()
-        def resp = rest.get("http://localhost:8080/twr-server/transcription/status/1") {
+        def resp = rest.get("${remoteTestServer}/transcription/status/1") {
         }
         assert resp.status == 200
         assert resp.text == "SUBMITTED"
 
-        resp = rest.get("http://localhost:8080/twr-server/transcription/status/112321") {
+        resp = rest.get("${remoteTestServer}/transcription/status/112321") {
         }
         assert resp.status == 200
         assert resp.text == "NOT FOUND"
@@ -173,7 +176,7 @@ class TranscriptionControllerTests {
 
     void testRestSubmit() {
         RestBuilder rest = new RestBuilder()
-        String url = "http://localhost:8080/twr-server/transcription/submit"
+        String url = "${remoteTestServer}/transcription/submit"
         File file = new File("./test/test-data/531-2531/decodable.wav")
 
         def builder = new JSONBuilder()
