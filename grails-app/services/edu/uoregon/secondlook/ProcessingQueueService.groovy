@@ -127,6 +127,7 @@ class ProcessingQueueService {
         /**
          * Move and replace the file back
          */
+        assert inputFile.delete()
         DataOutputStream dataOutputStream = inputFile.newDataOutputStream()
         DataInputStream dataInputStream = decodeFile.newDataInputStream()
         dataOutputStream << dataInputStream
