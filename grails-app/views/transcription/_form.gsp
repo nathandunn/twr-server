@@ -39,6 +39,13 @@
     <g:textField name="externalStudentId" value="${transcriptionInstance?.externalStudentId}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'transcriptErrors', 'error')} ">
+    <label for="transcriptErrors">
+        <g:message code="transcription.transcriptErrors.label" default="Transcript Errors"/>
+    </label>
+    <g:textArea name="transcriptErrors" value="${transcriptionInstance?.transcriptErrors}"/>
+</div>
+
 %{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'fileName', 'error')} ">--}%
 %{--<label for="fileName">--}%
 %{--<g:message code="transcription.fileName.label" default="File Name" />--}%
