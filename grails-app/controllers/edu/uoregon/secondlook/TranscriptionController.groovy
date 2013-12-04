@@ -1,6 +1,8 @@
 package edu.uoregon.secondlook
 
 import grails.converters.JSON
+import grails.plugins.rest.client.RestBuilder
+import grails.plugins.rest.client.RestResponse
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -218,6 +220,33 @@ class TranscriptionController {
             render "NOT FOUND"
 //            render "NOT FOUND" as JSON
         }
+    }
+
+    def doCallback(Long id) {
+        Transcription transcription = Transcription.findById(id)
+
+        RestBuilder rest = new RestBuilder()
+        println "doing callback url "
+        RestResponse resp = rest.post(transcription.callbackUrl) {
+            contentType "multipart/form-data"
+            transcriptId = transcription.id as String
+            studentId = transcription.externalStudentId
+            passageId = transcription.passage.externalId
+            twr = transcription.twr as String
+        }
+        println "geting response ?"
+        println "status ${resp.status}"
+
+        if(resp.status == 200){
+            transcription.status = TranscriptionStatus.CALLBACK_OK
+        }
+        else{
+            transcription.status = TranscriptionStatus.CALLBACK_ERROR
+        }
+
+        println "response text ${resp.text}"
+
+        transcription.save(flush:true)
     }
 
 }
