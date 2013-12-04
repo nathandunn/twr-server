@@ -29,10 +29,10 @@
 
 
         <li class="fieldcontain">
-            <span id="status-label" class="property-label"><g:message code="transcription.status.label"
+            <span id="id-label" class="property-label"><g:message code="transcription.id.label"
                                                                       default="ID"/></span>
 
-            <span class="property-value" aria-labelledby="status-label"><g:fieldValue
+            <span class="property-value" aria-labelledby="id-label"><g:fieldValue
                     bean="${transcriptionInstance}" field="id"/></span>
         </li>
 
@@ -67,6 +67,14 @@
                 </span>
             </li>
         </g:if>
+
+        <li class="fieldcontain">
+            <span callbackUrl="callbackUrl-label" class="property-label"><g:message code="transcription.callbackUrl.label"
+                                                                  default="Callback URL"/></span>
+
+            <span class="property-value" aria-labelledby="callbackUrl-label"><g:fieldValue
+                    bean="${transcriptionInstance}" field="callbackUrl"/></span>
+        </li>
 
         <g:if test="${transcriptionInstance?.externalStudentId}">
             <li class="fieldcontain">

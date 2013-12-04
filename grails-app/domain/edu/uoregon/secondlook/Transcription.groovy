@@ -25,6 +25,7 @@ class Transcription {
     Date returnDate
     TranscriptionStatus status
     String externalStudentId
+    String callbackUrl
 
     Passage passage
 
