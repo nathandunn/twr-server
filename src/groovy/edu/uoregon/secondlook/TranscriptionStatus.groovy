@@ -12,7 +12,7 @@ public enum TranscriptionStatus {
     RECEIVED,
     SUBMITTED,
     FINISHED,
-    CALLBACK_SENT,
+    CALLBACK_OK,
     CALLBACK_ERROR,
 
 }

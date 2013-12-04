@@ -1,5 +1,8 @@
 package edu.uoregon.secondlook
 
+import grails.plugins.rest.client.RestBuilder
+import grails.plugins.rest.client.RestResponse
+
 class ProcessingQueueService {
 
     def totalWordReadService
@@ -56,6 +59,30 @@ class ProcessingQueueService {
 
             transcription.save(flush: true)
             processingQueue.save(flush: true)
+
+            if(transcription.callbackUrl){
+                RestBuilder rest = new RestBuilder()
+                RestResponse resp = rest.post(transcription.callbackUrl) {
+                    contentType "multipart/form-data"
+                    transcriptId = transcription.id
+                    studentId = transcription.externalStudentId
+                    passageId = transcription.passage.externalId
+                    twr = transcription.twr
+                }
+
+                if(resp.status == 200){
+                    transcription.status = TranscriptionStatus.CALLBACK_OK
+                }
+                else{
+                    transcription.status = TranscriptionStatus.CALLBACK_ERROR
+                }
+
+//        println "return vlue ${resp.json.submitted}"
+//                assert resp.json.submitted!=null
+            }
+            else{
+                println "no callbcak url so not calling ${transcription.fileName} ${transcription.id}"
+            }
         }
 
 //        def future = callAsync {

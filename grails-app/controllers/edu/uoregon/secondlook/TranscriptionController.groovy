@@ -181,6 +181,7 @@ class TranscriptionController {
         println "fileName ${fileName}"
         println "audioData ${audioData?.length}"
         println "externalStudentId ${params.studentId}"
+        println "callback url ${params.callbackUrl}"
         Passage passage = Passage.findByExternalId(passageId)
 
         if (!passage) {
@@ -197,6 +198,7 @@ class TranscriptionController {
                 , passage: passage
                 , externalStudentId: params.studentId
                 ,requestDate: new Date()
+                ,callbackUrl: params.callbackUrl
                 ,status: TranscriptionStatus.RECEIVED
 
         ).save(insert: true, flush: true, failOnError: true)

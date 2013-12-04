@@ -1,6 +1,5 @@
 package edu.uoregon.secondlook
 
-import grails.converters.JSON
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
 import grails.test.mixin.Mock
@@ -200,6 +199,7 @@ class TranscriptionControllerTests {
             studentId = "asdfa"
             passageId = "cut1-external"
             audioData = file
+            callbackUrl = "http://abcd.com"
         }
 
         assert resp.status == 200
