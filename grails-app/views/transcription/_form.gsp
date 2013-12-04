@@ -1,6 +1,14 @@
 <%@ page import="edu.uoregon.secondlook.Transcription" %>
 
 
+<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'callbackUrl', 'error')} required">
+    <label for="callbackUrl">
+        <g:message code="transcription.callbackUrl.label" default="Calblabck Url"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="callbackUrl" value="${transcriptionInstance.callbackUrl}" size="80" />
+    %{--<input type="url" id="callbackUrl" name="callbackUrl" size="80"/>--}%
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'audioData', 'error')} required">
     <label for="audioData">
@@ -24,11 +32,11 @@
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'externalStudentId', 'error')} ">
-<label for="externalStudentId">
-<g:message code="transcription.externalStudentId.label" default="External Student ID" />
+    <label for="externalStudentId">
+        <g:message code="transcription.externalStudentId.label" default="External Student ID"/>
 
-</label>
-<g:textField name="externalStudentId" value="${transcriptionInstance?.externalStudentId}"/>
+    </label>
+    <g:textField name="externalStudentId" value="${transcriptionInstance?.externalStudentId}"/>
 </div>
 
 %{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'fileName', 'error')} ">--}%
