@@ -8,6 +8,7 @@ class Transcription {
         transcript nullable: true
         status nullable: false
         twr nullable: true
+        transcriptErrors nullable: true
         externalStudentId nullable: true
     }
 
@@ -17,6 +18,7 @@ class Transcription {
 
     static mapping = {
         transcript type: "text"
+        transcriptErrors type: "text"
     }
 
     byte[] audioData
@@ -26,6 +28,7 @@ class Transcription {
     TranscriptionStatus status
     String externalStudentId
     String callbackUrl
+    String transcriptErrors
 
     Passage passage
 

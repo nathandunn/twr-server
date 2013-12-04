@@ -148,6 +148,16 @@
 
         </g:if>
 
+
+        <li class="fieldcontain">
+            <span id="transcriptErrors-label" class="property-label"><g:message code="transcription.transcriptErrors.label"
+                                                                          default="Errors"/></span>
+
+            <span class="property-value" aria-labelledby="transcriptErrors-label">
+                ${transcriptionInstance?.transcriptErrors}
+
+        </li>
+
         <g:if test="${transcriptionInstance?.processingQueues}">
             <li class="fieldcontain">
                 <span id="processingQueue-label" class="property-label"><g:message
