@@ -63,13 +63,13 @@
           <root url="jar://$MAVEN_REPOSITORY$/org/grails/grails-datastore-gorm-hibernate-core/2.0.2.RELEASE/grails-datastore-gorm-hibernate-core-2.0.2.RELEASE.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/antlr/antlr/2.7.7/antlr-2.7.7.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/grails/grails-datastore-gorm-hibernate/2.0.2.RELEASE/grails-datastore-gorm-hibernate-2.0.2.RELEASE.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/2.0.5/liquibase-core-2.0.5.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/7.0.42/tomcat-embed-core-7.0.42.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/compiler/ecj/3.7.2/ecj-3.7.2.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-jasper/7.0.42/tomcat-embed-jasper-7.0.42.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-catalina-ant/7.0.42/tomcat-catalina-ant-7.0.42.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/grails/grails-datastore-rest-client/1.0.0.RELEASE/grails-datastore-rest-client-1.0.0.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
