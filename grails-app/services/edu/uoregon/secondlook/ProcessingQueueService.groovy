@@ -60,15 +60,19 @@ class ProcessingQueueService {
             transcription.save(flush: true)
             processingQueue.save(flush: true)
 
+
             if(transcription.callbackUrl){
                 RestBuilder rest = new RestBuilder()
+                println "doing callback url "
                 RestResponse resp = rest.post(transcription.callbackUrl) {
                     contentType "multipart/form-data"
-                    transcriptId = transcription.id
+                    transcriptId = transcription.id as String
                     studentId = transcription.externalStudentId
                     passageId = transcription.passage.externalId
-                    twr = transcription.twr
+                    twr = transcription.twr as String
                 }
+                println "geting response ?"
+                println "status ${resp.status}"
 
                 if(resp.status == 200){
                     transcription.status = TranscriptionStatus.CALLBACK_OK
@@ -76,6 +80,11 @@ class ProcessingQueueService {
                 else{
                     transcription.status = TranscriptionStatus.CALLBACK_ERROR
                 }
+                println "response text ${resp.text}"
+
+                transcription.save(flush:true)
+
+                println "saved status ${transcription.status}"
 
 //        println "return vlue ${resp.json.submitted}"
 //                assert resp.json.submitted!=null
