@@ -27,6 +27,15 @@
     </g:if>
     <ol class="property-list transcription">
 
+
+        <li class="fieldcontain">
+            <span id="status-label" class="property-label"><g:message code="transcription.status.label"
+                                                                      default="ID"/></span>
+
+            <span class="property-value" aria-labelledby="status-label"><g:fieldValue
+                    bean="${transcriptionInstance}" field="id"/></span>
+        </li>
+
         <g:if test="${transcriptionInstance?.fileName}">
             <li class="fieldcontain">
                 <span id="fileName-label" class="property-label"><g:message code="transcription.fileName.label"
@@ -40,7 +49,7 @@
 
         <li class="fieldcontain">
             <span id="status-label" class="property-label"><g:message code="transcription.status.label"
-                                                                      default="File Name"/></span>
+                                                                      default="Status"/></span>
 
             <span class="property-value" aria-labelledby="status-label"><g:fieldValue
                     bean="${transcriptionInstance}" field="status"/></span>
