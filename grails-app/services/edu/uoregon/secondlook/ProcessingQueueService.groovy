@@ -62,15 +62,8 @@ class ProcessingQueueService {
 
 
             if(transcription.callbackUrl){
-                RestBuilder rest = new RestBuilder()
                 println "doing callback url "
-                RestResponse resp = rest.post(transcription.callbackUrl) {
-                    contentType "multipart/form-data"
-                    transcriptId = transcription.id as String
-                    studentId = transcription.externalStudentId
-                    passageId = transcription.passage.externalId
-                    twr = transcription.twr as String
-                }
+                RestResponse resp = doCallback(transcription)
                 println "geting response ?"
                 println "status ${resp.status}"
 
@@ -100,6 +93,19 @@ class ProcessingQueueService {
 
 //        def resultOutput = future.get()
     }
+
+    def doCallback(Transcription transcription){
+        RestBuilder rest = new RestBuilder()
+        RestResponse resp = rest.post(transcription.callbackUrl) {
+            contentType "multipart/form-data"
+            transcriptId = transcription.id as String
+            studentId = transcription.externalStudentId
+            passageId = transcription.passage.externalId
+            twr = transcription.twr as String
+        }
+        return resp
+    }
+
 
     def processTranscript(ProcessingQueue processingQueue) {
 
