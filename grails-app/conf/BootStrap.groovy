@@ -12,7 +12,7 @@ class BootStrap {
 
         // restart any that had previously been paused!
         ProcessingQueue.findAllByStatusNotInList([ProcessingStatus.FINISHED]).each {
-            it.status = ProcessingStatus.PROCESSING
+            it.status = ProcessingStatus.DELIVERED
             it.save(flush: true)
 //            processingQueueService.processTranscriptAsync(it)
         }
