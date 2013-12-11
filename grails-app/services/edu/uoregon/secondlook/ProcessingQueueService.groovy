@@ -45,6 +45,8 @@ class ProcessingQueueService {
     def processTranscriptAsync(ProcessingQueue processingQueue) {
         def resultOutput
         runAsync {
+            processingQueue.status = ProcessingStatus.PROCESSING
+            processingQueue.save(flush: true)
             println "start ASync processing"
             resultOutput = processTranscript(processingQueue)
             println "after ASync processing"
