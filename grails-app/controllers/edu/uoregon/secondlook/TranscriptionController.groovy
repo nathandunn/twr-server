@@ -197,7 +197,7 @@ class TranscriptionController {
             return
         }
 
-        if(token!="Yi934nsVA3Nej03h"){
+        if(token!="JM0pEILe2Avluxg"){
             println "bad token ${token}"
             render "Bad token sent"
             response.status = HttpServletResponse.SC_UNAUTHORIZED
