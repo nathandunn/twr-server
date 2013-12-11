@@ -33,8 +33,12 @@
             <g:sortableColumn property="fileName"
                               title="${message(code: 'transcription.fileName.label', default: 'File Name')}"/>
 
+            <g:sortableColumn property="status"
+                              title="${message(code: 'transcription.transcript.label', default: 'Status')}"/>
+
             <g:sortableColumn property="transcript"
                               title="${message(code: 'transcription.transcript.label', default: 'Transcript')}"/>
+
 
             <th>Audio Data</th>
 
@@ -42,8 +46,8 @@
             <g:sortableColumn property="requestDate"
                               title="${message(code: 'transcription.requestDate.label', default: 'Request Date')}"/>
 
-            <g:sortableColumn property="returnDate"
-                              title="${message(code: 'transcription.returnDate.label', default: 'Return Date')}"/>
+            %{--<g:sortableColumn property="returnDate"--}%
+                              %{--title="${message(code: 'transcription.returnDate.label', default: 'Return Date')}"/>--}%
 
         </tr>
         </thead>
@@ -54,6 +58,9 @@
                 <td><g:link action="show"
                             id="${transcriptionInstance.id}">${fieldValue(bean: transcriptionInstance, field: "fileName")}</g:link></td>
 
+                <td>
+                    ${transcriptionInstance.status}
+                </td>
 
                 <td>
                     %{--${fieldValue(bean: transcriptionInstance, field: "transcript")}--}%
@@ -78,7 +85,7 @@
 
                 <td><g:formatDate date="${transcriptionInstance.requestDate}"/></td>
 
-                <td><g:formatDate date="${transcriptionInstance.returnDate}"/></td>
+                %{--<td><g:formatDate date="${transcriptionInstance.returnDate}"/></td>--}%
 
             </tr>
         </g:each>
