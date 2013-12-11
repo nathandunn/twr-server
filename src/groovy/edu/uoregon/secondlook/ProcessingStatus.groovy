@@ -9,10 +9,10 @@ package edu.uoregon.secondlook
  */
 public enum ProcessingStatus {
 
-    UNSTARTED,
-    PROCESSING,
-    FINISHED,
-    DELIVERED,
-    ERROR
+
+    DELIVERED, // delivered to queue, but not started
+    PROCESSING, // processing in the queue
+    FINISHED,  // finished processing in the queue, success
+    ERROR // finished processing in the queue, Error
 
 }

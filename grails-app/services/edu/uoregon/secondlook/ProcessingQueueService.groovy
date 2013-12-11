@@ -33,9 +33,9 @@ class ProcessingQueueService {
             transcription.save(flush: true)
 //            return transcription.status
 
-            println "Pre-processing transcript"
-            processTranscriptAsync(processingQueue)
-            println "POST-processing transcript"
+//            println "Pre-processing transcript"
+//            processTranscriptAsync(processingQueue)
+//            println "POST-processing transcript"
 
         } else {
             return null
@@ -223,6 +223,10 @@ class ProcessingQueueService {
             return resultFile.text
         } else {
             println "Timings file does not exist ${timingResultFile}"
+            processingQueue.status=ProcessingStatus.ERROR
+            processingQueue.save(flush: true)
+            transcription.status = TranscriptionStatus.ERROR
+            transcription.save(flush: true)
             return ""
         }
     }
