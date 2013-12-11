@@ -9,10 +9,11 @@ package edu.uoregon.secondlook
  */
 public enum TranscriptionStatus {
 
-    RECEIVED,
-    SUBMITTED,
-    FINISHED,
-    CALLBACK_OK,
-    CALLBACK_ERROR,
+    RECEIVED, // received, not yet processed
+    SUBMITTED, // submitted to queue
+    ERROR, // finished, error
+    FINISHED, // finished, ok
+    CALLBACK_OK, // fnished ok, callback ok
+    CALLBACK_ERROR, // fnished ok, callback error
 
 }

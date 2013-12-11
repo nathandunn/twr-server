@@ -10,10 +10,11 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        ProcessingQueue.findAllByStatusNotInList([ProcessingStatus.FINISHED, ProcessingStatus.DELIVERED]).each {
+        // restart any that had previously been paused!
+        ProcessingQueue.findAllByStatusNotInList([ProcessingStatus.FINISHED]).each {
             it.status = ProcessingStatus.PROCESSING
             it.save(flush: true)
-            processingQueueService.processTranscriptAsync(it)
+//            processingQueueService.processTranscriptAsync(it)
         }
 
         if (!Patch.findByName("PassageIndex")) {
