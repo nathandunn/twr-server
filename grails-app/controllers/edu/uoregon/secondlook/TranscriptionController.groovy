@@ -6,6 +6,8 @@ import grails.plugins.rest.client.RestResponse
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
+import javax.servlet.http.HttpServletResponse
+
 class TranscriptionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -178,6 +180,8 @@ class TranscriptionController {
 
         byte[] audioData = params.audioData.bytes
         def passageId = params.passageId
+        def token = params.token
+        println "token ${token}"
         println "params ${params.keySet()}"
         println "passage Id ${passageId}"
         println "fileName ${fileName}"
@@ -189,6 +193,14 @@ class TranscriptionController {
         if (!passage) {
             println "Passage not found ${passageId}"
             render "Passage not found "
+            response.status = HttpServletResponse.SC_BAD_REQUEST
+            return
+        }
+
+        if(token!="JM0pEILe2Avluxg"){
+            println "bad token ${token}"
+            render "Bad token sent"
+            response.status = HttpServletResponse.SC_UNAUTHORIZED
             return
         }
 
