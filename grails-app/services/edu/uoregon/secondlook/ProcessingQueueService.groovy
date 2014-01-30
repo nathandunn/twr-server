@@ -9,7 +9,7 @@ class ProcessingQueueService {
 
 //    String baseProcessingDirectory ="/usr/share/tomcat/temp"
     String baseProcessingDirectory = System.getenv("CATALINA_TEMP") ?: "/usr/share/tomcat/temp"
-    String decodeBinary = "/usr/share/kaldi-decode-childspeech/childspeech/s5/run_decode.sh"
+    String decodeBinary = "/usr/share/kaldi-decode-childspeech/childspeech/s5-decode/run_decode.sh"
     String timingsFile = "timings.all.txt"
     String soxBinary = "sox"
 
