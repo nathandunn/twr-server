@@ -24,6 +24,20 @@
   <component name="CopyrightManager" default="">
     <module2copyright />
   </component>
+  <component name="DataSourceManagerImpl" format="xml" hash="1567270000">
+    <data-source source="LOCAL" name="twr-server dev" uuid="c221ba5d-fdec-4d4a-a470-09096c7a4935">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/speech_dev</jdbc-url>
+      <user-name>ubuntu</user-name>
+      <user-password>dffcdfdbdf93dfe4dfdcdfeedff2dff9</user-password>
+      <libraries>
+        <library>
+          <url>file://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
