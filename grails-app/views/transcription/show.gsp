@@ -148,6 +148,14 @@
 
         </g:if>
 
+        <li class="fieldcontain">
+            <span id="note-label" class="property-label"><g:message code="transcription.note.label"
+                                                                                default="Note"/></span>
+
+            <span class="property-value" aria-labelledby="note-label">
+                ${transcriptionInstance?.note}
+
+        </li>
 
         <li class="fieldcontain">
             <span id="transcriptErrors-label" class="property-label"><g:message code="transcription.transcriptErrors.label"

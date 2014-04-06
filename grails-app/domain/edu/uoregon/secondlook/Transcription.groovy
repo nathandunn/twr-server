@@ -11,7 +11,7 @@ class Transcription {
         transcriptErrors nullable: true
         externalStudentId nullable: true
         callbackUrl nullable: true
-        notes nullable: true
+        note nullable: true
     }
 
     static hasMany = [
@@ -21,7 +21,7 @@ class Transcription {
     static mapping = {
         transcript type: "text"
         transcriptErrors type: "text"
-        notes type: "text"
+        note type: "text"
     }
 
     byte[] audioData
@@ -32,7 +32,7 @@ class Transcription {
     String externalStudentId
     String callbackUrl
     String transcriptErrors
-    String notes
+    String note
 
     Passage passage
 
