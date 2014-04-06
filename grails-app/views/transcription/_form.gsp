@@ -1,13 +1,18 @@
 <%@ page import="edu.uoregon.secondlook.Transcription" %>
 
 
-<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'callbackUrl', 'error')} required">
-    <label for="callbackUrl">
-        <g:message code="transcription.callbackUrl.label" default="Calblabck Url"/>
+
+<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'passage', 'error')} ">
+    <label for="passage">
+        <g:message code="transcription.passage.label" default="Passage Name"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="callbackUrl" value="${transcriptionInstance.callbackUrl}" size="80" />
-    %{--<input type="url" id="callbackUrl" name="callbackUrl" size="80"/>--}%
+    %{--<g:textField name="passage" value="${transcriptionInstance?.passage}"/>--}%
+    <g:select name="passage.id"
+              from="${edu.uoregon.secondlook.Passage.listOrderByExternalId()}"
+              value="${transcriptionInstance.passage}"
+              optionValue="display" optionKey="id"/>
+
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'audioData', 'error')} required">
@@ -18,19 +23,6 @@
     <input type="file" id="audioData" name="audioData"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'passage', 'error')} ">
-    <label for="passage">
-        <g:message code="transcription.passage.label" default="Passage Name"/>
-
-    </label>
-    %{--<g:textField name="passage" value="${transcriptionInstance?.passage}"/>--}%
-    <g:select name="passage.id"
-              from="${edu.uoregon.secondlook.Passage.listOrderByName()}"
-              value="${transcriptionInstance.passage}"
-              optionValue="name" optionKey="id"/>
-
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'externalStudentId', 'error')} ">
     <label for="externalStudentId">
         <g:message code="transcription.externalStudentId.label" default="External Student ID"/>
@@ -39,12 +31,23 @@
     <g:textField name="externalStudentId" value="${transcriptionInstance?.externalStudentId}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'transcriptErrors', 'error')} ">
-    <label for="transcriptErrors">
-        <g:message code="transcription.transcriptErrors.label" default="Transcript Errors"/>
+
+
+<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'callbackUrl', 'error')} required">
+    <label for="callbackUrl">
+        <g:message code="transcription.callbackUrl.label" default="Calblabck Url"/>
+        %{--<span class="required-indicator">*</span>--}%
     </label>
-    <g:textArea name="transcriptErrors" value="${transcriptionInstance?.transcriptErrors}"/>
+    <g:textField name="callbackUrl" value="${transcriptionInstance.callbackUrl}" size="80" />
+    %{--<input type="url" id="callbackUrl" name="callbackUrl" size="80"/>--}%
 </div>
+
+%{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'transcriptErrors', 'error')} ">--}%
+    %{--<label for="transcriptErrors">--}%
+        %{--<g:message code="transcription.transcriptErrors.label" default="Transcript Errors"/>--}%
+    %{--</label>--}%
+    %{--<g:textArea name="transcriptErrors" value="${transcriptionInstance?.transcriptErrors}"/>--}%
+%{--</div>--}%
 
 %{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'fileName', 'error')} ">--}%
 %{--<label for="fileName">--}%
