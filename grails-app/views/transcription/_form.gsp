@@ -42,6 +42,13 @@
     %{--<input type="url" id="callbackUrl" name="callbackUrl" size="80"/>--}%
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'note', 'error')} ">
+<label for="note">
+<g:message code="transcription.note.label" default="Transcript Errors"/>
+</label>
+<g:textArea name="note" value="${transcriptionInstance?.note}"/>
+</div>
+
 %{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'transcriptErrors', 'error')} ">--}%
     %{--<label for="transcriptErrors">--}%
         %{--<g:message code="transcription.transcriptErrors.label" default="Transcript Errors"/>--}%
