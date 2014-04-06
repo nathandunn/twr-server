@@ -18,4 +18,7 @@ class Passage {
     String text
     String externalId
 
+    String getDisplay(){
+        return externalId + " - " + name
+    }
 }
