@@ -115,6 +115,16 @@ class TranscriptionController {
         }
     }
 
+
+    private String transcriptFileName(Transcription transcription) {
+        String fileName = transcription.fileName
+        if (fileName.endsWith(".wav")) {
+            fileName = fileName.substring(0, fileName.length() - 4)
+            fileName += ".transcript.txt"
+        }
+        return fileName
+    }
+
     private String fileName(String fileName) {
         if (fileName.endsWith(".wav")) {
             fileName = fileName.substring(0, fileName.length() - 4)
@@ -155,7 +165,7 @@ class TranscriptionController {
         }
     }
 
-    def downloadTranscript(Integer id) {
+    def downloadTimings(Integer id) {
         Transcription transcription = Transcription.get(id)
         if (!transcription || !transcription.transcript) {
             response.status = 404
@@ -164,6 +174,29 @@ class TranscriptionController {
         if (transcription.transcript) {
             response.setHeader("Content-Disposition", "attachment; filename=" + fileName(transcription.fileName))
             render(text: transcription.transcript, contentType: "application/download", encoding: "UTF-8")
+        }
+    }
+
+    def downloadTranscripts(Integer id) {
+        Transcription transcription = Transcription.get(id)
+        if (!transcription || !transcription.transcript) {
+            response.status = 404
+            return
+        }
+        if (transcription.transcript) {
+            String timingsFile = transcription.transcript
+            String returnString = ""
+            timingsFile.eachLine { line ->
+                String[] cols = line.split(" ")
+                println "cols ${cols.length}"
+                if(cols.length==5){
+                   returnString += cols[4].toUpperCase() + " "
+                }
+            }
+
+//            response.setHeader("Content-Disposition", "attachment; filename=" + fileName(transcription.fileName))
+            response.setHeader("Content-Disposition", "attachment; filename=" + transcriptFileName(transcription))
+            render(text: returnString.trim(), contentType: "application/download", encoding: "UTF-8")
         }
     }
 

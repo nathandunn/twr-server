@@ -27,10 +27,9 @@
     </g:if>
     <ol class="property-list transcription">
 
-
         <li class="fieldcontain">
             <span id="id-label" class="property-label"><g:message code="transcription.id.label"
-                                                                      default="ID"/></span>
+                                                                  default="ID"/></span>
 
             <span class="property-value" aria-labelledby="id-label"><g:fieldValue
                     bean="${transcriptionInstance}" field="id"/></span>
@@ -69,8 +68,9 @@
         </g:if>
 
         <li class="fieldcontain">
-            <span callbackUrl="callbackUrl-label" class="property-label"><g:message code="transcription.callbackUrl.label"
-                                                                  default="Callback URL"/></span>
+            <span callbackUrl="callbackUrl-label" class="property-label"><g:message
+                    code="transcription.callbackUrl.label"
+                    default="Callback URL"/></span>
 
             <span class="property-value" aria-labelledby="callbackUrl-label"><g:fieldValue
                     bean="${transcriptionInstance}" field="callbackUrl"/></span>
@@ -139,18 +139,19 @@
                                                                               default="Transcript"/></span>
 
                 <span class="property-value" aria-labelledby="transcript-label">
-                    <g:link action="downloadTranscript" id="${transcriptionInstance.id}">
-                        Download timings file
-                    </g:link>
+                    <g:link action="downloadTimings" id="${transcriptionInstance.id}">
+                        Timings file</g:link>
+                    <g:link action="downloadTranscripts" id="${transcriptionInstance.id}">
+                        Transcript file</g:link>
                     ${transcriptionInstance?.transcript?.size()} characters
-
+                </span>
             </li>
 
         </g:if>
 
         <li class="fieldcontain">
             <span id="note-label" class="property-label"><g:message code="transcription.note.label"
-                                                                                default="Note"/></span>
+                                                                    default="Note"/></span>
 
             <span class="property-value" aria-labelledby="note-label">
                 ${transcriptionInstance?.note}
@@ -158,8 +159,9 @@
         </li>
 
         <li class="fieldcontain">
-            <span id="transcriptErrors-label" class="property-label"><g:message code="transcription.transcriptErrors.label"
-                                                                          default="Errors"/></span>
+            <span id="transcriptErrors-label" class="property-label"><g:message
+                    code="transcription.transcriptErrors.label"
+                    default="Errors"/></span>
 
             <span class="property-value" aria-labelledby="transcriptErrors-label">
                 ${transcriptionInstance?.transcriptErrors}
