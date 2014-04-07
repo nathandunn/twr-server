@@ -12,6 +12,7 @@ class Transcription {
         externalStudentId nullable: true
         callbackUrl nullable: true
         note nullable: true
+        goldenTranscript nullable: true
     }
 
     static hasMany = [
@@ -22,6 +23,7 @@ class Transcription {
         transcript type: "text"
         transcriptErrors type: "text"
         note type: "text"
+        goldenTranscript type: "text"
     }
 
     byte[] audioData
@@ -33,6 +35,7 @@ class Transcription {
     String callbackUrl
     String transcriptErrors
     String note
+    String goldenTranscript
 
     Passage passage
 

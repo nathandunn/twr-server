@@ -1,7 +1,7 @@
 package edu.uoregon.secondlook
 
-import grails.converters.JSON
-import grails.plugins.rest.client.RestBuilder
+//import difflib.Delta
+//import difflib.DiffUtils
 import grails.plugins.rest.client.RestResponse
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.multipart.commons.CommonsMultipartFile
@@ -116,6 +116,16 @@ class TranscriptionController {
     }
 
 
+    def humanFileName(Transcription transcription) {
+        String fileName = transcription.fileName
+        if (fileName.endsWith(".wav")) {
+            fileName = fileName.substring(0, fileName.length() - 4)
+            fileName += ".human.txt"
+        }
+
+        return fileName
+    }
+
     private String transcriptFileName(Transcription transcription) {
         String fileName = transcription.fileName
         if (fileName.endsWith(".wav")) {
@@ -165,6 +175,47 @@ class TranscriptionController {
         }
     }
 
+    def downloadGolden(Integer id) {
+        Transcription transcription = Transcription.get(id)
+        if (!transcription || !transcription.transcript) {
+            response.status = 404
+            return
+        }
+        if (transcription.goldenTranscript) {
+            response.setHeader("Content-Disposition", "attachment; filename=" + humanFileName(transcription))
+            render(text: transcription.goldenTranscript, contentType: "application/download", encoding: "UTF-8")
+        }
+    }
+
+    def downloadDiff(Integer id) {
+        Transcription transcription = Transcription.get(id)
+        if (!transcription || !transcription.transcript) {
+            response.status = 404
+            return
+        }
+        if (transcription.goldenTranscript && transcription.transcript) {
+            String computerTranscription = generateTranscriptFile(transcription)
+
+            List<String> computerTranscriptionList = generateListFromString(computerTranscription)
+            List<String> goldenTranscriptionList = generateListFromString(transcription.goldenTranscript)
+
+
+//            Patch patch = DiffUtils.diff(goldenTranscriptionList,computerTranscriptionList)
+
+//            for (Delta delta: patch.getDeltas()) {
+//                println(delta);
+//            }
+
+
+            response.setHeader("Content-Disposition", "attachment; filename=" + humanFileName(transcription))
+            render(text: transcription.goldenTranscript, contentType: "application/download", encoding: "UTF-8")
+        }
+    }
+
+    private List<String> generateListFromString(String inputString) {
+        return inputString.tokenize()
+    }
+
     def downloadTimings(Integer id) {
         Transcription transcription = Transcription.get(id)
         if (!transcription || !transcription.transcript) {
@@ -177,27 +228,29 @@ class TranscriptionController {
         }
     }
 
+    private String generateTranscriptFile(Transcription transcription) {
+        String returnString = ""
+        if (transcription.transcript) {
+            String timingsFile = transcription.transcript
+            timingsFile.eachLine { line ->
+                String[] cols = line.split(" ")
+                if (cols.length == 5) {
+                    returnString += cols[4].toUpperCase() + " "
+                }
+            }
+        }
+        return returnString.trim()
+    }
+
     def downloadTranscripts(Integer id) {
         Transcription transcription = Transcription.get(id)
         if (!transcription || !transcription.transcript) {
             response.status = 404
             return
         }
-        if (transcription.transcript) {
-            String timingsFile = transcription.transcript
-            String returnString = ""
-            timingsFile.eachLine { line ->
-                String[] cols = line.split(" ")
-                println "cols ${cols.length}"
-                if(cols.length==5){
-                   returnString += cols[4].toUpperCase() + " "
-                }
-            }
-
 //            response.setHeader("Content-Disposition", "attachment; filename=" + fileName(transcription.fileName))
-            response.setHeader("Content-Disposition", "attachment; filename=" + transcriptFileName(transcription))
-            render(text: returnString.trim(), contentType: "application/download", encoding: "UTF-8")
-        }
+        response.setHeader("Content-Disposition", "attachment; filename=" + transcriptFileName(transcription))
+        render(text: generateTranscriptFile(transcription), contentType: "application/download", encoding: "UTF-8")
     }
 
     def submit() {
@@ -230,7 +283,7 @@ class TranscriptionController {
             return
         }
 
-        if(token!="JM0pEILe2Avluxg"){
+        if (token != "JM0pEILe2Avluxg") {
             println "bad token ${token}"
             render "Bad token sent"
             response.status = HttpServletResponse.SC_UNAUTHORIZED
@@ -244,9 +297,9 @@ class TranscriptionController {
                 , audioData: audioData
                 , passage: passage
                 , externalStudentId: params.studentId
-                ,requestDate: new Date()
-                ,callbackUrl: params.callbackUrl
-                ,status: TranscriptionStatus.RECEIVED
+                , requestDate: new Date()
+                , callbackUrl: params.callbackUrl
+                , status: TranscriptionStatus.RECEIVED
 
         ).save(insert: true, flush: true, failOnError: true)
 
@@ -257,10 +310,9 @@ class TranscriptionController {
 
     def status(Long id) {
         Transcription transcription = Transcription.findById(id)
-        if(transcription){
+        if (transcription) {
             render transcription.status.name()
-        }
-        else{
+        } else {
 //            response.status = 404
             render "NOT FOUND"
 //            render "NOT FOUND" as JSON
@@ -275,16 +327,15 @@ class TranscriptionController {
         println "geting response ?"
         println "status ${resp.status}"
 
-        if(resp.status == 200){
+        if (resp.status == 200) {
             transcription.status = TranscriptionStatus.CALLBACK_OK
-        }
-        else{
+        } else {
             transcription.status = TranscriptionStatus.CALLBACK_ERROR
         }
 
         println "response text ${resp.text}"
 
-        transcription.save(flush:true)
+        transcription.save(flush: true)
     }
 
 }
