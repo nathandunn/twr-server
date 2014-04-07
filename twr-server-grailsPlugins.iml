@@ -4,11 +4,12 @@
     <facet type="web" name="GrailsWeb">
       <configuration>
         <webroots>
-          <root url="file://$USER_HOME$/.grails/2.3.4/projects/twr-server/plugins/resources-1.2.1/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.3.4/projects/twr-server/plugins/jquery-1.10.2/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.3.4/projects/twr-server/plugins/quartz-1.0-RC11/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.3.4/projects/twr-server/plugins/database-migration-1.3.8/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/jquery-1.10.2/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/platform-core-1.0.RC5/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/platform-core-1.0.RC5/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/resources-1.2.1/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/database-migration-1.3.8/grails-app/views" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/quartz-1.0-RC11/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -22,6 +23,60 @@
         <naming-strategy-map />
       </configuration>
     </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/cache-1.1.1">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/cache-1.1.1/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/cache-1.1.1/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/cache-1.1.1/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/cache-1.1.1/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/database-migration-1.3.8">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/database-migration-1.3.8/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/database-migration-1.3.8/grails-app/controllers" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/executor-0.3">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/executor-0.3/src/groovy" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/hibernate-3.6.10.2">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/hibernate-3.6.10.2/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/hibernate-3.6.10.2/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/hibernate-3.6.10.2/grails-app/i18n" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/jquery-1.10.2">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/jquery-1.10.2/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/jquery-1.10.2/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/jquery-1.10.2/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/platform-core-1.0.RC5">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/platform-core-1.0.RC5/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/platform-core-1.0.RC5/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/platform-core-1.0.RC5/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/platform-core-1.0.RC5/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/platform-core-1.0.RC5/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/quartz-1.0-RC11">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/quartz-1.0-RC11/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/quartz-1.0-RC11/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/quartz-1.0-RC11/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/quartz-1.0-RC11/grails-app/services" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/resources-1.2.1">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/resources-1.2.1/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/resources-1.2.1/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/resources-1.2.1/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/resources-1.2.1/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/rest-client-builder-2.0.0" />
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/tomcat-7.0.42">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/tomcat-7.0.42/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/tomcat-7.0.42/src/groovy" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/webxml-1.4.1">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.3.7/projects/twr-server/plugins/webxml-1.4.1/src/groovy" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
 
