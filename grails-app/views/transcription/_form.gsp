@@ -31,29 +31,35 @@
     <g:textField name="externalStudentId" value="${transcriptionInstance?.externalStudentId}"/>
 </div>
 
-
+<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'goldenTranscript', 'error')} ">
+    <label for="note">
+        <g:message code="transcription.goldenTranscript.label" default="Golden Transcript"/>
+    </label>
+    <g:textArea name="goldenTranscript" value="${transcriptionInstance?.goldenTranscript}"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'callbackUrl', 'error')} required">
     <label for="callbackUrl">
         <g:message code="transcription.callbackUrl.label" default="Calblabck Url"/>
         %{--<span class="required-indicator">*</span>--}%
     </label>
-    <g:textField name="callbackUrl" value="${transcriptionInstance.callbackUrl}" size="80" />
+    <g:textField name="callbackUrl" value="${transcriptionInstance.callbackUrl}" size="80"/>
     %{--<input type="url" id="callbackUrl" name="callbackUrl" size="80"/>--}%
 </div>
 
+
 <div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'note', 'error')} ">
-<label for="note">
-<g:message code="transcription.note.label" default="Transcript Notes"/>
-</label>
-<g:textArea name="note" value="${transcriptionInstance?.note}"/>
+    <label for="note">
+        <g:message code="transcription.note.label" default="Transcript Notes"/>
+    </label>
+    <g:textArea name="note" value="${transcriptionInstance?.note}"/>
 </div>
 
 %{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'transcriptErrors', 'error')} ">--}%
-    %{--<label for="transcriptErrors">--}%
-        %{--<g:message code="transcription.transcriptErrors.label" default="Transcript Errors"/>--}%
-    %{--</label>--}%
-    %{--<g:textArea name="transcriptErrors" value="${transcriptionInstance?.transcriptErrors}"/>--}%
+%{--<label for="transcriptErrors">--}%
+%{--<g:message code="transcription.transcriptErrors.label" default="Transcript Errors"/>--}%
+%{--</label>--}%
+%{--<g:textArea name="transcriptErrors" value="${transcriptionInstance?.transcriptErrors}"/>--}%
 %{--</div>--}%
 
 %{--<div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'fileName', 'error')} ">--}%
