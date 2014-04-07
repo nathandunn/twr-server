@@ -69,7 +69,7 @@
                         ${transcriptionInstance.twr}
                         ${transcriptionInstance?.transcript?.size()} characters
 
-                        <g:link action="downloadTranscript" id="${transcriptionInstance.id}">
+                        <g:link action="downloadTimings" id="${transcriptionInstance.id}">
                             Download
                         </g:link>
                     </g:if>
