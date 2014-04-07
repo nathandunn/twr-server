@@ -44,7 +44,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: transcriptionInstance, field: 'note', 'error')} ">
 <label for="note">
-<g:message code="transcription.note.label" default="Transcript Errors"/>
+<g:message code="transcription.note.label" default="Transcript Notes"/>
 </label>
 <g:textArea name="note" value="${transcriptionInstance?.note}"/>
 </div>

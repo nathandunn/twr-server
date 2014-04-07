@@ -134,48 +134,88 @@ img {
 
 /* NAVIGATION MENU */
 
-.nav {
-	background-color: #efefef;
-	padding: 0.5em 0.75em;
-	   -moz-box-shadow: 0 0 3px 1px #aaaaaa;
-	-webkit-box-shadow: 0 0 3px 1px #aaaaaa;
-	        box-shadow: 0 0 3px 1px #aaaaaa;
-	zoom: 1;
-}
+/*.nav {*/
+	/*background-color: #efefef;*/
+	/*padding: 0.5em 0.75em;*/
+	   /*-moz-box-shadow: 0 0 3px 1px #aaaaaa;*/
+	/*-webkit-box-shadow: 0 0 3px 1px #aaaaaa;*/
+	        /*box-shadow: 0 0 3px 1px #aaaaaa;*/
+	/*zoom: 1;*/
+/*}*/
 
-.nav ul {
-	overflow: hidden;
-	padding-left: 0;
-	zoom: 1;
+/*.nav ul {*/
+	/*overflow: hidden;*/
+	/*padding-left: 0;*/
+	/*zoom: 1;*/
+/*}*/
+
+/*.nav li {*/
+	/*display: block;*/
+	/*float: left;*/
+	/*list-style-type: none;*/
+	/*margin-right: 0.5em;*/
+	/*padding: 0;*/
+/*}*/
+
+/*.nav a {*/
+	/*color: #666666;*/
+	/*display: block;*/
+	/*padding: 0.25em 0.7em;*/
+	/*text-decoration: none;*/
+	   /*-moz-border-radius: 0.3em;*/
+	/*-webkit-border-radius: 0.3em;*/
+	        /*border-radius: 0.3em;*/
+/*}*/
+
+/*.nav a:active, .nav a:visited {*/
+	/*color: #666666;*/
+/*}*/
+
+/*.nav a:focus, .nav a:hover {*/
+	/*background-color: #999999;*/
+	/*color: #ffffff;*/
+	/*outline: none;*/
+	/*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);*/
+/*}*/
+
+.nav {
+    list-style-type: none;
+    clear: both;
+    margin: 1em 0;
+    font-size: 12px;
+    overflow: hidden; /* Clearing floats */
 }
 
 .nav li {
-	display: block;
-	float: left;
-	list-style-type: none;
-	margin-right: 0.5em;
-	padding: 0;
+    float: left;
+     /*border: 1px solid #888;*/
+    /*margin: 5px;*/
+    /*padding: 5px;*/
+    /* border-left-color: #bbb; */
 }
 
-.nav a {
-	color: #666666;
-	display: block;
-	padding: 0.25em 0.7em;
-	text-decoration: none;
-	   -moz-border-radius: 0.3em;
-	-webkit-border-radius: 0.3em;
-	        border-radius: 0.3em;
+.nav li a {
+    /*    padding: 0.5em 1em;*/
+    display: block;
+    text-decoration: none;
+    /* background-color: #aaa; */
+    /* color: #fff; */
+    /*margin: 5px;*/
+    padding: 5px;
 }
 
-.nav a:active, .nav a:visited {
-	color: #666666;
+.nav li.active a {
+    background-color: #555;
+    color: #fff;
+    cursor: default;
 }
 
-.nav a:focus, .nav a:hover {
-	background-color: #999999;
-	color: #ffffff;
-	outline: none;
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+.nav li a {
+    background-color: #ddd;
+}
+
+.nav li a:hover {
+    background-color: #999;
 }
 
 .no-borderradius .nav a:focus, .no-borderradius .nav a:hover {
@@ -201,6 +241,15 @@ img {
 .nav a.create {
 	background-image: url(../images/skin/database_add.png);
 }
+
+/*.user-menu {*/
+    /*float: right;*/
+    /*display: inline;*/
+    /*border-color: black;*/
+    /*border-width: 2px;*/
+    /*margin: 10px;*/
+    /*padding: 60px 20px 10px 10px;*/
+/*}*/
 
 /* CREATE/EDIT FORMS AND SHOW PAGES */
 
