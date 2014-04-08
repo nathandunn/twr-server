@@ -21,4 +21,16 @@ class Passage {
     String getDisplay(){
         return externalId + " - " + name
     }
+
+    def getNumberedText() {
+        String returnPassage = ""
+        if(text){
+            text.split(" ").eachWithIndex{ token  , index ->
+                returnPassage += token  + "<div class='numberShow'> (${index})</div> "
+            }
+        }
+
+
+        return returnPassage
+    }
 }

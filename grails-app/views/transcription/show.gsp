@@ -117,7 +117,7 @@
 
         <span class="property-value" aria-labelledby="passage-label">
             <g:link action="show" controller="passage" id="${transcriptionInstance.passage.id}">
-                ${transcriptionInstance.passage.name}
+                ${transcriptionInstance.passage.externalId} ${transcriptionInstance.passage.name}
             </g:link>
         </span>
 
