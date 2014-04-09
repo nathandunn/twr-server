@@ -6,7 +6,7 @@ class Passage {
     }
 
     static hasMany = [
-            transcriptions: Transcription
+            transcriptions: ComputerTranscription
     ]
 
     static mapping = {

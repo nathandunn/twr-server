@@ -1,6 +1,9 @@
 package edu.uoregon.secondlook
 
-class Transcription {
+/**
+ * A Computer Transcription
+ */
+class ComputerTranscription {
 
     static constraints = {
         audioData(maxSize: 50000000)
@@ -13,6 +16,7 @@ class Transcription {
         callbackUrl nullable: true
         note nullable: true
         goldenTranscript nullable: true
+        transcriptionEngine nullable: true
     }
 
     static hasMany = [
@@ -26,18 +30,25 @@ class Transcription {
         goldenTranscript type: "text"
     }
 
+    // TODO: remove
     byte[] audioData
     String fileName
+    Passage passage
+    String externalStudentId
+    String goldenTranscript
+
+    // Keep the same
     Date requestDate
     Date returnDate
     TranscriptionStatus status
-    String externalStudentId
     String callbackUrl
     String transcriptErrors
     String note
-    String goldenTranscript
 
-    Passage passage
+
+    // TODO: convert
+    AudioFile audioFile
+    TranscriptionEngine transcriptionEngine
 
 
     // results

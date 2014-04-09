@@ -7,7 +7,7 @@ import grails.test.mixin.TestFor
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(TotalWordReadService)
-@Mock([Transcription,Passage])
+@Mock([ComputerTranscription,Passage])
 class TotalWordReadServiceTests {
 
     void testSomething() {
