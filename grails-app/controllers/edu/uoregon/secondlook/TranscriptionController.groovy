@@ -19,11 +19,11 @@ class TranscriptionController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [transcriptionInstanceList: Transcription.list(params), transcriptionInstanceTotal: Transcription.count()]
+        [transcriptionInstanceList: ComputerTranscription.list(params), transcriptionInstanceTotal: ComputerTranscription.count()]
     }
 
     def create() {
-        [transcriptionInstance: new Transcription(params)]
+        [transcriptionInstance: new ComputerTranscription(params)]
     }
 
     def save() {
@@ -32,7 +32,7 @@ class TranscriptionController {
         CommonsMultipartFile uploadedFile = request.getFile('audioData')
         String fileName = uploadedFile.originalFilename
 
-        Transcription transcriptionInstance = new Transcription(params)
+        ComputerTranscription transcriptionInstance = new ComputerTranscription(params)
         transcriptionInstance.fileName = fileName
         transcriptionInstance.requestDate = new Date()
         transcriptionInstance.status = TranscriptionStatus.RECEIVED
@@ -46,7 +46,7 @@ class TranscriptionController {
     }
 
     def show(Long id) {
-        def transcriptionInstance = Transcription.get(id)
+        def transcriptionInstance = ComputerTranscription.get(id)
         if (!transcriptionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'transcription.label', default: 'Transcription'), id])
             redirect(action: "list")
@@ -57,7 +57,7 @@ class TranscriptionController {
     }
 
     def edit(Long id) {
-        def transcriptionInstance = Transcription.get(id)
+        def transcriptionInstance = ComputerTranscription.get(id)
         if (!transcriptionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'transcription.label', default: 'Transcription'), id])
             redirect(action: "list")
@@ -68,7 +68,7 @@ class TranscriptionController {
     }
 
     def update(Long id, Long version) {
-        def transcriptionInstance = Transcription.get(id)
+        def transcriptionInstance = ComputerTranscription.get(id)
         if (!transcriptionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'transcription.label', default: 'Transcription'), id])
             redirect(action: "list")
@@ -97,7 +97,7 @@ class TranscriptionController {
     }
 
     def delete(Long id) {
-        def transcriptionInstance = Transcription.get(id)
+        def transcriptionInstance = ComputerTranscription.get(id)
         if (!transcriptionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'transcription.label', default: 'Transcription'), id])
             redirect(action: "list")
@@ -116,7 +116,7 @@ class TranscriptionController {
     }
 
 
-    def humanFileName(Transcription transcription) {
+    def humanFileName(ComputerTranscription transcription) {
         String fileName = transcription.fileName
         if (fileName.endsWith(".wav")) {
             fileName = fileName.substring(0, fileName.length() - 4)
@@ -126,7 +126,7 @@ class TranscriptionController {
         return fileName
     }
 
-    private String transcriptFileName(Transcription transcription) {
+    private String transcriptFileName(ComputerTranscription transcription) {
         String fileName = transcription.fileName
         if (fileName.endsWith(".wav")) {
             fileName = fileName.substring(0, fileName.length() - 4)
@@ -145,7 +145,7 @@ class TranscriptionController {
     }
 
     def recalculateTwr(Long id) {
-        Transcription transcription = Transcription.get(id)
+        ComputerTranscription transcription = ComputerTranscription.get(id)
         if (!transcription) {
             response.status = 404
             return
@@ -163,7 +163,7 @@ class TranscriptionController {
     }
 
     def downloadBinary(Integer id) {
-        Transcription transcription = Transcription.get(id)
+        ComputerTranscription transcription = ComputerTranscription.get(id)
         if (!transcription) {
             response.status = 404
             return
@@ -176,7 +176,7 @@ class TranscriptionController {
     }
 
     def downloadGolden(Integer id) {
-        Transcription transcription = Transcription.get(id)
+        ComputerTranscription transcription = ComputerTranscription.get(id)
         if (!transcription || !transcription.transcript) {
             response.status = 404
             return
@@ -188,7 +188,7 @@ class TranscriptionController {
     }
 
     def downloadDiff(Integer id) {
-        Transcription transcription = Transcription.get(id)
+        ComputerTranscription transcription = ComputerTranscription.get(id)
         if (!transcription || !transcription.transcript) {
             response.status = 404
             return
@@ -217,7 +217,7 @@ class TranscriptionController {
     }
 
     def downloadTimings(Integer id) {
-        Transcription transcription = Transcription.get(id)
+        ComputerTranscription transcription = ComputerTranscription.get(id)
         if (!transcription || !transcription.transcript) {
             response.status = 404
             return
@@ -228,7 +228,7 @@ class TranscriptionController {
         }
     }
 
-    private String generateTranscriptFile(Transcription transcription) {
+    private String generateTranscriptFile(ComputerTranscription transcription) {
         String returnString = ""
         if (transcription.transcript) {
             String timingsFile = transcription.transcript
@@ -243,7 +243,7 @@ class TranscriptionController {
     }
 
     def downloadTranscripts(Integer id) {
-        Transcription transcription = Transcription.get(id)
+        ComputerTranscription transcription = ComputerTranscription.get(id)
         if (!transcription || !transcription.transcript) {
             response.status = 404
             return
@@ -292,7 +292,7 @@ class TranscriptionController {
 
         println "audio data ${audioData.length}"
 
-        Transcription transcription = new Transcription(
+        ComputerTranscription transcription = new ComputerTranscription(
                 fileName: fileName
                 , audioData: audioData
                 , passage: passage
@@ -309,7 +309,7 @@ class TranscriptionController {
     }
 
     def status(Long id) {
-        Transcription transcription = Transcription.findById(id)
+        ComputerTranscription transcription = ComputerTranscription.findById(id)
         if (transcription) {
             render transcription.status.name()
         } else {
@@ -320,7 +320,7 @@ class TranscriptionController {
     }
 
     def doCallback(Long id) {
-        Transcription transcription = Transcription.findById(id)
+        ComputerTranscription transcription = ComputerTranscription.findById(id)
 
         println "doing callback url "
         RestResponse resp = processingQueueService.doCallback(transcription)

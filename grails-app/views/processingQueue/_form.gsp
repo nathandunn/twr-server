@@ -1,4 +1,4 @@
-<%@ page import="edu.uoregon.secondlook.ProcessingQueue" %>
+<%@ page import="edu.uoregon.secondlook.ComputerTranscription; edu.uoregon.secondlook.ProcessingQueue" %>
 
 
 
@@ -23,6 +23,6 @@
 		<g:message code="processingQueue.transcription.label" default="Transcription" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="transcription" name="transcription.id" from="${edu.uoregon.secondlook.Transcription.list()}" optionKey="id" required="" value="${processingQueueInstance?.transcription?.id}" class="many-to-one"/>
+	<g:select id="transcription" name="transcription.id" from="${ComputerTranscription.list()}" optionKey="id" required="" value="${processingQueueInstance?.transcription?.id}" class="many-to-one"/>
 </div>
 

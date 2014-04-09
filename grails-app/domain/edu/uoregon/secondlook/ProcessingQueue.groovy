@@ -5,7 +5,7 @@ class ProcessingQueue {
     static constraints = {
     }
 
-    Transcription transcription
+    ComputerTranscription transcription
     Date entryDate
     ProcessingStatus status
 }

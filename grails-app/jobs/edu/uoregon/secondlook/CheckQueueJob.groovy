@@ -28,8 +28,8 @@ class CheckQueueJob {
 
 
 
-        List<Transcription> transcriptionList = Transcription.findAllByStatusInList([TranscriptionStatus.RECEIVED],[max:MAX_QUEUE_SIZE-currentlyProcessing])
-        for(Transcription transcription in transcriptionList){
+        List<ComputerTranscription> transcriptionList = ComputerTranscription.findAllByStatusInList([TranscriptionStatus.RECEIVED],[max:MAX_QUEUE_SIZE-currentlyProcessing])
+        for(ComputerTranscription transcription in transcriptionList){
             println "adding Transcript to process ${transcription.fileName}"
             processingQueueService.submitTranscript(transcription.id)
         }

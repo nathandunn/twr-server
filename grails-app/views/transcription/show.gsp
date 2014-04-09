@@ -1,4 +1,4 @@
-<%@ page import="edu.uoregon.secondlook.TranscriptionStatus; edu.uoregon.secondlook.Transcription" %>
+<%@ page import="edu.uoregon.secondlook.TranscriptionStatus; edu.uoregon.secondlook.ComputerTranscription" %>
 <!DOCTYPE html>
 <html>
 <head>

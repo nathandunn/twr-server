@@ -11,11 +11,11 @@ class TotalWordReadService {
 
 
     // TODO: use an actual method
-    Integer calculateTotalWordsRead(Transcription transcription){
+    Integer calculateTotalWordsRead(ComputerTranscription transcription){
         println "calc twr ${transcription}" 
         String transcript = transcription.transcript
         println "transcript ${transcript.size()}"
-        Passage passage = Passage.executeQuery("select p from Transcription t join t.passage p where t=:transcript",[transcript: transcription],[max:1])?.get(0)
+        Passage passage = Passage.executeQuery("select p from ComputerTranscription t join t.passage p where t=:transcript",[transcript: transcription],[max:1])?.get(0)
         String passageText = passage.text
 //        passageText = passageText.replaceAll("\n"," ")
         passageText = passageText.replaceAll("\\s{2,}"," ")
