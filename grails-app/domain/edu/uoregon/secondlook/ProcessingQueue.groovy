@@ -3,9 +3,14 @@ package edu.uoregon.secondlook
 class ProcessingQueue {
 
     static constraints = {
+        computerTranscription nullable: true
+        transcription nullable: true
     }
 
-    ComputerTranscription transcription
+    // TODO: remove
+    Transcription transcription
+
+    ComputerTranscription computerTranscription
     Date entryDate
     ProcessingStatus status
 }
