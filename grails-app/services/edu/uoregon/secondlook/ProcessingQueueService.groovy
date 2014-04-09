@@ -14,7 +14,7 @@ class ProcessingQueueService {
     String soxBinary = "sox"
 
     def submitTranscript(Long id) {
-        Transcription transcription = Transcription.get(id)
+        ComputerTranscription transcription = ComputerTranscription.get(id)
         println "got transcription value ${transcription}"
         println "processing in directory ${baseProcessingDirectory}"
 
@@ -50,7 +50,7 @@ class ProcessingQueueService {
             println "start ASync processing"
             resultOutput = processTranscript(processingQueue)
             println "after ASync processing"
-            Transcription transcription = processingQueue.transcription
+            ComputerTranscription transcription = processingQueue.transcription
             println "got transcrpton "
             transcription.transcript = resultOutput
             println "set trancript ${resultOutput.size()}"
@@ -96,7 +96,7 @@ class ProcessingQueueService {
 //        def resultOutput = future.get()
     }
 
-    def doCallback(Transcription transcription){
+    def doCallback(ComputerTranscription transcription){
         RestBuilder rest = new RestBuilder()
         RestResponse resp = rest.post(transcription.callbackUrl) {
             contentType "multipart/form-data"
@@ -115,12 +115,12 @@ class ProcessingQueueService {
         println "starting on Transcript ${processingQueue.transcription.fileName}"
 
         // TODO: get directory from configuration
-        Transcription transcription = processingQueue.transcription
+        ComputerTranscription transcription = processingQueue.transcription
 
         println "got transcript for filename diggity ${transcription.fileName}"
 
         // Passage passage = transcription.passage
-        Passage passage = Passage.executeQuery("select p from Transcription t join t.passage p where t=:transcript", [transcript: transcription], [max: 1])?.get(0)
+        Passage passage = Passage.executeQuery("select p from ComputerTranscription t join t.passage p where t=:transcript", [transcript: transcription], [max: 1])?.get(0)
 
         // TODO: create directory using transcript unique name
         println "passage to get? "

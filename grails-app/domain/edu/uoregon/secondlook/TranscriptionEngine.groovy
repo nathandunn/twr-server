@@ -3,8 +3,10 @@ package edu.uoregon.secondlook
 class TranscriptionEngine {
 
     static constraints = {
+        creationDate nullable: true
     }
 
-    String name
-    String key
+    String engineName
+    String lookupString
+    Date creationDate
 }
