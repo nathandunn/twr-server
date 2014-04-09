@@ -33,4 +33,14 @@ class Passage {
 
         return returnPassage
     }
+
+    String getWord(Integer wordNumber) {
+        String[] tokens = text.split(" ")
+        if(wordNumber>tokens.length){
+            return ""
+        }
+        else{
+            return tokens[wordNumber-1]
+        }
+    }
 }

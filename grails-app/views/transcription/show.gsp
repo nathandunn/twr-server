@@ -130,7 +130,15 @@
                                                                    default="TWR"/></span>
 
             <span class="property-value" aria-labelledby="twr-label"><g:fieldValue
-                    bean="${transcriptionInstance}" field="twr"/></span>
+                    bean="${transcriptionInstance}" field="twr"/>
+            ...
+            ${transcriptionInstance.passage.getWord(transcriptionInstance.twr - 2)}
+            ${transcriptionInstance.passage.getWord(transcriptionInstance.twr - 1)}
+                <b>${transcriptionInstance.passage.getWord(transcriptionInstance.twr)}</b>
+                ${transcriptionInstance.passage.getWord(transcriptionInstance.twr + 1)}
+                ${transcriptionInstance.passage.getWord(transcriptionInstance.twr + 2)}
+                ...
+            </span>
 
         </li>
 
