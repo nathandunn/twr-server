@@ -28,6 +28,7 @@ class DataStubber {
                         ,note: transcription.note
                         ,twr: transcription.twr
                         ,transcript: transcription.transcript
+                        ,audioFile: audioFile
                 ).save(insert:true,failOnError: true)
             }
 
@@ -39,6 +40,7 @@ class DataStubber {
                         ,twr: transcription.twr
                         ,transcript: transcription.goldenTranscript
                         ,researcher:  "Carol"
+                        ,audioFile: audioFile
                 ).save(insert:true,failOnError: true)
             }
         }
