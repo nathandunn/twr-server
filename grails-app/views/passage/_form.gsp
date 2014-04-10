@@ -23,6 +23,6 @@
 		<g:message code="passage.text.label" default="Text" />
 		
 	</label>
-	<g:textField name="text" value="${passageInstance?.text}"/>
+	<g:textArea name="text" value="${passageInstance?.text}"/>
 </div>
 
