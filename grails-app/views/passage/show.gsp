@@ -40,16 +40,32 @@
             </li>
         </g:if>
 
-        <g:if test="${passageInstance?.name}">
-            <li class="fieldcontain">
-                <span id="name-label" class="property-label"><g:message code="passage.name.label"
-                                                                        default="Name"/></span>
+        <li class="fieldcontain">
+            <span id="name-label" class="property-label"><g:message code="passage.name.label"
+                                                                    default="Name"/></span>
 
-                <span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${passageInstance}"
-                                                                                        field="name"/></span>
+            <span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${passageInstance}"
+                                                                                    field="name"/></span>
+        </li>
 
-            </li>
-        </g:if>
+        <li class="fieldcontain">
+            <span id="audioFiles-label" class="property-label">Audio Files</span>
+
+            <span class="property-value" aria-labelledby="name-label">
+                <g:if test="${passageInstance.audioFiles}">
+                   <g:each in="${passageInstance.audioFiles}" var="audioFile" status="st">
+                       <g:link action="show" controller="audioFile" id="${audioFile.id}">${audioFile.fileName} (${audioFile?.humanTranscripts.size()} / ${audioFile?.computerTranscripts.size()})</g:link>
+                       <g:if test="${st.intValue()<passageInstance.audioFiles.size()-1}">
+                           &bull;
+                       </g:if>
+
+                   </g:each>
+                </g:if>
+                <g:else>
+                    ---------
+                </g:else>
+            </span>
+        </li>
 
         <script>
             $(document).ready(function() {
@@ -68,12 +84,12 @@
                 </span>
             </li>
 
-            %{--<li class="fieldcontain">--}%
-                %{--<span id="text-label" class="property-label"><g:message code="passage.text.label"--}%
-                                                                        %{--default="Numbered Text"/></span>--}%
-                %{--<span class="property-value" aria-labelledby="text-label">--}%
-                %{--</span>--}%
-            %{--</li>--}%
+        %{--<li class="fieldcontain">--}%
+        %{--<span id="text-label" class="property-label"><g:message code="passage.text.label"--}%
+        %{--default="Numbered Text"/></span>--}%
+        %{--<span class="property-value" aria-labelledby="text-label">--}%
+        %{--</span>--}%
+        %{--</li>--}%
 
         </g:if>
 
