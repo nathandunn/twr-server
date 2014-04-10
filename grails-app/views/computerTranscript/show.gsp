@@ -36,7 +36,10 @@
 				<li class="fieldcontain">
 					<span id="transcript-label" class="property-label"><g:message code="computerTranscript.transcript.label" default="Transcript" /></span>
 					
-						<span class="property-value" aria-labelledby="transcript-label"><g:fieldValue bean="${computerTranscriptInstance}" field="transcript"/></span>
+						<span class="property-value" aria-labelledby="transcript-label">
+                            %{--<g:fieldValue bean="${computerTranscriptInstance}" field="transcript"/>--}%
+                            ${computerTranscriptInstance?.transcript.size()}
+                        </span>
 					
 				</li>
 				</g:if>
@@ -90,7 +93,7 @@
 				<li class="fieldcontain">
 					<span id="transcriptionEngine-label" class="property-label"><g:message code="computerTranscript.transcriptionEngine.label" default="Transcription Engine" /></span>
 					
-						<span class="property-value" aria-labelledby="transcriptionEngine-label"><g:link controller="transcriptionEngine" action="show" id="${computerTranscriptInstance?.transcriptionEngine?.id}">${computerTranscriptInstance?.transcriptionEngine?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="transcriptionEngine-label"><g:link controller="transcriptionEngine" action="show" id="${computerTranscriptInstance?.transcriptionEngine?.id}">${computerTranscriptInstance?.transcriptionEngine?.name}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -99,7 +102,7 @@
 				<li class="fieldcontain">
 					<span id="audioFile-label" class="property-label"><g:message code="computerTranscript.audioFile.label" default="Audio File" /></span>
 					
-						<span class="property-value" aria-labelledby="audioFile-label"><g:link controller="audioFile" action="show" id="${computerTranscriptInstance?.audioFile?.id}">${computerTranscriptInstance?.audioFile?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="audioFile-label"><g:link controller="audioFile" action="show" id="${computerTranscriptInstance?.audioFile?.id}">${computerTranscriptInstance?.audioFile?.fileName}</g:link></span>
 					
 				</li>
 				</g:if>
