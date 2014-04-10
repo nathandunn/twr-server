@@ -12,6 +12,7 @@ class HumanTranscript {
         note nullable: true
         researcher nullable: true
         audioFile nullable: false
+        processedTranscript nullable: true
     }
 
     static mapping = {
@@ -32,4 +33,5 @@ class HumanTranscript {
     Integer twr
 //    String timings
     String transcript // is the timings file
+    String processedTranscript
 }
