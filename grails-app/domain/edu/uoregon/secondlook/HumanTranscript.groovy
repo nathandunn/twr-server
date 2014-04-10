@@ -8,8 +8,10 @@ class HumanTranscript {
         status nullable: false
         twr nullable: true
         transcriptErrors nullable: true
+        passageErrors nullable: true
         note nullable: true
         researcher nullable: true
+        audioFile nullable: false
     }
 
     static mapping = {
@@ -21,8 +23,10 @@ class HumanTranscript {
     Date processDate
     TranscriptionStatus status
     String transcriptErrors
+    String passageErrors
     String note
     String researcher
+    AudioFile audioFile
 
     // results
     Integer twr

@@ -8,8 +8,10 @@ class ComputerTranscript {
         status nullable: false
         twr nullable: true
         transcriptErrors nullable: true
+        passageErrors nullable: true
         note nullable: true
         transcriptionEngine nullable: true
+        audioFile nullable: false
     }
 
     static mapping = {
@@ -22,8 +24,10 @@ class ComputerTranscript {
     Date returnDate
     TranscriptionStatus status
     String transcriptErrors
+    String passageErrors
     String note
     TranscriptionEngine transcriptionEngine
+    AudioFile audioFile
 
     // results
     Integer twr
