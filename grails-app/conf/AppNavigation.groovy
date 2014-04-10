@@ -35,9 +35,10 @@
 navigation = {
     // Declare the "app" scope, used by default in tags
     app {
-			Transcript(controller: 'transcription', action: 'list') 
-            Passage(controller: 'passage', action: 'list')
-            ProcessingQueue(controller: 'processingQueue', action: 'list')
+        Transcript(controller: 'transcription', action: 'list')
+        AudioFile(controller: 'audioFile', action: 'list')
+        Passage(controller: 'passage', action: 'list')
+        ProcessingQueue(controller: 'processingQueue', action: 'list')
 
 ////        // A nav item pointing to HomeController, using the default action
 //        experiment(controller: 'experiment', action: 'list') {

@@ -3,7 +3,7 @@ package edu.uoregon.secondlook
 class HumanTranscript {
 
     static constraints = {
-        returnDate nullable: true
+        processDate nullable: true
         transcript nullable: true
         status nullable: false
         twr nullable: true
@@ -18,8 +18,7 @@ class HumanTranscript {
         note type: "text"
     }
 
-    Date requestDate
-    Date returnDate
+    Date processDate
     TranscriptionStatus status
     String transcriptErrors
     String note
