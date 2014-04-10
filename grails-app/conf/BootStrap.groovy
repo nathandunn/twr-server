@@ -1,8 +1,11 @@
+import edu.uoregon.secondlook.AudioFile
+import edu.uoregon.secondlook.DataStubber
 import edu.uoregon.secondlook.Passage
 import edu.uoregon.secondlook.PassageText
 import edu.uoregon.secondlook.Patch
 import edu.uoregon.secondlook.ProcessingQueue
 import edu.uoregon.secondlook.ProcessingStatus
+import edu.uoregon.secondlook.TranscriptionEngine
 
 class BootStrap {
 
@@ -41,6 +44,16 @@ class BootStrap {
                     name: "PassageIndex"
                     , appliedDate: new Date()
             ).save(insert: true, flush: true, failOnError: true)
+        }
+
+        if(AudioFile.count==0){
+            println "not yet imported . . starting import"
+            new DataStubber().convertTranscripts()
+            println "Finished import"
+        }
+        else
+        {
+            println "Already imported"
         }
     }
     def destroy = {

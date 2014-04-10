@@ -1,3 +1,5 @@
+import edu.uoregon.secondlook.TranscriptionEngine
+
 //import edu.uoregon.stockdb.Researcher
 //import edu.uoregon.stockdb.ResearcherService
 //import org.apache.shiro.SecurityUtils
@@ -36,8 +38,9 @@ navigation = {
     // Declare the "app" scope, used by default in tags
     app {
         Transcript(controller: 'transcription', action: 'list')
-        AudioFile(controller: 'audioFile', action: 'list')
+        AudioFile(controller: 'audioFile', action: 'index')
         Passage(controller: 'passage', action: 'list')
+        TranscriptionEngine(controller: 'transcriptionEngine', action: 'index')
         ProcessingQueue(controller: 'processingQueue', action: 'list')
 
 ////        // A nav item pointing to HomeController, using the default action
