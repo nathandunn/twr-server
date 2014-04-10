@@ -646,4 +646,6 @@ a.skip {
 
 .numberShow{
     display: inline-block;
+    font-size: smaller;
+    color: gray;
 }

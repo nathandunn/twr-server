@@ -29,6 +29,8 @@
 						<g:sortableColumn property="name" title="${message(code: 'passage.name.label', default: 'Name')}" />
 					
 						<g:sortableColumn property="text" title="${message(code: 'passage.text.label', default: 'Text')}" />
+
+                        <th>AudioFiles</th>
 					
 					</tr>
 				</thead>
@@ -40,7 +42,18 @@
 					
 						<td>${fieldValue(bean: passageInstance, field: "name")}</td>
 					
-						<td>${fieldValue(bean: passageInstance, field: "text")}</td>
+						<td>
+                            <g:if test="${passageInstance.text.size()>30}">
+                                ${passageInstance.text.subSequence(0,30)} . . .
+                            </g:if>
+                            <g:else>
+                                ${passageInstance.text}
+                            </g:else>
+						</td>
+
+                        <td>
+                            ${passageInstance.audioFiles.size()}
+                        </td>
 					
 					</tr>
 				</g:each>

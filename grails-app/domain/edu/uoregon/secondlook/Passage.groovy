@@ -27,7 +27,7 @@ class Passage {
         String returnPassage = ""
         if(text){
             text.split(" ").eachWithIndex{ token  , index ->
-                returnPassage += token  + "<div class='numberShow'> (${index+1})</div> "
+                returnPassage += token  + "<div class='numberShow'>${index+1}</div> "
             }
         }
 
