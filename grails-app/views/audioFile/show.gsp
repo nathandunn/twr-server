@@ -73,23 +73,28 @@
                     code="audioFile.computerTranscripts.label" default="Computer Transcripts"/></span>
 
             <span class="property-value" aria-labelledby="computerTranscripts-label">
-            <g:if test="${audioFileInstance?.computerTranscripts}">
-                <g:each in="${audioFileInstance.computerTranscripts}" var="c">
-                    <g:link controller="computerTranscript" action="show" id="${c.id}">
-                    <g:formatDate date="${c.requestDate}" type="date"/>
-                    <g:if test="${c.status == edu.uoregon.secondlook.TranscriptionStatus.FINISHED}">
-                        TWR[${c.twr}]
-                    </g:if>
-                    <g:else>
-                        Status[${c.status}]
-                    </g:else>
+                <g:if test="${audioFileInstance?.computerTranscripts}">
+                    <g:each in="${audioFileInstance.computerTranscripts}" var="c" status="st">
+                        <g:link controller="computerTranscript" action="show" id="${c.id}">
+                            <g:formatDate date="${c.requestDate}" type="date"/>
+                            %{--<g:if test="${c.status == edu.uoregon.secondlook.TranscriptionStatus.FINISHED}">--}%
+                                TWR[${c.twr}]
+                            %{--</g:if>--}%
+                            %{--<g:else>--}%
+                                [${c.status}]
+                            %{--</g:else>--}%
 
-                </g:link>
-                </g:each>
-            </g:if>
-            <g:else>
-                ------
-            </g:else>
+
+                        </g:link>
+
+                        <g:if test="${st.intValue() < audioFileInstance.computerTranscripts.size() - 1}">
+                            &bull;
+                        </g:if>
+                    </g:each>
+                </g:if>
+                <g:else>
+                    ------
+                </g:else>
             </span>
         </li>
 
