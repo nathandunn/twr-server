@@ -81,6 +81,17 @@ class AudioFileController {
             return
         }
 
+        audioFileInstance.computerTranscripts.each {
+            audioFileInstance.removeFromComputerTranscripts(it)
+            audioFileInstance.save(flush:true )
+            it.audioFile = null
+            it.save(flush:true)
+        }
+//        audioFileInstance.humanTranscripts.del
+//        audioFileInstance.computerTranscripts = nu
+        audioFileInstance.passage = null
+        audioFileInstance.save(flush:true )
+
         audioFileInstance.delete flush:true
 
         request.withFormat {

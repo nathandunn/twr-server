@@ -11,16 +11,32 @@ class DataStubber {
                 ,"s5-decode"
         )
 
-        Transcription.findAllByFileNameLike('%wav').each { transcription ->
-            AudioFile audioFile = new AudioFile(
-                    audioData: transcription.audioData
-                    ,fileName: transcription.fileName
-                    ,externalStudentId: transcription.externalStudentId
-                    ,callbackUrl: transcription.callbackUrl
-                    ,note: transcription.note
-            ).save(insert:true,failOnError: true)
+//        List<Transcription> transcriptionList = Transcription.findAllByFileNameLike('%wav')
+        List<String> transcriptionNames = Transcription.executeQuery("select t.fileName from Transcription  t where t.fileName like '%wav'")
+//        List<String> transcriptionNames = Transcription.executeQuery("select t.fileName from Transcription t ")
+        println "# of transcripton names ${transcriptionNames.size()}"
+        for(String fileName in transcriptionNames){
+            Transcription transcription = Transcription.findByFileName(fileName)
+            println "processing audio file ${transcription.fileName}"
+
+
+
+            AudioFile audioFile = AudioFile.findByFileName(fileName)
+
+            if(!audioFile){
+                audioFile = new AudioFile(
+                        audioData: transcription.audioData
+                        ,fileName: transcription.fileName
+                        ,externalStudentId: transcription.externalStudentId
+                        ,callbackUrl: transcription.callbackUrl
+                        ,note: transcription.note
+                        ,passage: transcription.passage
+                ).save(insert:true,failOnError: true,flush:true)
+                transcription.passage.addToAudioFiles(audioFile)
+            }
 
             if(transcription.transcript){
+                println "creating computer transcript ${transcription.fileName}"
                 ComputerTranscript computerTranscript = new ComputerTranscript(
                        requestDate: transcription.requestDate
                         ,returnDate: transcription.returnDate
@@ -29,10 +45,13 @@ class DataStubber {
                         ,twr: transcription.twr
                         ,transcript: transcription.transcript
                         ,audioFile: audioFile
-                ).save(insert:true,failOnError: true)
+                        ,transcriptionEngine: transcriptionEngine
+                ).save(insert:true,failOnError: true,flush: true)
+                audioFile.addToComputerTranscripts(computerTranscript)
             }
 
             if(transcription.goldenTranscript){
+                println "creating human transcript ${transcription.fileName}"
                 HumanTranscript humanTranscript = new HumanTranscript(
                         processDate: null
                         ,status: transcription.status
@@ -41,8 +60,11 @@ class DataStubber {
                         ,transcript: transcription.goldenTranscript
                         ,researcher:  "Carol"
                         ,audioFile: audioFile
-                ).save(insert:true,failOnError: true)
+                ).save(insert:true,failOnError: true,flush:true)
+                audioFile.addToHumanTranscripts(humanTranscript)
             }
+
+//            transcription.discard()
         }
     }
 }

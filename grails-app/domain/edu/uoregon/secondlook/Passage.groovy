@@ -7,6 +7,7 @@ class Passage {
 
     static hasMany = [
             transcriptions: Transcription
+            ,audioFiles: AudioFile
     ]
 
     static mapping = {
