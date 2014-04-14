@@ -27,46 +27,60 @@
     </g:if>
     <ol class="property-list audioFile">
 
-        <g:if test="${audioFileInstance?.audioData}">
-            <li class="fieldcontain">
-                <span id="audioData-label" class="property-label"><g:message code="audioFile.audioData.label"
-                                                                             default="Audio Data"/></span>
+        <li class="fieldcontain">
+            <span id="fileName-label" class="property-label"><g:message code="audioFile.fileName.label"
+                                                                        default="File Name"/></span>
 
-            </li>
-        </g:if>
+            <span class="property-value" aria-labelledby="fileName-label"><g:fieldValue bean="${audioFileInstance}"
+                                                                                        field="fileName"/></span>
 
-        <g:if test="${audioFileInstance?.externalStudentId}">
-            <li class="fieldcontain">
-                <span id="externalStudentId-label" class="property-label"><g:message
-                        code="audioFile.externalStudentId.label" default="External Student Id"/></span>
+        </li>
 
-                <span class="property-value" aria-labelledby="externalStudentId-label"><g:fieldValue
-                        bean="${audioFileInstance}" field="externalStudentId"/></span>
+        <li class="fieldcontain">
+            <span id="audioData-label" class="property-label"><g:message code="audioFile.audioData.label"
+                                                                         default="Audio Data"/></span>
 
-            </li>
-        </g:if>
+            <span class="property-value" aria-labelledby="audioData-label">
+                <g:if test="${audioFileInstance?.audioData}">
+                    <g:formatNumber number="${audioFileInstance.audioData.length / 1E6}" type="number"/> MB
+                    <g:link action="downloadBinary" id="${audioFileInstance.id}">Download</g:link>
+                </g:if>
+                <g:else>
+                    ------
+                </g:else>
+            </span>
 
-        <g:if test="${audioFileInstance?.callbackUrl}">
-            <li class="fieldcontain">
-                <span id="callbackUrl-label" class="property-label"><g:message code="audioFile.callbackUrl.label"
-                                                                               default="Callback Url"/></span>
+        </li>
 
-                <span class="property-value" aria-labelledby="callbackUrl-label"><g:fieldValue
-                        bean="${audioFileInstance}" field="callbackUrl"/></span>
+        <li class="fieldcontain">
+            <span id="passage-label" class="property-label"><g:message code="audioFile.passage.label"
+                                                                       default="Passage"/></span>
 
-            </li>
-        </g:if>
+            <span class="property-value" aria-labelledby="passage-label"><g:link controller="passage" action="show"
+                                                                                 id="${audioFileInstance?.passage?.id}">${audioFileInstance?.passage?.display}</g:link></span>
 
-        <g:if test="${audioFileInstance?.note}">
-            <li class="fieldcontain">
-                <span id="note-label" class="property-label"><g:message code="audioFile.note.label"
-                                                                        default="Note"/></span>
+        </li>
 
-                <span class="property-value" aria-labelledby="note-label"><g:fieldValue bean="${audioFileInstance}"
-                                                                                        field="note"/></span>
+        <li class="fieldcontain">
+            <span id="externalStudentId-label" class="property-label"><g:message
+                    code="audioFile.externalStudentId.label" default="External Student Id"/></span>
 
-            </li>
-        </g:if>
+            <span class="property-value" aria-labelledby="externalStudentId-label">
+                <g:fieldValue
+                        bean="${audioFileInstance}" field="externalStudentId"/>
+            </span>
+
+        </li>
+
+        <li class="fieldcontain">
+            <span id="callbackUrl-label" class="property-label"><g:message code="audioFile.callbackUrl.label"
+                                                                           default="Callback Url"/></span>
+
+            <span class="property-value" aria-labelledby="callbackUrl-label"><g:fieldValue
+                    bean="${audioFileInstance}" field="callbackUrl"/></span>
+
+        </li>
+
 
         <li class="fieldcontain">
             <span id="computerTranscripts-label" class="property-label"><g:message
@@ -77,13 +91,12 @@
                     <g:each in="${audioFileInstance.computerTranscripts}" var="c" status="st">
                         <g:link controller="computerTranscript" action="show" id="${c.id}">
                             <g:formatDate date="${c.requestDate}" type="date"/>
-                            %{--<g:if test="${c.status == edu.uoregon.secondlook.TranscriptionStatus.FINISHED}">--}%
-                                TWR[${c.twr}]
-                            %{--</g:if>--}%
-                            %{--<g:else>--}%
-                                [${c.status}]
-                            %{--</g:else>--}%
-
+                        %{--<g:if test="${c.status == edu.uoregon.secondlook.TranscriptionStatus.FINISHED}">--}%
+                            TWR[${c.twr}]
+                        %{--</g:if>--}%
+                        %{--<g:else>--}%
+                            [${c.status}]
+                        %{--</g:else>--}%
 
                         </g:link>
 
@@ -98,16 +111,6 @@
             </span>
         </li>
 
-        <g:if test="${audioFileInstance?.fileName}">
-            <li class="fieldcontain">
-                <span id="fileName-label" class="property-label"><g:message code="audioFile.fileName.label"
-                                                                            default="File Name"/></span>
-
-                <span class="property-value" aria-labelledby="fileName-label"><g:fieldValue bean="${audioFileInstance}"
-                                                                                            field="fileName"/></span>
-
-            </li>
-        </g:if>
 
         <li class="fieldcontain">
             <span id="humanTranscripts-label" class="property-label"><g:message
@@ -126,29 +129,26 @@
 
         </li>
 
-        <g:if test="${audioFileInstance?.passage}">
-            <li class="fieldcontain">
-                <span id="passage-label" class="property-label"><g:message code="audioFile.passage.label"
-                                                                           default="Passage"/></span>
 
-                <span class="property-value" aria-labelledby="passage-label"><g:link controller="passage" action="show"
-                                                                                     id="${audioFileInstance?.passage?.id}">${audioFileInstance?.passage?.name}</g:link></span>
+        <li class="fieldcontain">
+            <span id="note-label" class="property-label"><g:message code="audioFile.note.label"
+                                                                    default="Note"/></span>
 
-            </li>
-        </g:if>
+            <span class="property-value" aria-labelledby="note-label"><g:fieldValue bean="${audioFileInstance}"
+                                                                                    field="note"/></span>
 
-        <g:if test="${audioFileInstance?.processingQueues}">
-            <li class="fieldcontain">
-                <span id="processingQueues-label" class="property-label"><g:message
-                        code="audioFile.processingQueues.label" default="Processing Queues"/></span>
+        </li>
 
-                <g:each in="${audioFileInstance.processingQueues}" var="p">
-                    <span class="property-value" aria-labelledby="processingQueues-label"><g:link
-                            controller="processingQueue" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
-                </g:each>
+        <li class="fieldcontain">
+            <span id="processingQueues-label" class="property-label"><g:message
+                    code="audioFile.processingQueues.label" default="Processing Queues"/></span>
 
-            </li>
-        </g:if>
+            <g:each in="${audioFileInstance.processingQueues}" var="p">
+                <span class="property-value" aria-labelledby="processingQueues-label"><g:link
+                        controller="processingQueue" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
+            </g:each>
+
+        </li>
 
     </ol>
     <g:form url="[resource: audioFileInstance, action: 'delete']" method="DELETE">
