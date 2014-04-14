@@ -8,7 +8,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class AudioFileController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -51,16 +51,26 @@ class AudioFileController {
     }
 
     @Transactional
-    def update(AudioFile audioFileInstance) {
+    def update(Long id) {
+        def audioFileInstance = AudioFile.get(id)
         if (audioFileInstance == null) {
             notFound()
             return
         }
 
+//        println "params auidoData ${params.audioData?.size} ${params.audioData?.originalFilename}"
+
+        if(!params.audioData.originalFilename){
+            params.audioData = audioFileInstance.audioData
+        }
+
+        audioFileInstance.properties = params
+
         if (audioFileInstance.hasErrors()) {
             respond audioFileInstance.errors, view:'edit'
             return
         }
+
 
         audioFileInstance.save flush:true
 
@@ -110,6 +120,19 @@ class AudioFileController {
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
+        }
+    }
+
+    def downloadBinary(Integer id) {
+        AudioFile audioFile= AudioFile.get(id)
+        if (!audioFile) {
+            response.status = 404
+            return
+        }
+        if (audioFile.audioData) {
+            response.setHeader("Content-Disposition", "attachment; filename=" + audioFile.fileName)
+            response.outputStream << audioFile.audioData
+//            render(file: transcription.audioData, contentType: "application/download", encoding: "UTF-8")
         }
     }
 }

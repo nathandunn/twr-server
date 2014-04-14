@@ -40,6 +40,8 @@ navigation = {
         Transcript(controller: 'transcription', action: 'list')
         AudioFile(controller: 'audioFile', action: 'index')
         Passage(controller: 'passage', action: 'list')
+        ComputerTranscript(controller: 'computerTranscript', action: 'index')
+        HumanTranscript(controller: 'humanTranscript', action: 'index')
         TranscriptionEngine(controller: 'transcriptionEngine', action: 'index')
         ProcessingQueue(controller: 'processingQueue', action: 'list')
 
