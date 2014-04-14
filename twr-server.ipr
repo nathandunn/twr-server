@@ -21,21 +21,15 @@
       </profile>
     </annotationProcessing>
   </component>
-  <component name="CopyrightManager" default="">
-    <module2copyright />
-  </component>
-  <component name="DataSourceManagerImpl" format="xml" hash="1567270000">
-    <data-source source="LOCAL" name="twr-server dev" uuid="c221ba5d-fdec-4d4a-a470-09096c7a4935">
+  <component name="CopyrightManager" default="" />
+  <component name="DataSourceManagerImpl" format="xml" hash="371064129">
+    <data-source source="LOCAL" name="twr-server dev" uuid="a080da38-ada4-49a4-8180-da4c2440c61c">
       <driver-ref>mysql</driver-ref>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/speech_dev</jdbc-url>
       <user-name>ubuntu</user-name>
       <user-password>dffcdfdbdf93dfe4dfdcdfeedff2dff9</user-password>
-      <libraries>
-        <library>
-          <url>file://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar</url>
-        </library>
-      </libraries>
+      <libraries />
     </data-source>
   </component>
   <component name="DependencyValidationManager">
@@ -45,7 +39,7 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
-  <component name="IdProvider" IDEtalkID="EE4F14EFF16E3F59D84C8999E1C9668A" />
+  <component name="IdProvider" IDEtalkID="F62466C0F181A282B8CF1D065D94B029" />
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
@@ -173,7 +167,7 @@
       <module fileurl="file://$PROJECT_DIR$/twr-server-grailsPlugins.iml" filepath="$PROJECT_DIR$/twr-server-grailsPlugins.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
