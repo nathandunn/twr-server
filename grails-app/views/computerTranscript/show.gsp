@@ -1,5 +1,5 @@
 
-<%@ page import="edu.uoregon.secondlook.ComputerTranscript" %>
+<%@ page import="edu.uoregon.secondlook.TranscriptionStatus; edu.uoregon.secondlook.ComputerTranscript" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -119,6 +119,28 @@
 			</ol>
 			<g:form url="[resource:computerTranscriptInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
+
+                    <g:if test="${computerTranscriptInstance.status == TranscriptionStatus.RECEIVED}">
+                        <g:link action="submitTranscript" controller="processingQueue" id="${computerTranscriptInstance.id}">
+                            Submit Transcript
+                        </g:link>
+                    </g:if>
+                    <g:else>
+                        <g:link action="submitTranscript" controller="processingQueue" id="${computerTranscriptInstance.id}">
+                            Submit Again
+                        </g:link>
+
+                        <g:link action="recalculateTwr" controller="computerTranscript" id="${computerTranscriptInstance.id}">
+                            Recalculate Twr
+                        </g:link>
+                    </g:else>
+
+                    %{--<g:if test="${computerTranscriptInstance.callbackUrl}">--}%
+                        %{--<g:link action="doCallback" controller="transcription" id="${computerTranscriptInstance.id}">--}%
+                            %{--Do Callback--}%
+                        %{--</g:link>--}%
+                    %{--</g:if>--}%
+
 					<g:link class="edit" action="edit" resource="${computerTranscriptInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>

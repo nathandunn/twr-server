@@ -101,4 +101,22 @@ class ComputerTranscriptController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    def recalculateTwr(Long id) {
+        ComputerTranscript transcription = ComputerTranscript.get(id)
+        if (!transcription) {
+            response.status = 404
+            return
+        }
+        Passage passage = transcription.passage
+        String passageText = passage.text
+//        passageText = passageText.replaceAll("\n"," ")
+        passageText = passageText.replaceAll("\\s{2,}", " ")
+        Integer oldTwr = transcription.twr
+        Integer twr = TWR.findTWR(passageText, transcription.transcript)
+        transcription.twr = twr
+        transcription.save(flush: true, insert: false)
+        flash.message = "Recalculated TWR ${oldTwr} -> ${transcription.twr} for Transcrption ${transcription.audioFile.fileName}"
+        redirect(action: "show", id: transcription.id)
+    }
 }
