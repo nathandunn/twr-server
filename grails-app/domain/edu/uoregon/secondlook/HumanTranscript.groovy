@@ -32,6 +32,6 @@ class HumanTranscript {
     // results
     Integer twr
 //    String timings
-    String transcript // is the timings file
+    String transcript // is the human file
     String processedTranscript
 }

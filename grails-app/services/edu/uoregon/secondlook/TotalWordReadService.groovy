@@ -23,4 +23,38 @@ class TotalWordReadService {
         return TWR.findTWR(passageText,transcript)
     }
 
+    String processTranscript(String inputTranscript) {
+        if(inputTranscript.contains("[")){
+            println "contains ["
+
+            List<String> firstTokens = inputTranscript.tokenize("[")
+            println "tokens ${firstTokens}"
+            List<String> lastTokens = new ArrayList<>()
+
+            firstTokens.each { token ->
+                println "token: ${token}"
+                if(token.contains("]")){
+                    String tokenToAdd = token.substring(token.indexOf("]")+1)
+                    println "adding token '${tokenToAdd}'"
+                    lastTokens.add(tokenToAdd)
+                }
+                else{
+                    println "ELSE adding token ${token}"
+                    lastTokens.add(token)
+                }
+            }
+//            println "lasttokens ${lastTokens}"
+            String returnString = ""
+            for(String aToken in lastTokens){
+                returnString += aToken.replaceAll("\\p{Punct}","") +" "
+            }
+            returnString = returnString.replaceAll(" +"," ")
+            return returnString.toUpperCase().trim()
+        }
+        else{
+            println "DOES NOTE contain ["
+//            return inputTranscript.replaceAll(" +"," ").toUpperCase()
+            return inputTranscript.replaceAll("\\p{Punct}","").replaceAll(" +"," ").toUpperCase().trim()
+        }
+    }
 }

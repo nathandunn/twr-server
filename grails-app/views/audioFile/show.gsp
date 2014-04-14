@@ -95,10 +95,7 @@
                             TWR[${c.twr}]
                         %{--</g:if>--}%
                         %{--<g:else>--}%
-                            [${c.status}]
-                        %{--</g:else>--}%
-
-                        </g:link>
+                            [${c.status}]</g:link>
 
                         <g:if test="${st.intValue() < audioFileInstance.computerTranscripts.size() - 1}">
                             &bull;
@@ -108,6 +105,9 @@
                 <g:else>
                     ------
                 </g:else>
+
+                <br/>
+                <g:link action="create" controller="computerTranscript" params="[audioFile:audioFileInstance.id]">Add Computer Transcript</g:link>
             </span>
         </li>
 
@@ -119,12 +119,20 @@
             <span class="property-value" aria-labelledby="humanTranscripts-label">
                 <g:if test="${audioFileInstance?.humanTranscripts}">
                     <g:each in="${audioFileInstance.humanTranscripts}" var="h">
-                        <g:link controller="humanTranscript" action="show" id="${h.id}">${h?.encodeAsHTML()}</g:link>
+                        <g:link controller="humanTranscript" action="show" id="${h.id}">
+                            <g:formatDate date="${h.processDate}" type="date"/>
+                        %{--<g:if test="${c.status == edu.uoregon.secondlook.TranscriptionStatus.FINISHED}">--}%
+                            TWR[${h.twr}]
+                        %{--</g:if>--}%
+                        %{--<g:else>--}%
+                            [${h.status}]</g:link>
                     </g:each>
                 </g:if>
                 <g:else>
                     -------
                 </g:else>
+                <br/>
+                <g:link action="create" controller="humanTranscript" params="[audioFile:audioFileInstance.id]">Add Human Transcript</g:link>
             </span>
 
         </li>

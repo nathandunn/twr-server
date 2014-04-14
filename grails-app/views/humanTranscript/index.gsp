@@ -25,16 +25,17 @@
 					<tr>
 					
 						<g:sortableColumn property="processDate" title="${message(code: 'humanTranscript.processDate.label', default: 'Process Date')}" />
-					
+                        <g:sortableColumn property="audioFile" title="Audio File" />
+
 						<g:sortableColumn property="transcript" title="${message(code: 'humanTranscript.transcript.label', default: 'Transcript')}" />
 					
 						<g:sortableColumn property="status" title="${message(code: 'humanTranscript.status.label', default: 'Status')}" />
 					
 						<g:sortableColumn property="twr" title="${message(code: 'humanTranscript.twr.label', default: 'Twr')}" />
 					
-						<g:sortableColumn property="transcriptErrors" title="${message(code: 'humanTranscript.transcriptErrors.label', default: 'Transcript Errors')}" />
-					
-						<g:sortableColumn property="passageErrors" title="${message(code: 'humanTranscript.passageErrors.label', default: 'Passage Errors')}" />
+						%{--<g:sortableColumn property="transcriptErrors" title="${message(code: 'humanTranscript.transcriptErrors.label', default: 'Transcript Errors')}" />--}%
+					%{----}%
+						%{--<g:sortableColumn property="passageErrors" title="${message(code: 'humanTranscript.passageErrors.label', default: 'Passage Errors')}" />--}%
 					
 					</tr>
 				</thead>
@@ -42,17 +43,32 @@
 				<g:each in="${humanTranscriptInstanceList}" status="i" var="humanTranscriptInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${humanTranscriptInstance.id}">${fieldValue(bean: humanTranscriptInstance, field: "processDate")}</g:link></td>
+						<td><g:link action="show" id="${humanTranscriptInstance.id}">
+                            <g:formatDate date="${humanTranscriptInstance.processDate}" type="date"/>
+						</g:link></td>
+
+                        <td>
+                            <g:link action="show" controller="audioFile" id="${humanTranscriptInstance.audioFile.id}">
+                                ${humanTranscriptInstance.audioFile.fileName}
+                            </g:link>
+                        </td>
 					
-						<td>${fieldValue(bean: humanTranscriptInstance, field: "transcript")}</td>
+						<td>
+                            <g:if test="${humanTranscriptInstance?.transcript?.size()>50}">
+                                ${humanTranscriptInstance.transcript.substring(0,50)}...
+                            </g:if>
+                            <g:else>
+                                ${humanTranscriptInstance.transcript}
+                            </g:else>
+                        </td>
 					
 						<td>${fieldValue(bean: humanTranscriptInstance, field: "status")}</td>
 					
 						<td>${fieldValue(bean: humanTranscriptInstance, field: "twr")}</td>
 					
-						<td>${fieldValue(bean: humanTranscriptInstance, field: "transcriptErrors")}</td>
-					
-						<td>${fieldValue(bean: humanTranscriptInstance, field: "passageErrors")}</td>
+						%{--<td>${fieldValue(bean: humanTranscriptInstance, field: "transcriptErrors")}</td>--}%
+					%{----}%
+						%{--<td>${fieldValue(bean: humanTranscriptInstance, field: "passageErrors")}</td>--}%
 					
 					</tr>
 				</g:each>
