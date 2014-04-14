@@ -15,6 +15,6 @@ class HumanTranscriptSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
+    void "human transcript processing"() {
     }
 }

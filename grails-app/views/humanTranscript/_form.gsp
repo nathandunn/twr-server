@@ -7,8 +7,18 @@
 		<g:message code="humanTranscript.processDate.label" default="Process Date" />
 		
 	</label>
-	<g:datePicker name="processDate" precision="day"  value="${humanTranscriptInstance?.processDate}" default="none" noSelection="['': '']" />
+	<g:datePicker name="processDate" precision="day" relativeYears="[-20..0]"  value="${humanTranscriptInstance?.processDate}" default="${new Date()}" noSelection="['': '']" />
 
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'audioFile', 'error')} required">
+    <label for="audioFile">
+        <g:message code="humanTranscript.audioFile.label" default="Audio File" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:select id="audioFile" name="audioFile.id" from="${edu.uoregon.secondlook.AudioFile.list()}" optionKey="id"
+              required="" optionValue="fileName"
+              value="${humanTranscriptInstance?.audioFile?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'transcript', 'error')} ">
@@ -16,7 +26,7 @@
 		<g:message code="humanTranscript.transcript.label" default="Transcript" />
 		
 	</label>
-	<g:textField name="transcript" value="${humanTranscriptInstance?.transcript}"/>
+	<g:textArea name="transcript" value="${humanTranscriptInstance?.transcript}"/>
 
 </div>
 
@@ -43,7 +53,7 @@
 		<g:message code="humanTranscript.transcriptErrors.label" default="Transcript Errors" />
 		
 	</label>
-	<g:textField name="transcriptErrors" value="${humanTranscriptInstance?.transcriptErrors}"/>
+	<g:textArea name="transcriptErrors" value="${humanTranscriptInstance?.transcriptErrors}"/>
 
 </div>
 
@@ -52,7 +62,16 @@
 		<g:message code="humanTranscript.passageErrors.label" default="Passage Errors" />
 		
 	</label>
-	<g:textField name="passageErrors" value="${humanTranscriptInstance?.passageErrors}"/>
+	<g:textArea name="passageErrors" value="${humanTranscriptInstance?.passageErrors}"/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'researcher', 'error')} ">
+    <label for="researcher">
+        <g:message code="humanTranscript.researcher.label" default="Researcher" />
+
+    </label>
+    <g:textField name="researcher" value="${humanTranscriptInstance?.researcher}"/>
 
 </div>
 
@@ -61,34 +80,19 @@
 		<g:message code="humanTranscript.note.label" default="Note" />
 		
 	</label>
-	<g:textField name="note" value="${humanTranscriptInstance?.note}"/>
+	<g:textArea name="note" value="${humanTranscriptInstance?.note}"/>
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'researcher', 'error')} ">
-	<label for="researcher">
-		<g:message code="humanTranscript.researcher.label" default="Researcher" />
-		
-	</label>
-	<g:textField name="researcher" value="${humanTranscriptInstance?.researcher}"/>
 
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'audioFile', 'error')} required">
-	<label for="audioFile">
-		<g:message code="humanTranscript.audioFile.label" default="Audio File" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="audioFile" name="audioFile.id" from="${edu.uoregon.secondlook.AudioFile.list()}" optionKey="id" required="" value="${humanTranscriptInstance?.audioFile?.id}" class="many-to-one"/>
+%{--<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'processedTranscript', 'error')} ">--}%
+	%{--<label for="processedTranscript">--}%
+		%{--<g:message code="humanTranscript.processedTranscript.label" default="Processed Transcript" />--}%
+		%{----}%
+	%{--</label>--}%
+    %{--${humanTranscriptInstance.processedTranscript}--}%
+	%{--<g:textField name="processedTranscript" value="${humanTranscriptInstance?.processedTranscript}"/>--}%
 
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'processedTranscript', 'error')} ">
-	<label for="processedTranscript">
-		<g:message code="humanTranscript.processedTranscript.label" default="Processed Transcript" />
-		
-	</label>
-	<g:textField name="processedTranscript" value="${humanTranscriptInstance?.processedTranscript}"/>
-
-</div>
+%{--</div>--}%
 

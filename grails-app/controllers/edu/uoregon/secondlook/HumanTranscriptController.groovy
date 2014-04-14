@@ -10,6 +10,8 @@ class HumanTranscriptController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def totalWordReadService
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond HumanTranscript.list(params), model:[humanTranscriptInstanceCount: HumanTranscript.count()]
@@ -34,6 +36,8 @@ class HumanTranscriptController {
             respond humanTranscriptInstance.errors, view:'create'
             return
         }
+
+        humanTranscriptInstance.processedTranscript = totalWordReadService.processTranscript(humanTranscriptInstance.transcript)
 
         humanTranscriptInstance.save flush:true
 
@@ -62,6 +66,8 @@ class HumanTranscriptController {
             return
         }
 
+        humanTranscriptInstance.processedTranscript = totalWordReadService.processTranscript(humanTranscriptInstance.transcript)
+
         humanTranscriptInstance.save flush:true
 
         request.withFormat {
@@ -72,6 +78,25 @@ class HumanTranscriptController {
             '*'{ respond humanTranscriptInstance, [status: OK] }
         }
     }
+
+//    private String processTranscript(String inputTranscript) {
+//        if(inputTranscript.contains("[")){
+//
+//            List<String> firstTokens = inputTranscript.tokenize("[")
+//            List<String> lastTokens = new ArrayList<>()
+//
+//            firstTokens.each { token ->
+//                if(token.contains("]")){
+//                    lastTokens.add(token.substring(token.indexOf("]")+1))
+//                }
+//                else{
+//                    lastTokens.add(token)
+//                }
+//            }
+//            return (lastTokens.collect() as String).replaceAll(" +"," ").toUpperCase()
+//        }
+//        return inputTranscript.replaceAll(" +"," ").toUpperCase()
+//    }
 
     @Transactional
     def delete(HumanTranscript humanTranscriptInstance) {
