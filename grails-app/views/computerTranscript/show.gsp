@@ -115,7 +115,23 @@
 					
 				</li>
 				</g:if>
-			
+
+                <g:if test="${computerTranscriptInstance?.processingQueue}">
+                    <li class="fieldcontain">
+                        <span id="processingQueue-label" class="property-label"><g:message
+                                code="processingQueue.processingQueue.label"
+                                default="Processing Queue"/></span>
+
+                        <span class="property-value" aria-labelledby="processingQueue-label">
+                            %{--<g:each in="${computerTranscriptInstance.processingQueue}" var="processingQueue">--}%
+                                <g:link action="show" controller="processingQueue"
+                                        id="${computerTranscriptInstance.processingQueue.id}">Queue Details</g:link>
+                            %{--</g:each>--}%
+                        </span>
+
+                    </li>
+                </g:if>
+
 			</ol>
 			<g:form url="[resource:computerTranscriptInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">

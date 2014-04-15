@@ -28,7 +28,7 @@
         <thead>
         <tr>
 
-            <g:sortableColumn property="returnDate"
+            <g:sortableColumn property="requestDate"
                               title="${message(code: 'computerTranscript.returnDate.label', default: 'Request Date')}"/>
 
             <g:sortableColumn property="transcript"
@@ -61,7 +61,7 @@
                 <td><g:link action="show"
                             id="${computerTranscriptInstance.id}">${fieldValue(bean: computerTranscriptInstance, field: "requestDate")}</g:link></td>
 
-                <td>${computerTranscriptInstance?.transcript.size()}</td>
+                <td>${computerTranscriptInstance?.transcript?.size()}</td>
 
                 <td>${fieldValue(bean: computerTranscriptInstance, field: "status")}</td>
 

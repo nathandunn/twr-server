@@ -21,6 +21,14 @@
               value="${humanTranscriptInstance?.audioFile?.id}" class="many-to-one"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'originalFile', 'error')} required">
+    <label for="originalFile">
+        <g:message code="audioFile.originalFile.label" default="Auxillary File"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <input type="file" id="originalFile" name="originalFile" />
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'transcript', 'error')} ">
 	<label for="transcript">
 		<g:message code="humanTranscript.transcript.label" default="Transcript" />
