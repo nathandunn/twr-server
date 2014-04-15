@@ -55,6 +55,19 @@ class HumanTranscriptController {
         respond humanTranscriptInstance
     }
 
+    def downloadBinary(Integer id) {
+        HumanTranscript humanTranscript= HumanTranscript.get(id)
+        if (!humanTranscript) {
+            response.status = 404
+            return
+        }
+        if (humanTranscript.originalFile) {
+            response.setHeader("Content-Disposition", "attachment; filename=" + humanTranscript.originalFile)
+            response.outputStream << humanTranscript.originalFile
+//            render(file: transcription.audioData, contentType: "application/download", encoding: "UTF-8")
+        }
+    }
+
     @Transactional
 //    def update(HumanTranscript humanTranscriptInstance) {
     def update(Long id) {
@@ -64,7 +77,8 @@ class HumanTranscriptController {
             return
         }
 
-        if (!params.originalFile.originalFilename) {
+        println "params ${params}"
+        if (!params.originalFile) {
             params.originalFile = humanTranscriptInstance.originalFile
         }
 
