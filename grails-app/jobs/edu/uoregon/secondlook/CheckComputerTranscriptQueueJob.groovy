@@ -40,7 +40,7 @@ class CheckComputerTranscriptQueueJob {
 
         List<ProcessingQueue> processingQueueList = ProcessingQueue.findAllByStatusInList([ProcessingStatus.DELIVERED],[max:MAX_QUEUE_SIZE-currentlyProcessing])
         Integer processesAdded = processingQueueList.size()
-//        println "processes to process ${processesAdded}"
+        println "processes to process ${processesAdded}"
 
         for(ProcessingQueue processingQueue in processingQueueList){
             println "processing ${processingQueue.computerTranscript.audioFile.fileName}"
