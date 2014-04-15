@@ -1,9 +1,8 @@
 package edu.uoregon.secondlook
 
-
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class HumanTranscriptController {
@@ -14,7 +13,7 @@ class HumanTranscriptController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond HumanTranscript.list(params), model:[humanTranscriptInstanceCount: HumanTranscript.count()]
+        respond HumanTranscript.list(params), model: [humanTranscriptInstanceCount: HumanTranscript.count()]
     }
 
     def show(HumanTranscript humanTranscriptInstance) {
@@ -33,13 +32,15 @@ class HumanTranscriptController {
         }
 
         if (humanTranscriptInstance.hasErrors()) {
-            respond humanTranscriptInstance.errors, view:'create'
+            respond humanTranscriptInstance.errors, view: 'create'
             return
         }
 
-        humanTranscriptInstance.processedTranscript = totalWordReadService.processTranscript(humanTranscriptInstance.transcript)
+        if (humanTranscriptInstance.transcript) {
+            humanTranscriptInstance.processedTranscript = totalWordReadService.processTranscript(humanTranscriptInstance.transcript)
+        }
 
-        humanTranscriptInstance.save flush:true
+        humanTranscriptInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -55,27 +56,37 @@ class HumanTranscriptController {
     }
 
     @Transactional
-    def update(HumanTranscript humanTranscriptInstance) {
+//    def update(HumanTranscript humanTranscriptInstance) {
+    def update(Long id) {
+        HumanTranscript humanTranscriptInstance = HumanTranscript.get(id)
         if (humanTranscriptInstance == null) {
             notFound()
             return
         }
 
+        if (!params.originalFile.originalFilename) {
+            params.originalFile = humanTranscriptInstance.originalFile
+        }
+
+        humanTranscriptInstance.properties = params
+
         if (humanTranscriptInstance.hasErrors()) {
-            respond humanTranscriptInstance.errors, view:'edit'
+            respond humanTranscriptInstance.errors, view: 'edit'
             return
         }
 
-        humanTranscriptInstance.processedTranscript = totalWordReadService.processTranscript(humanTranscriptInstance.transcript)
+        if (humanTranscriptInstance.transcript) {
+            humanTranscriptInstance.processedTranscript = totalWordReadService.processTranscript(humanTranscriptInstance.transcript)
+        }
 
-        humanTranscriptInstance.save flush:true
+        humanTranscriptInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'HumanTranscript.label', default: 'HumanTranscript'), humanTranscriptInstance.id])
                 redirect humanTranscriptInstance
             }
-            '*'{ respond humanTranscriptInstance, [status: OK] }
+            '*' { respond humanTranscriptInstance, [status: OK] }
         }
     }
 
@@ -106,14 +117,14 @@ class HumanTranscriptController {
             return
         }
 
-        humanTranscriptInstance.delete flush:true
+        humanTranscriptInstance.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'HumanTranscript.label', default: 'HumanTranscript'), humanTranscriptInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -123,7 +134,7 @@ class HumanTranscriptController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'humanTranscript.label', default: 'HumanTranscript'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

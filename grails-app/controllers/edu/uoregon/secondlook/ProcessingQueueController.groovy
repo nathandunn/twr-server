@@ -93,6 +93,11 @@ class ProcessingQueueController {
         }
 
         try {
+            processingQueueInstance.computerTranscript.processingQueue = null
+            processingQueueInstance.computerTranscript = null
+//            processingQueueInstance.transcription.processingQueues = null
+//            processingQueueInstance.computerTranscript = null
+
             processingQueueInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'processingQueue.label', default: 'ProcessingQueue'), id])
             redirect(action: "list")

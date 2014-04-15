@@ -28,7 +28,7 @@
 					
 						<g:sortableColumn property="status" title="${message(code: 'processingQueue.status.label', default: 'Status')}" />
 					
-						<th><g:message code="processingQueue.transcription.label" default="Transcription" /></th>
+						<th><g:message code="processingQueue.transcription.label" default="Computer Transcript" /></th>
 					
 					</tr>
 				</thead>
@@ -43,8 +43,8 @@
 						%{--<td>${fieldValue(bean: processingQueueInstance, field: "transcription")}</td>--}%
                         <td>
                         %{--${fieldValue(bean: processingQueueInstance, field: "transcription")}--}%
-                        <g:link action="show" controller="transcription" id="${processingQueueInstance.transcription.id}">
-                            ${processingQueueInstance.transcription.fileName}
+                        <g:link action="show" controller="computerTranscript" id="${processingQueueInstance?.computerTranscript?.id}">
+                            ${processingQueueInstance?.computerTranscript?.audioFile?.fileName}
                         </g:link>
                     </td>
 

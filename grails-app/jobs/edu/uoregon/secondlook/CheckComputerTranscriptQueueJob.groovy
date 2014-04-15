@@ -2,14 +2,14 @@ package edu.uoregon.secondlook
 
 /**
  */
-class CheckQueueJob {
+class CheckComputerTranscriptQueueJob {
 
-    def processingQueueService
+    def computerProcessingQueueService
 
     Integer MAX_QUEUE_SIZE = 2
 
     static triggers = {
-      simple repeatInterval: 30000000l // execute job once in 30000 seconds
+      simple repeatInterval: 10000l // execute job once in 10 seconds
     }
 
     /**
@@ -28,10 +28,10 @@ class CheckQueueJob {
 
 
 
-        List<Transcription> transcriptionList = Transcription.findAllByStatusInList([TranscriptionStatus.RECEIVED],[max:MAX_QUEUE_SIZE-currentlyProcessing])
-        for(Transcription transcription in transcriptionList){
-            println "adding Transcript to process ${transcription.fileName}"
-            processingQueueService.submitTranscript(transcription.id)
+        List<ComputerTranscript> transcriptionList = ComputerTranscript.findAllByStatusInList([TranscriptionStatus.RECEIVED],[max:MAX_QUEUE_SIZE-currentlyProcessing])
+        for(ComputerTranscript transcription in transcriptionList){
+            println "adding Transcript to process ${transcription.audioFile.fileName}"
+            computerProcessingQueueService.submitTranscript(transcription.id)
         }
 
 
@@ -43,8 +43,8 @@ class CheckQueueJob {
 //        println "processes to process ${processesAdded}"
 
         for(ProcessingQueue processingQueue in processingQueueList){
-            println "processing ${processingQueue.transcription.fileName}"
-            processingQueueService.processTranscriptAsync(processingQueue)
+            println "processing ${processingQueue.computerTranscript.audioFile.fileName}"
+            computerProcessingQueueService.processTranscriptAsync(processingQueue)
         }
 
 

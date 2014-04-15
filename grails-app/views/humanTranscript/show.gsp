@@ -30,6 +30,22 @@
 
                 </li>
 
+                <li class="fieldcontain">
+                    <span id="originalFile-label" class="property-label"><g:message code="audioFile.originalFile.label"
+                                                                                 default="Auxillary File"/></span>
+
+                    <span class="property-value" aria-labelledby="originalFile-label">
+                        <g:if test="${humanTranscriptInstance?.originalFile}">
+                            <g:formatNumber number="${humanTranscriptInstance.originalFile.length / 1E6}" type="number"/> MB
+                            <g:link action="downloadBinary" id="${humanTranscriptInstance.id}">Download</g:link>
+                        </g:if>
+                        <g:else>
+                            ------
+                        </g:else>
+                    </span>
+
+                </li>
+
 				<li class="fieldcontain">
 					<span id="processDate-label" class="property-label"><g:message code="humanTranscript.processDate.label" default="Process Date" /></span>
 					
