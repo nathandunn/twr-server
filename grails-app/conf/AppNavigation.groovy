@@ -37,7 +37,7 @@ import edu.uoregon.secondlook.TranscriptionEngine
 navigation = {
     // Declare the "app" scope, used by default in tags
     app {
-        Transcript(controller: 'transcription', action: 'list')
+        Transcript(controller: 'transcription', action: 'list',visible: false)
         AudioFile(controller: 'audioFile', action: 'index')
         Passage(controller: 'passage', action: 'list')
         ComputerTranscript(controller: 'computerTranscript', action: 'index')
