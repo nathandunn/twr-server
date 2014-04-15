@@ -121,12 +121,12 @@
 				<fieldset class="buttons">
 
                     <g:if test="${computerTranscriptInstance.status == TranscriptionStatus.RECEIVED}">
-                        <g:link action="submitTranscript" controller="processingQueue" id="${computerTranscriptInstance.id}">
+                        <g:link action="submitComputerTranscript" controller="processingQueue" id="${computerTranscriptInstance.id}">
                             Submit Transcript
                         </g:link>
                     </g:if>
                     <g:else>
-                        <g:link action="submitTranscript" controller="processingQueue" id="${computerTranscriptInstance.id}">
+                        <g:link action="submitComputerTranscript" controller="processingQueue" id="${computerTranscriptInstance.id}">
                             Submit Again
                         </g:link>
 

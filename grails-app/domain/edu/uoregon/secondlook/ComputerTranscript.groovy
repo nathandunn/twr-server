@@ -12,6 +12,7 @@ class ComputerTranscript {
         note nullable: true
         transcriptionEngine nullable: true
         audioFile nullable: false
+        processingQueue nullable: true
     }
 
     static mapping = {
@@ -28,6 +29,7 @@ class ComputerTranscript {
     String note
     TranscriptionEngine transcriptionEngine
     AudioFile audioFile
+    ProcessingQueue processingQueue
 
     // results
     Integer twr

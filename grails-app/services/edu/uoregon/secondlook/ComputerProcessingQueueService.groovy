@@ -2,11 +2,10 @@ package edu.uoregon.secondlook
 
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
+import groovy.transform.CompileStatic
 
-/**
- * @deprecated
- */
-class ProcessingQueueService {
+//@CompileStatic
+class ComputerProcessingQueueService {
 
     def totalWordReadService
 
@@ -17,23 +16,23 @@ class ProcessingQueueService {
     String soxBinary = "sox"
 
     def submitTranscript(Long id) {
-        Transcription transcription = Transcription.get(id)
-        println "got transcription value ${transcription}"
+        ComputerTranscript computerTranscript = ComputerTranscript.get(id)
+        println "got transcription value ${computerTranscript}"
         println "processing in directory ${baseProcessingDirectory}"
 
 
-        if (transcription) {
-            ProcessingQueue processingQueue = ProcessingQueue.findByTranscription(transcription)
+        if (computerTranscript) {
+            ProcessingQueue processingQueue = ProcessingQueue.findByComputerTranscript(computerTranscript)
             if (!processingQueue) {
                 processingQueue = new ProcessingQueue(
-                        transcription: transcription
+                        computerTranscript: computerTranscript
                         , entryDate: new Date()
                         , status: ProcessingStatus.DELIVERED
                 ).save(insert: true)
             }
-            transcription.addToProcessingQueues(processingQueue)
-            transcription.status = TranscriptionStatus.SUBMITTED
-            transcription.save(flush: true)
+            computerTranscript.processingQueue = processingQueue
+            computerTranscript.status = TranscriptionStatus.SUBMITTED
+            computerTranscript.save(flush: true)
 //            return transcription.status
 
 //            println "Pre-processing transcript"
@@ -53,42 +52,42 @@ class ProcessingQueueService {
             println "start ASync processing"
             resultOutput = processTranscript(processingQueue)
             println "after ASync processing"
-            Transcription transcription = processingQueue.transcription
+            ComputerTranscript computerTranscript = processingQueue.computerTranscript
             println "got transcrpton "
-            transcription.transcript = resultOutput
+            computerTranscript.transcript = resultOutput
             println "set trancript ${resultOutput.size()}"
-            transcription.twr = totalWordReadService.calculateTotalWordsRead(transcription)
-            println "calc words read ${transcription.twr}"
+            computerTranscript.twr = totalWordReadService.calculateTotalWordsReadFromComputerTranscript(computerTranscript)
+            println "calc words read ${computerTranscript.twr}"
             processingQueue.status = ProcessingStatus.FINISHED
-            transcription.status = TranscriptionStatus.FINISHED
+            computerTranscript.status = TranscriptionStatus.FINISHED
 
-            transcription.save(flush: true)
+            computerTranscript.save(flush: true)
             processingQueue.save(flush: true)
 
 
-            if(transcription.callbackUrl){
+            if(computerTranscript.audioFile.callbackUrl){
                 println "doing callback url "
-                RestResponse resp = doCallback(transcription)
+                RestResponse resp = doCallback(computerTranscript)
                 println "geting response ?"
                 println "status ${resp.status}"
 
                 if(resp.status == 200){
-                    transcription.status = TranscriptionStatus.CALLBACK_OK
+                    computerTranscript.status = TranscriptionStatus.CALLBACK_OK
                 }
                 else{
-                    transcription.status = TranscriptionStatus.CALLBACK_ERROR
+                    computerTranscript.status = TranscriptionStatus.CALLBACK_ERROR
                 }
                 println "response text ${resp.text}"
 
-                transcription.save(flush:true)
+                computerTranscript.save(flush:true)
 
-                println "saved status ${transcription.status}"
+                println "saved status ${computerTranscript.status}"
 
 //        println "return vlue ${resp.json.submitted}"
 //                assert resp.json.submitted!=null
             }
             else{
-                println "no callbcak url so not calling ${transcription.fileName} ${transcription.id}"
+                println "no callbcak url so not calling ${computerTranscript.audioFile.fileName} ${computerTranscript.id}"
             }
         }
 
@@ -99,13 +98,13 @@ class ProcessingQueueService {
 //        def resultOutput = future.get()
     }
 
-    def doCallback(Transcription transcription){
+    def doCallback(ComputerTranscript transcription){
         RestBuilder rest = new RestBuilder()
-        RestResponse resp = rest.post(transcription.callbackUrl) {
+        RestResponse resp = rest.post(transcription.audioFile.callbackUrl) {
             contentType "multipart/form-data"
             transcriptId = transcription.id as String
-            studentId = transcription.externalStudentId
-            passageId = transcription.passage.externalId
+            studentId = transcription.audioFile.externalStudentId
+            passageId = transcription.audioFile.passage.externalId
             twr = transcription.twr as String
             token = "Yi934nsVA3Nej03h"
         }
@@ -118,17 +117,18 @@ class ProcessingQueueService {
         println "starting on Transcript ${processingQueue.transcription.fileName}"
 
         // TODO: get directory from configuration
-        Transcription transcription = processingQueue.transcription
+        ComputerTranscript computerTranscript = processingQueue.computerTranscript
 
-        println "got transcript for filename diggity ${transcription.fileName}"
+        println "got transcript for filename diggity ${computerTranscript.audioFile.fileName}"
 
         // Passage passage = transcription.passage
-        Passage passage = Passage.executeQuery("select p from Transcription t join t.passage p where t=:transcript", [transcript: transcription], [max: 1])?.get(0)
+//        Passage passage = Passage.executeQuery("select p from ComputerTranscript t join t.audioFile.passage p where t=:transcript", [transcript: computerTranscript], [max: 1])?.get(0)
+        Passage passage = computerTranscript.audioFile.passage
 
         // TODO: create directory using transcript unique name
         println "passage to get? "
         println "passage ${passage?.name}"
-        String uniqueId = transcription.externalStudentId + passage.externalId
+        String uniqueId = computerTranscript.audioFile.externalStudentId + passage.externalId
         println "unique ID: ${uniqueId}"
         String processingDirectory = baseProcessingDirectory + "/" + uniqueId + "/"
 
@@ -140,7 +140,7 @@ class ProcessingQueueService {
         assert file.isDirectory()
 
         // TODO: write audio data to disk
-        byte[] audioData = transcription.audioData;
+        byte[] audioData = computerTranscript.audioFile.audioData;
         String inputFilePath = processingDirectory + "input.wav"
         File inputFile = new File(inputFilePath)
         println "Removing old file ${inputFile.delete()}"
@@ -231,8 +231,8 @@ class ProcessingQueueService {
             println "Timings file does not exist ${timingResultFile}"
             processingQueue.status=ProcessingStatus.ERROR
             processingQueue.save(flush: true)
-            transcription.status = TranscriptionStatus.ERROR
-            transcription.save(flush: true)
+            computerTranscript.status = TranscriptionStatus.ERROR
+            computerTranscript.save(flush: true)
             return ""
         }
     }
