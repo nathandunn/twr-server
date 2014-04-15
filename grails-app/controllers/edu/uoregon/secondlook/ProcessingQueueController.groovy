@@ -7,6 +7,7 @@ class ProcessingQueueController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def processingQueueService
+    def computerProcessingQueueService
 
     def index() {
         redirect(action: "list", params: params)
@@ -116,11 +117,19 @@ class ProcessingQueueController {
 //        return transcription.id
 //    }
 
+    /**
+     * @deprecated
+     * @param id
+     * @return
+     */
     def submitTranscript(Long id) {
         processingQueueService.submitTranscript(id)
-
-
         redirect(action: "show", id: id,controller: "transcription")
-
     }
+
+    def submitComputerTranscript(Long id) {
+        computerProcessingQueueService.submitTranscript(id)
+        redirect(action: "show", id: id,controller: "computerTranscript")
+    }
+
 }
