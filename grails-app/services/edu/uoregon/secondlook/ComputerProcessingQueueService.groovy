@@ -22,17 +22,26 @@ class ComputerProcessingQueueService {
 
 
         if (computerTranscript) {
+            println "is a computer transcript"
             ProcessingQueue processingQueue = ProcessingQueue.findByComputerTranscript(computerTranscript)
+            println "is there a processing Queue? ${processingQueue}"
             if (!processingQueue) {
+                println "creating one ${processingQueue}"
                 processingQueue = new ProcessingQueue(
                         computerTranscript: computerTranscript
                         , entryDate: new Date()
                         , status: ProcessingStatus.DELIVERED
-                ).save(insert: true)
+                ).save(insert: true,failOnError: true)
+                println "created one ${processingQueue}"
+            }
+            else{
+                processingQueue.status = ProcessingStatus.DELIVERED
+                processingQueue.save(flush:true)
             }
             computerTranscript.processingQueue = processingQueue
             computerTranscript.status = TranscriptionStatus.SUBMITTED
-            computerTranscript.save(flush: true)
+            computerTranscript.save(flush: true,failOnError: true)
+            println "saved a computer transcript ${computerTranscript}"
 //            return transcription.status
 
 //            println "Pre-processing transcript"
@@ -40,6 +49,7 @@ class ComputerProcessingQueueService {
 //            println "POST-processing transcript"
 
         } else {
+            println "no computer transcript found I guess"
             return null
         }
     }
@@ -114,7 +124,7 @@ class ComputerProcessingQueueService {
 
     def processTranscript(ProcessingQueue processingQueue) {
 
-        println "starting on Transcript ${processingQueue.transcription.fileName}"
+        println "starting on Transcript ${processingQueue.computerTranscript.audioFile.fileName}"
 
         // TODO: get directory from configuration
         ComputerTranscript computerTranscript = processingQueue.computerTranscript
