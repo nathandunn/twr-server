@@ -56,7 +56,7 @@ class ComputerProcessingQueueService {
 
     def processTranscriptAsync(ProcessingQueue processingQueue) {
         def resultOutput
-        runAsync {
+//        runAsync {
             processingQueue.status = ProcessingStatus.PROCESSING
             processingQueue.save(flush: true)
             println "start ASync processing"
@@ -99,7 +99,7 @@ class ComputerProcessingQueueService {
             else{
                 println "no callbcak url so not calling ${computerTranscript.audioFile.fileName} ${computerTranscript.id}"
             }
-        }
+//        }
 
 //        def future = callAsync {
 //            processTranscript(processingQueue)

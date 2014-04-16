@@ -4,7 +4,7 @@ class HumanTranscript {
 
     static constraints = {
 //        originalFile(maxSize: 50000000)
-        originalFile nullable: true, maxSize: 50000000
+        originalFile nullable: true
         processDate nullable: true
         transcript nullable: true
         status nullable: false
@@ -19,6 +19,7 @@ class HumanTranscript {
 
     static mapping = {
         transcript type: "text"
+        originalFile type: "text"
         transcriptErrors type: "text"
         note type: "text"
     }
@@ -30,7 +31,7 @@ class HumanTranscript {
     String note
     String researcher
     AudioFile audioFile
-    byte[] originalFile
+    String originalFile
 
     // results
     Integer twr
