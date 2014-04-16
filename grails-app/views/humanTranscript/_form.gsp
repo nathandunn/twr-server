@@ -1,5 +1,6 @@
 <%@ page import="edu.uoregon.secondlook.HumanTranscript" %>
 
+<resource:include components="richTextEditor" autoComplete="[skin: 'default']" />
 
 
 <div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'processDate', 'error')} ">
@@ -26,7 +27,9 @@
         <g:message code="audioFile.originalFile.label" default="Auxillary File"/>
         <span class="required-indicator">*</span>
     </label>
-    <input type="file" id="originalFile" name="originalFile" />
+    <richui:richTextEditor type="advanced" name="originalFile" id="originalFile" width="60" height="30" value="${humanTranscriptInstance.originalFile}"/>
+
+    %{--<input type="file" id="originalFile" name="originalFile" />--}%
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'transcript', 'error')} ">

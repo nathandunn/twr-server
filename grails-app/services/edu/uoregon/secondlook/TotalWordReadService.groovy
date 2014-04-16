@@ -19,7 +19,12 @@ class TotalWordReadService {
 //        passageText = passageText.replaceAll("\n"," ")
         passageText = passageText.replaceAll("\\s{2,}"," ")
         println "passage ${passageText}"
-        return TWR.findTWR(passageText,transcript)
+        if(transcript){
+            return TWR.findTWR(passageText,transcript)
+        }
+        else{
+            return -1
+        }
     }
 
 

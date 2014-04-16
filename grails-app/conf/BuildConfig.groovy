@@ -76,6 +76,7 @@ grails.project.dependency.resolution = {
 //        compile ":rest-client-builder:1.0.3"
         compile ":rest-client-builder:2.0.0"
         compile ":scaffolding:2.0.3"
+        compile ":richui:0.8"
 
 
         // plugins needed at runtime but not for compilation
