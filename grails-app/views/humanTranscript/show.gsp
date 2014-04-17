@@ -32,12 +32,13 @@
 
                 <li class="fieldcontain">
                     <span id="originalFile-label" class="property-label"><g:message code="audioFile.originalFile.label"
-                                                                                 default="Auxillary File"/></span>
+                                                                                 default="Original File"/></span>
 
                     <span class="property-value" aria-labelledby="originalFile-label">
                         <g:if test="${humanTranscriptInstance?.originalFile}">
-                            <g:formatNumber number="${humanTranscriptInstance.originalFile.length / 1E6}" type="number"/> MB
-                            <g:link action="downloadBinary" id="${humanTranscriptInstance.id}">Download</g:link>
+                            ${humanTranscriptInstance.originalFile}
+                            %{--<g:formatNumber number="${humanTranscriptInstance.originalFile.length / 1E6}" type="number"/> MB--}%
+                            %{--<g:link action="downloadBinary" id="${humanTranscriptInstance.id}">Download</g:link>--}%
                         </g:if>
                         <g:else>
                             ------
@@ -94,19 +95,19 @@
 				</li>
 
 
-                <li class="fieldcontain">
-                    <span id="transcriptErrors-label" class="property-label"><g:message code="humanTranscript.transcriptErrors.label" default="Transcript Errors" /></span>
+                %{--<li class="fieldcontain">--}%
+                    %{--<span id="transcriptErrors-label" class="property-label"><g:message code="humanTranscript.transcriptErrors.label" default="Transcript Errors" /></span>--}%
 
-                    <span class="property-value" aria-labelledby="transcriptErrors-label"><g:fieldValue bean="${humanTranscriptInstance}" field="transcriptErrors"/></span>
+                    %{--<span class="property-value" aria-labelledby="transcriptErrors-label"><g:fieldValue bean="${humanTranscriptInstance}" field="transcriptErrors"/></span>--}%
 
-                </li>
+                %{--</li>--}%
 
-                <li class="fieldcontain">
-                    <span id="passageErrors-label" class="property-label"><g:message code="humanTranscript.passageErrors.label" default="Passage Errors" /></span>
+                %{--<li class="fieldcontain">--}%
+                    %{--<span id="passageErrors-label" class="property-label"><g:message code="humanTranscript.passageErrors.label" default="Passage Errors" /></span>--}%
 
-                    <span class="property-value" aria-labelledby="passageErrors-label"><g:fieldValue bean="${humanTranscriptInstance}" field="passageErrors"/></span>
+                    %{--<span class="property-value" aria-labelledby="passageErrors-label"><g:fieldValue bean="${humanTranscriptInstance}" field="passageErrors"/></span>--}%
 
-                </li>
+                %{--</li>--}%
 
                 <li class="fieldcontain">
                     <span id="note-label" class="property-label"><g:message code="humanTranscript.note.label" default="Note" /></span>
