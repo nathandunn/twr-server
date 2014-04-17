@@ -7,6 +7,7 @@ class ProcessingQueueController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def processingQueueService
+    def computerProcessingQueueService
 
     def index() {
         redirect(action: "list", params: params)
@@ -92,6 +93,11 @@ class ProcessingQueueController {
         }
 
         try {
+            processingQueueInstance.computerTranscript.processingQueue = null
+            processingQueueInstance.computerTranscript = null
+//            processingQueueInstance.transcription.processingQueues = null
+//            processingQueueInstance.computerTranscript = null
+
             processingQueueInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'processingQueue.label', default: 'ProcessingQueue'), id])
             redirect(action: "list")
@@ -116,11 +122,19 @@ class ProcessingQueueController {
 //        return transcription.id
 //    }
 
+    /**
+     * @deprecated
+     * @param id
+     * @return
+     */
     def submitTranscript(Long id) {
         processingQueueService.submitTranscript(id)
-
-
         redirect(action: "show", id: id,controller: "transcription")
-
     }
+
+    def submitComputerTranscript(Long id) {
+        computerProcessingQueueService.submitTranscript(id)
+        redirect(action: "show", id: id,controller: "computerTranscript")
+    }
+
 }

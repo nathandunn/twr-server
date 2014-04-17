@@ -7,6 +7,7 @@ class Passage {
 
     static hasMany = [
             transcriptions: Transcription
+            ,audioFiles: AudioFile
     ]
 
     static mapping = {
@@ -25,8 +26,8 @@ class Passage {
     def getNumberedText() {
         String returnPassage = ""
         if(text){
-            text.split(" ").eachWithIndex{ token  , index ->
-                returnPassage += token  + "<div class='numberShow'> (${index+1})</div> "
+            text.split("\\s+").eachWithIndex{ token  , index ->
+                returnPassage += token  + "<div class='numberShow'>${index+1}</div> "
             }
         }
 
@@ -35,7 +36,7 @@ class Passage {
     }
 
     String getWord(Integer wordNumber) {
-        String[] tokens = text.split(" ")
+        String[] tokens = text.split("\\s+")
         if(wordNumber>tokens.length){
             return ""
         }
