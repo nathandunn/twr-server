@@ -17,6 +17,7 @@ class AudioFile {
 
     static mapping = {
         note type: "text"
+        audioData lazy:true
     }
 
     byte[] audioData
