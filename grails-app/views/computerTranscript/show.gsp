@@ -68,7 +68,15 @@
                                                                        default="Twr"/></span>
 
                 <span class="property-value" aria-labelledby="twr-label"><g:fieldValue
-                        bean="${computerTranscriptInstance}" field="twr"/></span>
+                        bean="${computerTranscriptInstance}" field="twr"/>
+                ...
+                ${computerTranscriptInstance?.twr >= 2 ? computerTranscriptInstance.audioFile.passage.getWord(computerTranscriptInstance.twr - 2) : '?'}
+                ${computerTranscriptInstance?.twr >= 1 ? computerTranscriptInstance.audioFile.passage.getWord(computerTranscriptInstance.twr - 1) : '?'}
+                    <b>${computerTranscriptInstance.audioFile.passage.getWord(computerTranscriptInstance.twr)}</b>
+                    ${computerTranscriptInstance.audioFile.passage.getWord(computerTranscriptInstance.twr + 1)}
+                    ${computerTranscriptInstance.audioFile.passage.getWord(computerTranscriptInstance.twr + 2)}
+                    ...
+                </span>
 
             </li>
         </g:if>
