@@ -9,7 +9,7 @@ class CheckQueueJob {
     Integer MAX_QUEUE_SIZE = 2
 
     static triggers = {
-      simple repeatInterval: 30000l // execute job once in 30 seconds
+      simple repeatInterval: 30000000l // execute job once in 30000 seconds
     }
 
     /**
