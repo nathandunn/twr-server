@@ -54,14 +54,37 @@
                       value="${computerTranscriptInstance?.returnDate}" default="${new Date()}" noSelection="['': '']"/>
     </div>
 
-    <div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'transcript', 'error')} ">
-        <label for="transcript">
-            <g:message code="computerTranscript.transcript.label" default="Computer Transcription"/>
+    %{--<div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'transcript', 'error')} ">--}%
+        %{--<label for="transcript">--}%
+            %{--<g:message code="computerTranscript.transcript.label" default="Computer Transcription"/>--}%
 
-        </label>
+        %{--</label>--}%
 
-        ${computerTranscriptInstance.transcript}
+        %{--${computerTranscriptInstance.transcript}--}%
         %{--<g:textArea name="transcript" value="${computerTranscriptInstance?.transcript}"/>--}%
+
+    %{--</div>--}%
+    <div class="fieldcontain">
+        <span id="transcript-label" class="property-label"><g:message code="computerTranscript.transcript.label"
+                                                                      default="Computer Transcript"/></span>
+
+        <span class="property-value" aria-labelledby="transcript-label">
+            %{--<g:fieldValue bean="${computerTranscriptInstance}" field="transcript"/>--}%
+            <g:if test="${computerTranscriptInstance?.transcript}">
+                Charaters: ${computerTranscriptInstance?.transcript.size()}
+                <g:link action="downloadTimingsFile" id="${computerTranscriptInstance.id}">
+                    Timings File
+                </g:link>
+                &nbsp;
+                <g:link action="downloadTranscripts" id="${computerTranscriptInstance.id}">
+                    Transcript
+                </g:link>
+            %{--${computerTranscriptInstance?.transcript}--}%
+            </g:if>
+            <g:else>
+                ------
+            </g:else>
+        </span>
 
     </div>
 
