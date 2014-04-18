@@ -20,6 +20,7 @@ class HumanTranscript {
     static mapping = {
         transcript type: "text"
         originalFile type: "text"
+        processedTranscript type: "text"
         transcriptErrors type: "text"
         note type: "text"
     }
