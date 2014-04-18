@@ -1,6 +1,6 @@
 package edu.uoregon.secondlook
 
-class ComputerTranscript {
+class ComputerTranscript implements TranscriptDisplay{
 
     static constraints = {
         returnDate nullable: true
@@ -38,4 +38,13 @@ class ComputerTranscript {
     Integer twr
 //    String timings
     String transcript // is the timings file
+
+    @Override
+    String getDisplay() {
+        String returnString = ""
+
+        returnString += "Comp ${twr}-${transcript?.size()} - ${transcriptionEngine.name} - ${returnDate}"
+
+        return returnString
+    }
 }

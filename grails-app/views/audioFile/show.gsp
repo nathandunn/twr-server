@@ -137,6 +137,19 @@
 
         </li>
 
+        <li class="fieldcontain">
+            <span id="diff-label" class="property-label">
+                Diffs
+            </span>
+
+            <span class="property-value" aria-labelledby="note-label">
+                %{--<g:fieldValue bean="${audioFileInstance}" field="note"/>--}%
+                <g:select name="patch1" from="${availableTranscripts}" optionValue="display" optionKey="id"/>
+                vs
+                %{--<g:select name="patch2" from="${availableTranscripts}"/>--}%
+                <g:select name="patch2" from="${availableTranscripts}" optionValue="display" optionKey="id"/>
+            </span>
+        </li>
 
         <li class="fieldcontain">
             <span id="note-label" class="property-label"><g:message code="audioFile.note.label"

@@ -16,7 +16,29 @@ class AudioFileController {
     }
 
     def show(AudioFile audioFileInstance) {
-        respond audioFileInstance
+        List<Object> availableTranscripts = new ArrayList<>()
+
+        availableTranscripts.addAll(audioFileInstance.computerTranscripts)
+        availableTranscripts.addAll(audioFileInstance.humanTranscripts)
+
+
+//        audioFileInstance.computerTranscripts.each {
+//            if(it.transcript){
+////                availableTranscripts.put(it.id,"Comp (${it.transcript.size()}):"+it?.transcriptionEngine?.name + " - " + it.requestDate)
+//                availableTranscripts.put(it.id,"Comp (${it.transcript.size()}):"+it?.transcriptionEngine?.name + " - " + it.requestDate)
+//            }
+//        }
+
+//        if(audioFileInstance.computerTranscripts && audioFileInstance.humanTranscripts){
+//            availableTranscripts.put(null,"------------")
+//        }
+
+//        audioFileInstance.humanTranscripts.each {
+//            availableTranscripts.put(it.id,"Human (${it.processedTranscript.size()}-${it.twr}):"+it.researcher+ " - " + it.processDate)
+////            availableTranscripts.add(it.processedTranscript)
+//        }
+
+        respond audioFileInstance, model:[availableTranscripts: availableTranscripts]
     }
 
     def create() {
@@ -135,4 +157,6 @@ class AudioFileController {
 //            render(file: transcription.audioData, contentType: "application/download", encoding: "UTF-8")
         }
     }
+
+
 }

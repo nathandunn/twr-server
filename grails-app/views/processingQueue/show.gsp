@@ -53,9 +53,15 @@
             <span id="transcription-label" class="property-label"><g:message code="processingQueue.transcription.label"
                                                                              default="Transcription"/></span>
 
-            <span class="property-value" aria-labelledby="transcription-label"><g:link controller="computerTranscript"
-                                                                                       action="show"
-                                                                                       id="${processingQueueInstance?.computerTranscript?.id}">${processingQueueInstance?.computerTranscript?.audioFile.fileName}</g:link></span>
+            <span class="property-value" aria-labelledby="transcription-label">
+                <g:if test="${processingQueueInstance.computerTranscript}">
+                    <g:link controller="computerTranscript" action="show"
+                            id="${processingQueueInstance?.computerTranscript?.id}">${processingQueueInstance?.computerTranscript?.audioFile.fileName}</g:link>
+                </g:if>
+                <g:else>
+                    ----
+                </g:else>
+            </span>
 
         </li>
 
