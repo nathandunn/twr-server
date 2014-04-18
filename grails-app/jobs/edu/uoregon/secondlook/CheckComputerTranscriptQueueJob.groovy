@@ -43,8 +43,13 @@ class CheckComputerTranscriptQueueJob {
         println "processes to process ${processesAdded}"
 
         for(ProcessingQueue processingQueue in processingQueueList){
-            println "processing ${processingQueue.computerTranscript.audioFile.fileName}"
-            computerProcessingQueueService.processTranscriptAsync(processingQueue)
+            if(processingQueue.computerTranscript){
+                println "processing ${processingQueue?.computerTranscript?.audioFile?.fileName}"
+                computerProcessingQueueService.processTranscriptAsync(processingQueue)
+            }
+            else{
+                processingQueue.delete(flush: true )
+            }
         }
 
 

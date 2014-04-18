@@ -649,3 +649,8 @@ a.skip {
     font-size: smaller;
     color: gray;
 }
+
+.annotationTable{
+    /*float: right;*/
+    /*display: inline-block;*/
+}

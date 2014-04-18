@@ -1,4 +1,8 @@
 package edu.uoregon.secondlook
+
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+
 //@CompileStatic
 class TotalWordReadService {
 
@@ -41,7 +45,13 @@ class TotalWordReadService {
         return TWR.findTWR(passageText,transcript)
     }
 
-    String processTranscript(String inputTranscript) {
+    String processTranscript(String inputHtmlTranscript) {
+
+
+        Document doc = Jsoup.parse(inputHtmlTranscript);
+        String inputTranscript = doc.text()
+
+
         if(inputTranscript.contains("[")){
             println "contains ["
 

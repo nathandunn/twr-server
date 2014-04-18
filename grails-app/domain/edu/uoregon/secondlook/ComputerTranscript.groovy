@@ -13,12 +13,14 @@ class ComputerTranscript {
         transcriptionEngine nullable: true
         audioFile nullable: false
         processingQueue nullable: true
+        humanAnnotation nullable: true
     }
 
     static mapping = {
         transcript type: "text"
         transcriptErrors type: "text"
         note type: "text"
+        humanAnnotation type: "text"
     }
 
     Date requestDate
@@ -30,6 +32,7 @@ class ComputerTranscript {
     TranscriptionEngine transcriptionEngine
     AudioFile audioFile
     ProcessingQueue processingQueue
+    String humanAnnotation
 
     // results
     Integer twr

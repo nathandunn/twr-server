@@ -3,6 +3,11 @@
 %{--<resource:include components="richTextEditor" autoComplete="[skin: 'default']" />--}%
 <head>
     <ckeditor:resources/>
+    <ckeditor:config var="toolbar_Mytoolbar">
+        [
+            [ 'Source', '-', 'Bold','Underline','-','RemoveFormat','TextColor','Styles','Format','Font','FontSize'  ]
+        ]
+    </ckeditor:config>
 </head>
 
 
@@ -28,25 +33,32 @@
 
 <div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'originalFile', 'error')} required">
     <label for="originalFile">
-        <g:message code="audioFile.originalFile.label" default="Original File"/>
-        <span class="required-indicator">*</span>
+        <g:message code="audioFile.originalFile.label" default="Passage Annotation"/>
+        %{--<span class="required-indicator">*</span>--}%
     </label>
 
-    <ckeditor:editor name="originalFile" height="400px" width="80%">
-        ${humanTranscriptInstance.originalFile}
-    </ckeditor:editor>
+    <div class="annotationTable">
+        <ckeditor:editor name="originalFile" height="100px" width="90%" toolbar="Mytoolbar">
+            ${humanTranscriptInstance.originalFile}
+        </ckeditor:editor>
+    </div>
     %{--<richui:richTextEditor type="advanced" name="originalFile" id="originalFile" width="60" height="30"--}%
-                           %{--value="${humanTranscriptInstance.originalFile}"/>--}%
+    %{--value="${humanTranscriptInstance.originalFile}"/>--}%
 
     %{--<input type="file" id="originalFile" name="originalFile" />--}%
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'transcript', 'error')} ">
     <label for="transcript">
-        <g:message code="humanTranscript.transcript.label" default="Transcript"/>
+        <g:message code="humanTranscript.transcript.label" default="Annotated Human Transcript"/>
 
     </label>
-    <g:textArea name="transcript" value="${humanTranscriptInstance?.transcript}"/>
+    %{--<g:textArea name="transcript" value="${humanTranscriptInstance?.transcript}"/>--}%
+    <div class="annotationTable">
+        <ckeditor:editor name="transcript" height="100px" width="90%" toolbar="Mytoolbar">
+            ${humanTranscriptInstance?.transcript}
+        </ckeditor:editor>
+    </div>
 
 </div>
 
@@ -71,20 +83,20 @@
 </div>
 
 %{--<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'transcriptErrors', 'error')} ">--}%
-    %{--<label for="transcriptErrors">--}%
-        %{--<g:message code="humanTranscript.transcriptErrors.label" default="Transcript Errors"/>--}%
+%{--<label for="transcriptErrors">--}%
+%{--<g:message code="humanTranscript.transcriptErrors.label" default="Transcript Errors"/>--}%
 
-    %{--</label>--}%
-    %{--<g:textArea name="transcriptErrors" value="${humanTranscriptInstance?.transcriptErrors}"/>--}%
+%{--</label>--}%
+%{--<g:textArea name="transcriptErrors" value="${humanTranscriptInstance?.transcriptErrors}"/>--}%
 
 %{--</div>--}%
 
 %{--<div class="fieldcontain ${hasErrors(bean: humanTranscriptInstance, field: 'passageErrors', 'error')} ">--}%
-    %{--<label for="passageErrors">--}%
-        %{--<g:message code="humanTranscript.passageErrors.label" default="Passage Errors"/>--}%
+%{--<label for="passageErrors">--}%
+%{--<g:message code="humanTranscript.passageErrors.label" default="Passage Errors"/>--}%
 
-    %{--</label>--}%
-    %{--<g:textArea name="passageErrors" value="${humanTranscriptInstance?.passageErrors}"/>--}%
+%{--</label>--}%
+%{--<g:textArea name="passageErrors" value="${humanTranscriptInstance?.passageErrors}"/>--}%
 
 %{--</div>--}%
 

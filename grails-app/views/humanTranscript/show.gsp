@@ -43,11 +43,52 @@
             <span class="property-value" aria-labelledby="originalFile-label">
                 <g:if test="${humanTranscriptInstance?.originalFile}">
                     ${humanTranscriptInstance.originalFile}
-                %{--<g:formatNumber number="${humanTranscriptInstance.originalFile.length / 1E6}" type="number"/> MB--}%
-                %{--<g:link action="downloadBinary" id="${humanTranscriptInstance.id}">Download</g:link>--}%
                 </g:if>
                 <g:else>
                     ------
+                </g:else>
+            </span>
+        </li>
+
+
+        <li class="fieldcontain">
+            <span id="transcript-label" class="property-label"><g:message code="humanTranscript.transcript.label"
+                                                                          default="Annotated Human Transcript"/></span>
+
+            <span class="property-value" aria-labelledby="transcript-label">
+                %{--<g:fieldValue bean="${humanTranscriptInstance}" field="transcript"/>--}%
+                ${humanTranscriptInstance.transcript}
+            </span>
+
+        </li>
+
+        <li class="fieldcontain">
+            <span id="processedTranscript-label" class="property-label"><g:message
+                    code="humanTranscript.processedTranscript.label" default="Processed Transcript"/></span>
+
+            <span class="property-value" aria-labelledby="processedTranscript-label"><g:fieldValue
+                    bean="${humanTranscriptInstance}" field="processedTranscript"/></span>
+
+        </li>
+
+        <li class="fieldcontain">
+            <span id="twr-label" class="property-label"><g:message code="humanTranscript.twr.label"
+                                                                   default="Twr"/></span>
+
+            <span class="property-value" aria-labelledby="twr-label">
+                <g:if test="${humanTranscriptInstance?.twr}">
+                    <g:fieldValue
+                            bean="${humanTranscriptInstance}" field="twr"/>
+                    ...
+                    ${humanTranscriptInstance?.twr >= 2 ? humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr - 2) : '?'}
+                    ${humanTranscriptInstance?.twr >= 1 ? humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr - 1) : '?'}
+                    <b>${humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr)}</b>
+                    ${humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr + 1)}
+                    ${humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr + 2)}
+                    ...
+                </g:if>
+                <g:else>
+                    -------
                 </g:else>
             </span>
 
@@ -59,7 +100,6 @@
 
             <span class="property-value" aria-labelledby="processDate-label"><g:formatDate
                     date="${humanTranscriptInstance?.processDate}"/></span>
-
         </li>
 
 
@@ -70,28 +110,7 @@
 
             <span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${humanTranscriptInstance}"
                                                                                       field="status"/></span>
-
         </li>
-
-        <g:if test="${humanTranscriptInstance?.twr}">
-            <li class="fieldcontain">
-                <span id="twr-label" class="property-label"><g:message code="humanTranscript.twr.label"
-                                                                       default="Twr"/></span>
-
-                <span class="property-value" aria-labelledby="twr-label"><g:fieldValue
-                        bean="${humanTranscriptInstance}" field="twr"/>
-                ...
-                ${humanTranscriptInstance?.twr >= 2 ? humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr - 2) : '?'}
-                ${humanTranscriptInstance?.twr >= 1 ? humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr - 1) : '?'}
-                    <b>${humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr)}</b>
-                    ${humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr + 1)}
-                    ${humanTranscriptInstance.audioFile.passage.getWord(humanTranscriptInstance.twr + 2)}
-                    ...
-                </span>
-
-            </li>
-        </g:if>
-
 
         <li class="fieldcontain">
             <span id="researcher-label" class="property-label"><g:message code="humanTranscript.researcher.label"
@@ -99,24 +118,6 @@
 
             <span class="property-value" aria-labelledby="researcher-label"><g:fieldValue
                     bean="${humanTranscriptInstance}" field="researcher"/></span>
-
-        </li>
-
-        <li class="fieldcontain">
-            <span id="transcript-label" class="property-label"><g:message code="humanTranscript.transcript.label"
-                                                                          default="Transcript"/></span>
-
-            <span class="property-value" aria-labelledby="transcript-label"><g:fieldValue
-                    bean="${humanTranscriptInstance}" field="transcript"/></span>
-
-        </li>
-
-        <li class="fieldcontain">
-            <span id="processedTranscript-label" class="property-label"><g:message
-                    code="humanTranscript.processedTranscript.label" default="Processed Transcript"/></span>
-
-            <span class="property-value" aria-labelledby="processedTranscript-label"><g:fieldValue
-                    bean="${humanTranscriptInstance}" field="processedTranscript"/></span>
 
         </li>
 
