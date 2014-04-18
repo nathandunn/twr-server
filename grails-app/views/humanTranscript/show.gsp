@@ -59,7 +59,6 @@
                 %{--<g:fieldValue bean="${humanTranscriptInstance}" field="transcript"/>--}%
                 ${humanTranscriptInstance.transcript}
             </span>
-
         </li>
 
         <li class="fieldcontain">

@@ -38,18 +38,6 @@
             </li>
         </g:if>
 
-        <g:if test="${computerTranscriptInstance?.transcript}">
-            <li class="fieldcontain">
-                <span id="transcript-label" class="property-label"><g:message code="computerTranscript.transcript.label"
-                                                                              default="Transcript"/></span>
-
-                <span class="property-value" aria-labelledby="transcript-label">
-                    %{--<g:fieldValue bean="${computerTranscriptInstance}" field="transcript"/>--}%
-                    ${computerTranscriptInstance?.transcript.size()}
-                </span>
-
-            </li>
-        </g:if>
 
         <g:if test="${computerTranscriptInstance?.status}">
             <li class="fieldcontain">
@@ -81,27 +69,65 @@
             </li>
         </g:if>
 
-        <g:if test="${computerTranscriptInstance?.transcriptErrors}">
-            <li class="fieldcontain">
-                <span id="transcriptErrors-label" class="property-label"><g:message
-                        code="computerTranscript.transcriptErrors.label" default="Transcript Errors"/></span>
+    %{--<g:if test="${computerTranscriptInstance?.transcriptErrors}">--}%
+    %{--<li class="fieldcontain">--}%
+    %{--<span id="transcriptErrors-label" class="property-label"><g:message--}%
+    %{--code="computerTranscript.transcriptErrors.label" default="Transcript Errors"/></span>--}%
 
-                <span class="property-value" aria-labelledby="transcriptErrors-label"><g:fieldValue
-                        bean="${computerTranscriptInstance}" field="transcriptErrors"/></span>
+    %{--<span class="property-value" aria-labelledby="transcriptErrors-label"><g:fieldValue--}%
+    %{--bean="${computerTranscriptInstance}" field="transcriptErrors"/></span>--}%
 
-            </li>
-        </g:if>
+    %{--</li>--}%
+    %{--</g:if>--}%
 
-        <g:if test="${computerTranscriptInstance?.passageErrors}">
-            <li class="fieldcontain">
-                <span id="passageErrors-label" class="property-label"><g:message
-                        code="computerTranscript.passageErrors.label" default="Passage Errors"/></span>
 
-                <span class="property-value" aria-labelledby="passageErrors-label"><g:fieldValue
-                        bean="${computerTranscriptInstance}" field="passageErrors"/></span>
+        <li class="fieldcontain">
+            <span id="transcript-label" class="property-label"><g:message code="computerTranscript.transcript.label"
+                                                                          default="Computer Transcript"/></span>
 
-            </li>
-        </g:if>
+            <span class="property-value" aria-labelledby="transcript-label">
+                %{--<g:fieldValue bean="${computerTranscriptInstance}" field="transcript"/>--}%
+                <g:if test="${computerTranscriptInstance?.transcript}">
+                    Charaters: ${computerTranscriptInstance?.transcript.size()}
+                    <g:link action="downloadTimingsFile" id="${computerTranscriptInstance.id}">
+                        Timings File
+                    </g:link>
+                    &nbsp;
+                    <g:link action="downloadTranscripts" id="${computerTranscriptInstance.id}">
+                        Transcript
+                    </g:link>
+                %{--${computerTranscriptInstance?.transcript}--}%
+                </g:if>
+                <g:else>
+                    ------
+                </g:else>
+            </span>
+
+        </li>
+
+        <li class="fieldcontain">
+            <span id="humanAnnotation-label" class="property-label"><g:message code="computerTranscript.transcript.label"
+                                                                               default="Human Annotation"/></span>
+            <span class="property-value" aria-labelledby="humanAnnotation-label">
+                <g:if test="${computerTranscriptInstance?.humanAnnotation}">
+                    ${computerTranscriptInstance.humanAnnotation}
+                </g:if>
+                <g:else>
+                    ------
+                </g:else>
+            </span>
+        </li>
+
+    %{--<g:if test="${computerTranscriptInstance?.passageErrors}">--}%
+    %{--<li class="fieldcontain">--}%
+    %{--<span id="passageErrors-label" class="property-label"><g:message--}%
+    %{--code="computerTranscript.passageErrors.label" default="Passage Errors"/></span>--}%
+
+    %{--<span class="property-value" aria-labelledby="passageErrors-label"><g:fieldValue--}%
+    %{--bean="${computerTranscriptInstance}" field="passageErrors"/></span>--}%
+
+    %{--</li>--}%
+    %{--</g:if>--}%
 
 
         <g:if test="${computerTranscriptInstance?.transcriptionEngine}">
