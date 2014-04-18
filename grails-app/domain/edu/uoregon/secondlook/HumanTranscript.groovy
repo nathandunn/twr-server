@@ -1,6 +1,6 @@
 package edu.uoregon.secondlook
 
-class HumanTranscript {
+class HumanTranscript implements TranscriptDisplay{
 
     static constraints = {
 //        originalFile(maxSize: 50000000)
@@ -41,4 +41,11 @@ class HumanTranscript {
     // actual annotated transcript
     String transcript // is the human file
     String processedTranscript
+
+    @Override
+    String getDisplay() {
+        String returnString = ""
+        returnString += "Human ${twr}-${processedTranscript?.size()} - ${researcher} - ${processDate}"
+        return returnString
+    }
 }
