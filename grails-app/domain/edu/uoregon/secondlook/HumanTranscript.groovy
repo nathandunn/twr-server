@@ -31,11 +31,13 @@ class HumanTranscript {
     String note
     String researcher
     AudioFile audioFile
+    // this file // passage annotation
     String originalFile
 
     // results
     Integer twr
 //    String timings
+    // actual annotated transcript
     String transcript // is the human file
     String processedTranscript
 }
