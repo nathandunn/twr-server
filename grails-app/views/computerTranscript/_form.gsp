@@ -1,5 +1,14 @@
 <%@ page import="edu.uoregon.secondlook.ComputerTranscript" %>
 
+<head>
+    <ckeditor:resources/>
+    <ckeditor:config var="toolbar_Mytoolbar">
+        [
+            [ 'Source', '-', 'Bold','Underline','-','RemoveFormat','TextColor','Styles','Format','Font','FontSize'  ]
+        ]
+    </ckeditor:config>
+</head>
+
 <div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'transcriptionEngine', 'error')} ">
     <label for="transcriptionEngine">
         <g:message code="computerTranscript.transcriptionEngine.label" default="Transcription Engine"/>
@@ -47,10 +56,26 @@
 
     <div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'transcript', 'error')} ">
         <label for="transcript">
-            <g:message code="computerTranscript.transcript.label" default="Transcript"/>
+            <g:message code="computerTranscript.transcript.label" default="Computer Transcription"/>
 
         </label>
-        <g:textArea name="transcript" value="${computerTranscriptInstance?.transcript}"/>
+
+        ${computerTranscriptInstance.transcript}
+        %{--<g:textArea name="transcript" value="${computerTranscriptInstance?.transcript}"/>--}%
+
+    </div>
+
+    <div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'transcript', 'error')} ">
+        <label for="transcript">
+            <g:message code="computerTranscript.transcript.label" default="Human Annotation"/>
+
+        </label>
+        %{--<g:textArea name="transcript" value="${computerTranscriptInstance?.transcript}"/>--}%
+        <div class="annotationTable">
+            <ckeditor:editor name="humanAnnotation" height="100px" width="90%" toolbar="Mytoolbar">
+                ${computerTranscriptInstance.humanAnnotation}
+            </ckeditor:editor>
+        </div>
 
     </div>
 
@@ -77,23 +102,23 @@
 
 
 
-    <div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'transcriptErrors', 'error')} ">
-        <label for="transcriptErrors">
-            <g:message code="computerTranscript.transcriptErrors.label" default="Transcript Errors"/>
+    %{--<div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'transcriptErrors', 'error')} ">--}%
+        %{--<label for="transcriptErrors">--}%
+            %{--<g:message code="computerTranscript.transcriptErrors.label" default="Transcript Errors"/>--}%
 
-        </label>
-        <g:textArea name="transcriptErrors" value="${computerTranscriptInstance?.transcriptErrors}"/>
+        %{--</label>--}%
+        %{--<g:textArea name="transcriptErrors" value="${computerTranscriptInstance?.transcriptErrors}"/>--}%
 
-    </div>
+    %{--</div>--}%
 
-    <div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'passageErrors', 'error')} ">
-        <label for="passageErrors">
-            <g:message code="computerTranscript.passageErrors.label" default="Passage Errors"/>
+    %{--<div class="fieldcontain ${hasErrors(bean: computerTranscriptInstance, field: 'passageErrors', 'error')} ">--}%
+        %{--<label for="passageErrors">--}%
+            %{--<g:message code="computerTranscript.passageErrors.label" default="Passage Errors"/>--}%
 
-        </label>
-        <g:textArea name="passageErrors" value="${computerTranscriptInstance?.passageErrors}"/>
+        %{--</label>--}%
+        %{--<g:textArea name="passageErrors" value="${computerTranscriptInstance?.passageErrors}"/>--}%
 
-    </div>
+    %{--</div>--}%
 
 </g:if>
 <g:else>
