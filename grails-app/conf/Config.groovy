@@ -109,9 +109,9 @@ log4j = {
                 grails.util.Environment.current.name == "staging"
         ) {
             def mailAppender = new org.apache.log4j.net.SMTPAppender()
-            mailAppender.setFrom("ndunn@cas.uoregon.edu")
-            mailAppender.setTo("ndunn@cas.uoregon.edu")
-            mailAppender.setSubject("SticklebackDb - An log4j error has been generated in the ${grails.util.Environment.current.name} environment")
+            mailAppender.setFrom("ndunn@uoregon.edu")
+            mailAppender.setTo("ndunn@uoregon.edu")
+            mailAppender.setSubject("Second Look - An log4j error has been generated in the ${grails.util.Environment.current.name} environment")
             mailAppender.setSMTPHost("smtp.uoregon.edu")
             // using long as should only be executed in the case of an error
             mailAppender.setLayout(shortPatternLayout)
