@@ -149,6 +149,10 @@
                 %{--<g:select name="patch2" from="${availableTranscripts}"/>--}%
                 <g:select name="patch2" from="${availableTranscripts}" optionValue="display" optionKey="id"/>
             </span>
+            <br/>
+            <div id="diff-box">
+
+            </div>
         </li>
 
         <li class="fieldcontain">
