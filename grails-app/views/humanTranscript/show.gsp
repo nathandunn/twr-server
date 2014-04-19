@@ -38,7 +38,7 @@
 
         <li class="fieldcontain">
             <span id="originalFile-label" class="property-label"><g:message code="audioFile.originalFile.label"
-                                                                            default="Original File"/></span>
+                                                                            default="Passage Annotation"/></span>
 
             <span class="property-value" aria-labelledby="originalFile-label">
                 <g:if test="${humanTranscriptInstance?.originalFile}">
