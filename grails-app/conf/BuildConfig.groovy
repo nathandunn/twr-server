@@ -90,7 +90,10 @@ grails.project.dependency.resolution = {
 
         compile ":mail:1.0.1"
         // plugins.shiro=1.1.4
-        compile ":shiro:1.2.0"
+//        compile ":shiro:1.2.0"
+        compile (":shiro:latest.release") {
+            excludes "servlet-api"
+        }
         compile ":crypto:2.0"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
