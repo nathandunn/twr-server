@@ -36,7 +36,7 @@
     <shiro:user>
         <g:set var="researcherId"
                value="${ResearcherUser.findByUsername(org.apache.shiro.SecurityUtils.subject.principal).id}"/>
-        <g:link controller="researcher" action="edit" id="${researcherId}">Edit <shiro:principal/></g:link>
+        <g:link controller="researcherUser" action="edit" id="${researcherId}">Edit <shiro:principal/></g:link>
     %{--&nbsp;&nbsp;--}%
         <g:link controller="auth" action="signOut">Logout</g:link>
     </shiro:user>
