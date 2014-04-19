@@ -44,6 +44,7 @@ navigation = {
         HumanTranscript(controller: 'humanTranscript', action: 'index')
         TranscriptionEngine(controller: 'transcriptionEngine', action: 'index')
         ProcessingQueue(controller: 'processingQueue', action: 'list')
+        Researchers(controller: 'researcherUser', action: 'index')
 
 ////        // A nav item pointing to HomeController, using the default action
 //        experiment(controller: 'experiment', action: 'list') {
