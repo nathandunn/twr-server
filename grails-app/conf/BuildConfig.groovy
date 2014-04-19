@@ -88,6 +88,10 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.2.1"
         runtime ':hibernate:3.6.10.2'
 
+        compile ":mail:1.0.1"
+        // plugins.shiro=1.1.4
+        compile ":shiro:1.2.0"
+        compile ":crypto:2.0"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
