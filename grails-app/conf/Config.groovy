@@ -70,24 +70,89 @@ environments {
 }
 
 // log4j configuration
-log4j = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+//log4j = {
+//    // Example of changing the log pattern for the default console appender:
+//    //
+//    //appenders {
+//    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+//    //}
+//
+//    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+//           'org.codehaus.groovy.grails.web.pages',          // GSP
+//           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+//           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+//           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+//           'org.codehaus.groovy.grails.commons',            // core / classloading
+//           'org.codehaus.groovy.grails.plugins',            // plugins
+//           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+//           'org.springframework',
+//           'org.hibernate',
+//           'net.sf.ehcache.hibernate'
+//}
 
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
-           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-           'org.codehaus.groovy.grails.commons',            // core / classloading
-           'org.codehaus.groovy.grails.plugins',            // plugins
-           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+String logDirectory = "${System.getProperty('catalina.base') ?: '.'}/logs"
+
+// log4j configuration
+log4j = {
+    // Example of changing the log pattern for the default console
+    // appender:
+    //
+
+    appenders {
+        def shortPatternLayout = new org.apache.log4j.PatternLayout()
+        shortPatternLayout.setConversionPattern("%d %c{3} [%m]%n")
+        console name: 'stdout', layout: shortPatternLayout
+//        console name: "stdout", layout: pattern(conversionPattern: "%d{yyyy-MMM-dd HH:mm:ss,SSS} [%t] %c %x%n %-5p %m%n")
+        rollingFile name: 'file', file: "${logDirectory}/metagenomicsdb-output.log", maxFileSize: 2048
+        if (grails.util.Environment.current == grails.util.Environment.PRODUCTION
+                ||
+                grails.util.Environment.current.name == "staging"
+        ) {
+            def mailAppender = new org.apache.log4j.net.SMTPAppender()
+            mailAppender.setFrom("ndunn@cas.uoregon.edu")
+            mailAppender.setTo("ndunn@cas.uoregon.edu")
+            mailAppender.setSubject("SticklebackDb - An log4j error has been generated in the ${grails.util.Environment.current.name} environment")
+            mailAppender.setSMTPHost("smtp.uoregon.edu")
+            // using long as should only be executed in the case of an error
+            mailAppender.setLayout(shortPatternLayout)
+            appender name: 'mail', mailAppender
+        }
+    }
+
+    root {
+        warn 'stdout', 'file', 'mail'
+    }
+
+//    appenders {
+//        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+//    }
+
+    error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
+            'org.codehaus.groovy.grails.web.pages', //  GSP
+            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+            'org.codehaus.groovy.grails.web.mapping', // URL mapping
+            'org.codehaus.groovy.grails.commons', // core / classloading
+            'org.codehaus.groovy.grails.plugins', // plugins
+            'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+            'org.springframework',
+            'org.hibernate',
+            'net.sf.ehcache.hibernate'
+
+//    trace 'org.hibernate.type'
+//    debug 'org.hibernate.SQL'
+
+    info 'grails.app'
+//    debug 'grails.app.jobs'
+//    debug 'grails.app.taglib'
+//    debug 'grails.app.taglib.edu.uoregon.nic.nemo.portal'
+//    debug 'grails.app.controllers'
+    debug 'grails.app.services'
+//    debug 'grails.app.services.edu.uoregon.nic.nemo.portal.OntologyService'
+//    debug 'grails.app.services.edu.uoregon.nic.nemo.portal.DataStubService'
+//    debug 'grails.app.services.edu.uoregon.nic.nemo.portal.UserService'
+//    debug 'grails.app.controllers.edu.uoregon.nic.nemo.portal'
+//    debug 'grails.app.controllers.edu.uoregon.nic.nemo.portal.TermController'
 }
 
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements
@@ -113,3 +178,19 @@ grails {
     }
 }
 remove this line */
+grails {
+    mail {
+//        host = "smtp.gmail.com"
+        host = "smtp.uoregon.edu"
+//        port = 465
+//        username = "ndunn@uoregon.edu"
+//        password = "yourpassword"
+        props = [
+                "mail.smtp.auth": "false"
+//                "mail.smtp.socketFactory.port":"465",
+//                "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+// "mail.smtp.socketFactory.fallback":"false"
+        ]
+
+    }
+}

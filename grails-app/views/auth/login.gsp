@@ -26,7 +26,10 @@
         </tr>
         <tr>
           <td />
-          <td><input type="submit" value="Sign in" /></td>
+          <td>
+              <input type="submit" value="Sign in" />
+              <g:link action="forgotPassword" controller="auth">Forgot Password</g:link>
+          </td>
         </tr>
       </tbody>
     </table>
