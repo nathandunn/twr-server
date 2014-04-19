@@ -5,6 +5,7 @@ import edu.uoregon.secondlook.PassageText
 //import edu.uoregon.secondlook.Patch
 import edu.uoregon.secondlook.ProcessingQueue
 import edu.uoregon.secondlook.ProcessingStatus
+import edu.uoregon.secondlook.ResearcherUser
 import edu.uoregon.secondlook.TranscriptionEngine
 
 class BootStrap {
@@ -55,6 +56,14 @@ class BootStrap {
         {
             println "Already imported"
         }
+
+
+        if(ResearcherUser.count==0){
+            println "start to stub users"
+            new DataStubber().stubUsers()
+            println "finish stub users"
+        }
+
     }
     def destroy = {
     }

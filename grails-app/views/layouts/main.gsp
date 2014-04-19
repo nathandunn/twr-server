@@ -1,3 +1,4 @@
+<%@ page import="edu.uoregon.secondlook.ResearcherUser" %>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -21,8 +22,25 @@
 
 <body>
 
-%{--<div id="grailsLogo" role="banner"><a href="http://grails.org"><img--}%
-        %{--src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a></div>--}%
+<div id="grailsLogo" role="banner">
+    <a href="/">
+    <img height="50px" width="500px" src="${resource(dir: 'images', file: 'SpeechSignal.jpg')}" alt="Grails"/>
+</a>
+</div>
+
+
+<div class="user-menu">
+    <shiro:notUser>
+        <g:link controller="auth" action="login">Login</g:link>
+    </shiro:notUser>
+    <shiro:user>
+        <g:set var="researcherId"
+               value="${ResearcherUser.findByUsername(org.apache.shiro.SecurityUtils.subject.principal).id}"/>
+        <g:link controller="researcher" action="edit" id="${researcherId}">Edit <shiro:principal/></g:link>
+    %{--&nbsp;&nbsp;--}%
+        <g:link controller="auth" action="signOut">Logout</g:link>
+    </shiro:user>
+</div>
 
 <nav:primary/>
 %{--<nav:secondary/>--}%
