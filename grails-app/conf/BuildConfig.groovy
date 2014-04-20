@@ -72,7 +72,6 @@ grails.project.dependency.resolution = {
 
         compile ':cache:1.1.1'
 //        compile ":quartz:1.0.1"
-        compile ':quartz:1.0-RC11'
         compile ":executor:0.3"
 //        compile ":rest-client-builder:1.0.3"
         compile ":rest-client-builder:2.0.0"
@@ -93,7 +92,10 @@ grails.project.dependency.resolution = {
 //        compile ":shiro:1.2.0"
         compile (":shiro:latest.release") {
             excludes "servlet-api"
+            excludes "quartz"
         }
+        compile ':quartz:1.0.1'
+
         compile ":crypto:2.0"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
