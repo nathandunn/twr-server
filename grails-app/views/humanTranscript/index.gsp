@@ -54,11 +54,11 @@
                         </td>
 					
 						<td>
-                            <g:if test="${humanTranscriptInstance?.transcript?.size()>50}">
-                                ${humanTranscriptInstance.transcript.substring(0,50)}...
+                            <g:if test="${humanTranscriptInstance?.processedTranscript?.size()>30}">
+                                ${humanTranscriptInstance.processedTranscript.substring(0,30)}...
                             </g:if>
                             <g:else>
-                                ${humanTranscriptInstance.transcript}
+                                ${humanTranscriptInstance.processedTranscript}
                             </g:else>
                         </td>
 					
