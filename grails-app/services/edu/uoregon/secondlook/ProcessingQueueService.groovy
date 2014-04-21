@@ -135,13 +135,16 @@ class ProcessingQueueService {
         println "processing directory ${processingDirectory}"
 
         File file = new File(processingDirectory)
-        if (file.mkdir())
+        if (file.mkdir()){
             assert file.exists()
+        }
         assert file.isDirectory()
 
         // TODO: write audio data to disk
         byte[] audioData = transcription.audioData;
+        println "aduioData size: ${audioData.length}"
         String inputFilePath = processingDirectory + "input.wav"
+        println "inputFilePath: ${inputFilePath}"
         File inputFile = new File(inputFilePath)
         println "Removing old file ${inputFile.delete()}"
         FileOutputStream fileOutputStream = new FileOutputStream(inputFile)
@@ -153,11 +156,13 @@ class ProcessingQueueService {
         // TODO: use SOX/LAME convert from android multimedia .amr to 16kHz Mono WAV file
 
         String decodeFilePath = processingDirectory + "decodable.wav"
+        println "decodeFilePath: [${decodeFilePath}]"
         File decodeFile = new File(decodeFilePath)
         println "removing old output file ${decodeFile.delete()}"
 
 //        if(new File(soxBinary).exists()){
         String execSox = [soxBinary, inputFilePath, "-b", "16", decodeFilePath, "channels", "1", "rate", "16k"].join(" ")
+        println "sox exec: [${execSox}]"
         Process procSox
         try {
             procSox = execSox.execute()
