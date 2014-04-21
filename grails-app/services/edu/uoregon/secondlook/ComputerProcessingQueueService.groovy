@@ -212,7 +212,14 @@ class ComputerProcessingQueueService {
 //        String command = """${decodeBinary} mono0a ${processingDirectory}"""
 //        def proc = command.execute()                 // Call *execute* on the string
         //String execString = [decodeBinary,processingDirectory,8].join(" ")
-        String execString = [decodeBinary, processingDirectory].join(" ")
+
+        String execString
+        if(computerTranscript?.transcriptionEngine?.lookup){
+            execString = [computerTranscript.transcriptionEngine.lookup, processingDirectory].join(" ")
+        }
+        else{
+            execString = [decodeBinary, processingDirectory].join(" ")
+        }
 //        String execString = ["ls"].join(" ")
         println "execString ${execString}"
         Process proc

@@ -22,34 +22,30 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list transcriptionEngine">
-			
-				<g:if test="${transcriptionEngineInstance?.note}">
-				<li class="fieldcontain">
-					<span id="note-label" class="property-label"><g:message code="transcriptionEngine.note.label" default="Note" /></span>
-					
-						<span class="property-value" aria-labelledby="note-label"><g:fieldValue bean="${transcriptionEngineInstance}" field="note"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${transcriptionEngineInstance?.lookup}">
+
+                <li class="fieldcontain">
+                    <span id="name-label" class="property-label"><g:message code="transcriptionEngine.name.label" default="Name" /></span>
+
+                    <span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${transcriptionEngineInstance}" field="name"/></span>
+
+                </li>
+
 				<li class="fieldcontain">
 					<span id="lookup-label" class="property-label"><g:message code="transcriptionEngine.lookup.label" default="Lookup" /></span>
 					
 						<span class="property-value" aria-labelledby="lookup-label"><g:fieldValue bean="${transcriptionEngineInstance}" field="lookup"/></span>
 					
 				</li>
-				</g:if>
-			
-				<g:if test="${transcriptionEngineInstance?.name}">
-				<li class="fieldcontain">
-					<span id="name-label" class="property-label"><g:message code="transcriptionEngine.name.label" default="Name" /></span>
-					
-						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${transcriptionEngineInstance}" field="name"/></span>
-					
-				</li>
-				</g:if>
-			
+
+
+
+                <li class="fieldcontain">
+                    <span id="note-label" class="property-label"><g:message code="transcriptionEngine.note.label" default="Note" /></span>
+
+                    <span class="property-value" aria-labelledby="note-label"><g:fieldValue bean="${transcriptionEngineInstance}" field="note"/></span>
+
+                </li>
+
 			</ol>
 			<g:form url="[resource:transcriptionEngineInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
