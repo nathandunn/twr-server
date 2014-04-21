@@ -138,7 +138,9 @@ class ComputerProcessingQueueService {
         // TODO: create directory using transcript unique name
         println "passage to get? "
         println "passage ${passage?.name}"
-        String uniqueId = computerTranscript.audioFile.externalStudentId + passage.externalId
+
+        String dateString = new Date().format("yyyyMMddHHmmss")
+        String uniqueId = computerTranscript.audioFile.externalStudentId +"-"+ passage.externalId +"-"+ dateString
         println "unique ID: ${uniqueId}"
         String processingDirectory = baseProcessingDirectory + "/" + uniqueId + "/"
 
