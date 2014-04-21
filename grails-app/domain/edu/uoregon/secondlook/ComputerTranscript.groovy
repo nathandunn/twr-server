@@ -37,7 +37,8 @@ class ComputerTranscript implements TranscriptDisplay{
     // results
     Integer twr
 //    String timings
-    String transcript // is the timings file
+    String transcript
+    String processingDirectory // is the timings file
 
     @Override
     String getDisplay() {
