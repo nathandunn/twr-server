@@ -45,7 +45,7 @@ class CheckComputerTranscriptQueueJob {
         for(ProcessingQueue processingQueue in processingQueueList){
             if(processingQueue.computerTranscript){
                 println "processing ${processingQueue?.computerTranscript?.audioFile?.fileName}"
-                computerProcessingQueueService.processTranscriptAsync(processingQueue)
+                computerProcessingQueueService.processTranscriptAsync(processingQueue.id)
             }
             else{
                 processingQueue.delete(flush: true )
