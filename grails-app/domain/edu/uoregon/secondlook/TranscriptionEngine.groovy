@@ -11,6 +11,8 @@ class TranscriptionEngine {
     }
 
     String name
+
+    // what binary is called
     String lookup
     String note
 }
