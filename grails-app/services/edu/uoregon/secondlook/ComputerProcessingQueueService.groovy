@@ -143,6 +143,7 @@ class ComputerProcessingQueueService {
         String uniqueId = computerTranscript.audioFile.externalStudentId +"-"+ passage.externalId +"-"+ dateString
         println "unique ID: ${uniqueId}"
         String processingDirectory = baseProcessingDirectory + "/" + uniqueId + "/"
+        computerTranscript.processingDirectory = processingDirectory
 
         println "processing directory ${processingDirectory}"
 
