@@ -14,6 +14,7 @@ class ComputerTranscript implements TranscriptDisplay{
         audioFile nullable: false
         processingQueue nullable: true
         humanAnnotation nullable: true
+        processingDirectory nullable: true
     }
 
     static mapping = {
