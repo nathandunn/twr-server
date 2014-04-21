@@ -54,16 +54,17 @@ class ComputerProcessingQueueService {
         }
     }
 
-    def processTranscriptAsync(ProcessingQueue processingQueue) {
+    def processTranscriptAsync(Long processingQueueId) {
         def resultOutput
-//        runAsync {
+        runAsync {
+            ProcessingQueue processingQueue = ProcessingQueue.findById(processingQueueId)
             processingQueue.status = ProcessingStatus.PROCESSING
             processingQueue.save(flush: true)
             println "start ASync processing"
             resultOutput = processTranscript(processingQueue)
             println "after ASync processing"
             ComputerTranscript computerTranscript = processingQueue.computerTranscript
-            println "got transcrpton "
+            println "got transcription "
             computerTranscript.transcript = resultOutput
             println "set trancript ${resultOutput.size()}"
             computerTranscript.twr = totalWordReadService.calculateTotalWordsReadFromComputerTranscript(computerTranscript)
@@ -99,7 +100,7 @@ class ComputerProcessingQueueService {
             else{
                 println "no callbcak url so not calling ${computerTranscript.audioFile.fileName} ${computerTranscript.id}"
             }
-//        }
+        }
 
 //        def future = callAsync {
 //            processTranscript(processingQueue)
