@@ -114,7 +114,10 @@
         <g:message code="humanTranscript.note.label" default="Note"/>
 
     </label>
-    <g:textArea name="note" value="${humanTranscriptInstance?.note}"/>
+    %{--<g:textArea name="note" value="${humanTranscriptInstance?.note}"/>--}%
+    <ckeditor:editor name="note" height="100px" width="90%" toolbar="Full">
+        ${humanTranscriptInstance.note}
+    </ckeditor:editor>
 
 </div>
 

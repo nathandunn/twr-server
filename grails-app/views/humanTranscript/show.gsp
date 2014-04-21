@@ -139,8 +139,9 @@
             <span id="note-label" class="property-label"><g:message code="humanTranscript.note.label"
                                                                     default="Note"/></span>
 
-            <span class="property-value" aria-labelledby="note-label"><g:fieldValue bean="${humanTranscriptInstance}"
-                                                                                    field="note"/></span>
+            <span class="property-value" aria-labelledby="note-label">
+                ${humanTranscriptInstance.note}
+            </span>
 
         </li>
 
