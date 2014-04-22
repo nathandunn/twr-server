@@ -1,6 +1,9 @@
 package edu.uoregon.secondlook
 
 import grails.transaction.Transactional
+import org.springframework.web.multipart.commons.CommonsMultipartFile
+
+import javax.servlet.http.HttpServletResponse
 
 import static org.springframework.http.HttpStatus.*
 
@@ -8,6 +11,8 @@ import static org.springframework.http.HttpStatus.*
 class ComputerTranscriptController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def computerProcessingQueueService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -175,5 +180,77 @@ class ComputerTranscriptController {
 //            response.setHeader("Content-Disposition", "attachment; filename=" + fileName(transcription.fileName))
         response.setHeader("Content-Disposition", "attachment; filename=" + transcriptFileName(computerTranscript))
         render(text: generateTranscriptFile(computerTranscript), contentType: "application/download", encoding: "UTF-8")
+    }
+
+    def submit() {
+//        def submit(String fileName, String passageId, String studentId,byte[] audioData) {
+
+
+        CommonsMultipartFile uploadedFile = request.getFile('audioData')
+        def fileName = params.fileName ?: uploadedFile.originalFilename
+//        uploadedFile.bytes
+//        byte[] audio = uploadedFile.bytes
+
+//        String fileName = uploadedFile.originalFilename
+
+        byte[] audioData = params.audioData.bytes
+        def passageId = params.passageId
+        def token = params.token
+        println "token ${token}"
+        println "params ${params.keySet()}"
+        println "passage Id ${passageId}"
+        println "fileName ${fileName}"
+        println "audioData ${audioData?.length}"
+        println "externalStudentId ${params.studentId}"
+        println "callback url ${params.callbackUrl}"
+        Passage passage = Passage.findByExternalId(passageId)
+
+        if (!passage) {
+            println "Passage not found ${passageId}"
+            render "Passage not found "
+            response.status = HttpServletResponse.SC_BAD_REQUEST
+            return
+        }
+
+        if (token != "JM0pEILe2Avluxg") {
+            println "bad token ${token}"
+            render "Bad token sent"
+            response.status = HttpServletResponse.SC_UNAUTHORIZED
+            return
+        }
+
+        println "audio data ${audioData.length}"
+
+
+
+        AudioFile audioFile = new AudioFile(
+                fileName: fileName
+                ,audioData: audioData
+                ,passage: passage
+                ,externalStudentId: params.studentId
+                ,callbackUrl: params.callbackUrl
+        ).save(insert:true,flush:true)
+
+        ComputerTranscript transcription = new ComputerTranscript(
+                audioFile: audioFile
+                , requestDate: new Date()
+                , status: TranscriptionStatus.RECEIVED
+
+        ).save(insert: true, flush: true, failOnError: true)
+        computerProcessingQueueService.submitTranscript(transcription.id)
+
+//        Transcription transcription = new Transcription(
+//                fileName: fileName
+//                , audioData: audioData
+//                , passage: passage
+//                , externalStudentId: params.studentId
+//                , requestDate: new Date()
+//                , callbackUrl: params.callbackUrl
+//                , status: TranscriptionStatus.RECEIVED
+//
+//        ).save(insert: true, flush: true, failOnError: true)
+//        processingQueueService.submitTranscript(transcription.id)
+
+        render "{submitted: ${transcription.id} }"
     }
 }

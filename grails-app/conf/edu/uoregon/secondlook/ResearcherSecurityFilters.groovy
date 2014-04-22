@@ -14,10 +14,10 @@ class ResearcherSecurityFilters {
                 // Access control by convention.
 //                accessControl()
 
-                if(actionName in ['list','show','index']){
-                    return true
-//                if ((controllerName+':'+actionName) in ['book:view', 'book:list']) {
+//                if(actionName in ['list','show','index']){
 //                    return true
+                if ((controllerName+':'+actionName) in ['computerTranscript:submit']) {
+                    return true
                 } else {
                     accessControl(auth: false)
 //                    accessControl()
