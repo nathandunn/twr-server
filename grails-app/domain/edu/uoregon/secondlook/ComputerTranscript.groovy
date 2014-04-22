@@ -45,7 +45,7 @@ class ComputerTranscript implements TranscriptDisplay{
     String getDisplay() {
         String returnString = ""
 
-        returnString += "Comp ${twr}-${transcript?.size()} - ${transcriptionEngine.name} - ${returnDate}"
+        returnString += "Comp ${twr}-${transcript?.size()} - ${transcriptionEngine?.name} - ${returnDate}"
 
         return returnString
     }

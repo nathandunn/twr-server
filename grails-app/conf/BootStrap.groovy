@@ -47,22 +47,22 @@ class BootStrap {
 //            ).save(insert: true, flush: true, failOnError: true)
 //        }
 
-        if(AudioFile.count==0){
-            println "not yet imported . . starting import"
-            new DataStubber().convertTranscripts()
-            println "Finished import"
-        }
-        else
-        {
-            println "Already imported"
-        }
-
-
-        if(ResearcherUser.count==0){
-            println "start to stub users"
-            new DataStubber().stubUsers()
-            println "finish stub users"
-        }
+//        if(AudioFile.count==0){
+//            println "not yet imported . . starting import"
+//            new DataStubber().convertTranscripts()
+//            println "Finished import"
+//        }
+//        else
+//        {
+//            println "Already imported"
+//        }
+//
+//
+//        if(ResearcherUser.count==0){
+//            println "start to stub users"
+//            new DataStubber().stubUsers()
+//            println "finish stub users"
+//        }
 
     }
     def destroy = {

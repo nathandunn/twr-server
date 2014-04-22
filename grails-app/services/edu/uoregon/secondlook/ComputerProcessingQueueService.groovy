@@ -177,6 +177,11 @@ class ComputerProcessingQueueService {
             procSox = execSox.execute()
         } catch (e) {
             println "error doing SOX ${e}"
+            computerTranscript.status = TranscriptionStatus.ERROR
+            computerTranscript.save()
+            processingQueue.status = ProcessingStatus.ERROR
+            processingQueue.save(flush:true)
+            return ""
         }
 
         println "output ${procSox.in.text}"
