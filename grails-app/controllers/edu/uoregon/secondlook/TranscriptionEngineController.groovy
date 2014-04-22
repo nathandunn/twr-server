@@ -99,7 +99,7 @@ class TranscriptionEngineController {
     def createRemaining(Long id) {
         println "id: ${id}"
 
-//        TranscriptionEngine transcriptionEngine = TranscriptionEngine.findById(id)
+        TranscriptionEngine transcriptionEngine = TranscriptionEngine.findById(id)
 
         // find all audioFiles with no computer transcript using that transcriptEngine
         List<AudioFile> audioFileList = AudioFile.executeQuery("select distinct af from AudioFile af join af.computerTranscripts ct where ct.transcriptionEngine.id = :id ",[id:id])
@@ -120,6 +120,7 @@ class TranscriptionEngineController {
                     audioFile: audioFile
                     , requestDate: new Date()
                     , status: TranscriptionStatus.RECEIVED
+                    ,transcriptionEngine: transcriptionEngine
 
             ).save(insert: true, flush: true, failOnError: true)
 

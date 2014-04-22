@@ -238,10 +238,17 @@ class ComputerTranscriptController {
                 , callbackUrl: params.callbackUrl
         ).save(insert: true, flush: true)
 
+
+        TranscriptionEngine transcriptionEngine = TranscriptionEngine.findByDefaultEngine(true)
+        if(!transcriptionEngine){
+            transcriptionEngine = TranscriptionEngine.all[0]
+        }
+
         ComputerTranscript transcription = new ComputerTranscript(
                 audioFile: audioFile
                 , requestDate: new Date()
                 , status: TranscriptionStatus.RECEIVED
+                ,transcriptionEngine: transcriptionEngine
 
         ).save(insert: true, flush: true, failOnError: true)
         computerProcessingQueueService.submitTranscript(transcription.id)

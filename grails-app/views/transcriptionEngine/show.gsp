@@ -47,6 +47,14 @@
                 </li>
 
                 <li class="fieldcontain">
+                    <span id="defaultEngine-label" class="property-label">
+                        <g:message code="transcriptionEngine.defaultEngine.label" default="Default Engine" /></span>
+
+                    <span class="property-value" aria-labelledby="defaultEngine-label"><g:fieldValue bean="${transcriptionEngineInstance}" field="defaultEngine"/></span>
+
+                </li>
+
+                <li class="fieldcontain">
                     <span id="transcriptionEngines-label" class="property-label">
                         Computer Transcripts
                         <g:link action="createRemaining" id="${transcriptionEngineInstance.id}">Compute Remaining</g:link>

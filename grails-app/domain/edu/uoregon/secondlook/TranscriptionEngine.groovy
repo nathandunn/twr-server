@@ -15,4 +15,5 @@ class TranscriptionEngine {
     // what binary is called
     String lookup
     String note
+    Boolean defaultEngine
 }
