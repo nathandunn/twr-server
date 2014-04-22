@@ -54,7 +54,7 @@
         <g:message code="audioFile.note.label" default="Note"/>
 
     </label>
-    <g:textField name="note" value="${audioFileInstance?.note}"/>
+    <g:textArea name="note" value="${audioFileInstance?.note}"/>
 
 </div>
 
