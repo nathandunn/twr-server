@@ -21,6 +21,14 @@
 
 </div>
 
+<li class="fieldcontain">
+    <span id="defaultEngine-label" class="property-label">
+        <g:message code="transcriptionEngine.defaultEngine.label" default="Default Engine" />
+    </span>
+
+    <g:checkBox name="defaultEngine" />
+</li>
+
 <div class="fieldcontain ${hasErrors(bean: transcriptionEngineInstance, field: 'note', 'error')} ">
     <label for="note">
         <g:message code="transcriptionEngine.note.label" default="Note" />
