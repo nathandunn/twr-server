@@ -46,6 +46,24 @@
 
                 </li>
 
+                <li class="fieldcontain">
+                    <span id="transcriptionEngines-label" class="property-label">
+                        Computer Transcripts
+                        <g:link action="createRemaining" id="${transcriptionEngineInstance.id}">Compute Remaining</g:link>
+                    </span>
+
+                    <span class="property-value" aria-labelledby="note-label">
+                        <g:each in="${computerTranscripts}" var="transcript">
+                            <g:link action="show" id="${transcript.id}">
+                                ${transcript.audioFile.fileName}
+                            </g:link>
+                            &bull;
+                        </g:each>
+                    </span>
+
+                </li>
+
+
 			</ol>
 			<g:form url="[resource:transcriptionEngineInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">

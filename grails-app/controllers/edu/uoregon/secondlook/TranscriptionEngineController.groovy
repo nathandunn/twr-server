@@ -10,14 +10,17 @@ class TranscriptionEngineController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def computerProcessingQueueService
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond TranscriptionEngine.list(params), model:[transcriptionEngineInstanceCount: TranscriptionEngine.count()]
     }
 
     def show(TranscriptionEngine transcriptionEngineInstance) {
-        respond transcriptionEngineInstance
+        respond transcriptionEngineInstance, [model:[computerTranscripts:ComputerTranscript.findAllByTranscriptionEngine(transcriptionEngineInstance)]]
     }
+
 
     def create() {
         respond new TranscriptionEngine(params)
@@ -90,6 +93,51 @@ class TranscriptionEngineController {
             }
             '*'{ render status: NO_CONTENT }
         }
+    }
+
+    @Transactional
+    def createRemaining(Long id) {
+        println "id: ${id}"
+
+//        TranscriptionEngine transcriptionEngine = TranscriptionEngine.findById(id)
+
+        // find all audioFiles with no computer transcript using that transcriptEngine
+        List<AudioFile> audioFileList = AudioFile.executeQuery("select distinct af from AudioFile af join af.computerTranscripts ct where ct.transcriptionEngine.id = :id ",[id:id])
+        Set<AudioFile> uniqueSeq = new HashSet<>(audioFileList)
+        println "with engine size ${uniqueSeq.size()}"
+
+        List<AudioFile> allAudioFileList = AudioFile.all
+        println "all size ${allAudioFileList.size()}"
+
+        List<AudioFile> aList = allAudioFileList - uniqueSeq
+        println "to process size ${aList.size()}"
+
+
+        for(AudioFile audioFile in aList){
+            println "processing ${audioFile.fileName}"
+
+            ComputerTranscript transcription = new ComputerTranscript(
+                    audioFile: audioFile
+                    , requestDate: new Date()
+                    , status: TranscriptionStatus.RECEIVED
+
+            ).save(insert: true, flush: true, failOnError: true)
+
+            computerProcessingQueueService.submitTranscript(transcription.id)
+        }
+
+        redirect(action: "index", controller: "processingQueue",params:[sort:"entryDate",order:"desc"])
+
+
+//        List<AudioFile> audioFileList = new ArrayList<>()
+//        AudioFile.all.each { audioFile ->
+//            if(!audioFile.computerTranscripts){
+//                audioFileList.add(audioFile)
+//            }
+//            else{
+//                if(transcriptionEngine in )
+//            }
+//        }
     }
 
     protected void notFound() {
