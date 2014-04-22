@@ -182,6 +182,7 @@ class ComputerTranscriptController {
         render(text: generateTranscriptFile(computerTranscript), contentType: "application/download", encoding: "UTF-8")
     }
 
+    @Transactional
     def submit() {
 //        def submit(String fileName, String passageId, String studentId,byte[] audioData) {
 
