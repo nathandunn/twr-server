@@ -6,10 +6,10 @@ class CheckComputerTranscriptQueueJob {
 
     def computerProcessingQueueService
 
-    Integer MAX_QUEUE_SIZE = 2
+    Integer MAX_QUEUE_SIZE = 5
 
     static triggers = {
-      simple repeatInterval: 10000l // execute job once in 10 seconds
+      simple repeatInterval: 30000l // execute job once in 30 seconds
     }
 
     /**

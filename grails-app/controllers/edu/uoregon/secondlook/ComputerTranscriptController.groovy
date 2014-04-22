@@ -85,6 +85,12 @@ class ComputerTranscriptController {
             return
         }
 
+        computerTranscriptInstance.audioFile.removeFromComputerTranscripts(computerTranscriptInstance)
+        computerTranscriptInstance.processingQueue = null
+        computerTranscriptInstance.transcriptionEngine = null
+
+        computerTranscriptInstance.save(flush: true)
+
         computerTranscriptInstance.delete flush: true
 
         request.withFormat {
@@ -226,11 +232,11 @@ class ComputerTranscriptController {
 
         AudioFile audioFile = new AudioFile(
                 fileName: fileName
-                ,audioData: audioData
-                ,passage: passage
-                ,externalStudentId: params.studentId
-                ,callbackUrl: params.callbackUrl
-        ).save(insert:true,flush:true)
+                , audioData: audioData
+                , passage: passage
+                , externalStudentId: params.studentId
+                , callbackUrl: params.callbackUrl
+        ).save(insert: true, flush: true)
 
         ComputerTranscript transcription = new ComputerTranscript(
                 audioFile: audioFile
