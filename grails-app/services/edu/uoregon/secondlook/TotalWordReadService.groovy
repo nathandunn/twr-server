@@ -53,21 +53,21 @@ class TotalWordReadService {
 
 
         if(inputTranscript.contains("[")){
-            println "contains ["
+//            println "contains ["
 
             List<String> firstTokens = inputTranscript.tokenize("[")
-            println "tokens ${firstTokens}"
+//            println "tokens ${firstTokens}"
             List<String> lastTokens = new ArrayList<>()
 
             firstTokens.each { token ->
                 println "token: ${token}"
                 if(token.contains("]")){
                     String tokenToAdd = token.substring(token.indexOf("]")+1)
-                    println "adding token '${tokenToAdd}'"
+//                    println "adding token '${tokenToAdd}'"
                     lastTokens.add(tokenToAdd)
                 }
                 else{
-                    println "ELSE adding token ${token}"
+//                    println "ELSE adding token ${token}"
                     lastTokens.add(token)
                 }
             }
@@ -80,7 +80,7 @@ class TotalWordReadService {
             return returnString.toUpperCase().trim()
         }
         else{
-            println "DOES NOTE contain ["
+//            println "DOES NOTE contain ["
 //            return inputTranscript.replaceAll(" +"," ").toUpperCase()
             return inputTranscript.replaceAll("\\p{Punct}","").replaceAll(" +"," ").toUpperCase().trim()
         }
