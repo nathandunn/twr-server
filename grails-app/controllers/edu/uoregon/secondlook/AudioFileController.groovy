@@ -1,9 +1,8 @@
 package edu.uoregon.secondlook
 
-
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class AudioFileController {
@@ -12,7 +11,7 @@ class AudioFileController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond AudioFile.list(params), model:[audioFileInstanceCount: AudioFile.count()]
+        respond AudioFile.list(params), model: [audioFileInstanceCount: AudioFile.count()]
     }
 
     def show(AudioFile audioFileInstance) {
@@ -21,6 +20,23 @@ class AudioFileController {
         availableTranscripts.addAll(audioFileInstance.computerTranscripts)
         availableTranscripts.addAll(audioFileInstance.humanTranscripts)
 
+        Map<TranscriptionEngine, List<ComputerTranscript>> computerTranscriptMap = new HashMap<>()
+
+
+        for (ComputerTranscript computerTranscript in audioFileInstance.computerTranscripts) {
+            if (computerTranscript.transcriptionEngine) {
+
+                if (computerTranscriptMap.containsKey(computerTranscript.transcriptionEngine)) {
+                    List<ComputerTranscript> computerTranscriptList = computerTranscriptMap.get(computerTranscript.transcriptionEngine)
+                    computerTranscriptList.add(computerTranscript)
+                    computerTranscriptMap.put(computerTranscript.transcriptionEngine, computerTranscriptList)
+                } else {
+                    List<ComputerTranscript> computerTranscriptList = new ArrayList<>()
+                    computerTranscriptList.add(computerTranscript)
+                    computerTranscriptMap.put(computerTranscript.transcriptionEngine, computerTranscriptList)
+                }
+            }
+        }
 
 //        audioFileInstance.computerTranscripts.each {
 //            if(it.transcript){
@@ -38,7 +54,7 @@ class AudioFileController {
 ////            availableTranscripts.add(it.processedTranscript)
 //        }
 
-        respond audioFileInstance, model:[availableTranscripts: availableTranscripts]
+        respond audioFileInstance, model: [availableTranscripts: availableTranscripts, computerTranscripts: computerTranscriptMap]
     }
 
     def create() {
@@ -53,11 +69,11 @@ class AudioFileController {
         }
 
         if (audioFileInstance.hasErrors()) {
-            respond audioFileInstance.errors, view:'create'
+            respond audioFileInstance.errors, view: 'create'
             return
         }
 
-        audioFileInstance.save flush:true
+        audioFileInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -82,26 +98,26 @@ class AudioFileController {
 
 //        println "params auidoData ${params.audioData?.size} ${params.audioData?.originalFilename}"
 
-        if(!params.audioData.originalFilename){
+        if (!params.audioData.originalFilename) {
             params.audioData = audioFileInstance.audioData
         }
 
         audioFileInstance.properties = params
 
         if (audioFileInstance.hasErrors()) {
-            respond audioFileInstance.errors, view:'edit'
+            respond audioFileInstance.errors, view: 'edit'
             return
         }
 
 
-        audioFileInstance.save flush:true
+        audioFileInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'AudioFile.label', default: 'AudioFile'), audioFileInstance.id])
                 redirect audioFileInstance
             }
-            '*'{ respond audioFileInstance, [status: OK] }
+            '*' { respond audioFileInstance, [status: OK] }
         }
     }
 
@@ -115,23 +131,23 @@ class AudioFileController {
 
         audioFileInstance.computerTranscripts.each {
             audioFileInstance.removeFromComputerTranscripts(it)
-            audioFileInstance.save(flush:true )
+            audioFileInstance.save(flush: true)
             it.audioFile = null
-            it.save(flush:true)
+            it.save(flush: true)
         }
 //        audioFileInstance.humanTranscripts.del
 //        audioFileInstance.computerTranscripts = nu
         audioFileInstance.passage = null
-        audioFileInstance.save(flush:true )
+        audioFileInstance.save(flush: true)
 
-        audioFileInstance.delete flush:true
+        audioFileInstance.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'AudioFile.label', default: 'AudioFile'), audioFileInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -141,12 +157,12 @@ class AudioFileController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'audioFile.label', default: 'AudioFile'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 
     def downloadBinary(Integer id) {
-        AudioFile audioFile= AudioFile.get(id)
+        AudioFile audioFile = AudioFile.get(id)
         if (!audioFile) {
             response.status = 404
             return

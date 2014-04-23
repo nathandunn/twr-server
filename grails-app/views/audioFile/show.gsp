@@ -87,19 +87,33 @@
                     code="audioFile.computerTranscripts.label" default="Computer Transcripts"/></span>
 
             <span class="property-value" aria-labelledby="computerTranscripts-label">
-                <g:if test="${audioFileInstance?.computerTranscripts}">
-                    <g:each in="${audioFileInstance.computerTranscripts}" var="c" status="st">
-                        <g:link controller="computerTranscript" action="show" id="${c.id}">
-                            <g:formatDate date="${c.requestDate}" type="date"/>
-                        %{--<g:if test="${c.status == edu.uoregon.secondlook.TranscriptionStatus.FINISHED}">--}%
-                            TWR[${c.twr}]
-                        %{--</g:if>--}%
-                        %{--<g:else>--}%
-                            [${c.status}]</g:link>
+                <g:if test="${computerTranscripts}">
+                    <g:each in="${computerTranscripts}" var="transcriptEngine" status="st">
+                        Engine:
+                        <g:link action="show" controller="transcriptionEngine" id="${transcriptEngine.key.id}">
+                            ${transcriptEngine?.key.name}:</g:link>
 
-                        <g:if test="${st.intValue() < audioFileInstance.computerTranscripts.size() - 1}">
-                            &bull;
+                        <g:each in="${transcriptEngine.value}" var="computerTranscript" status="st2">
+                            <g:link action="show" controller="computerTranscript" id="${computerTranscript.id}">
+                                <g:formatDate date="${computerTranscript.requestDate}" type="date"/>
+                                ${computerTranscript.status} ${computerTranscript.twr}
+                            </g:link>
+                            <g:if test="${st2.intValue() < transcriptEngine.value.size() - 1}">
+                                &bull;
+                            </g:if>
+                        </g:each>
+
+                        <g:if test="${st.intValue() < computerTranscripts.size() - 1}">
+                            <br/>
                         </g:if>
+                    %{--${transcriptEngine.value.size()}--}%
+                    %{--<g:link controller="computerTranscript" action="show" id="${c.id}">--}%
+                    %{--<g:formatDate date="${c.requestDate}" type="date"/>--}%
+                    %{--[${c.twr}]--}%
+                    %{--[${c.status}]--}%
+                    %{--[${c?.transcriptionEngine?.name}]--}%
+                    %{--</g:link>--}%
+
                     </g:each>
                 </g:if>
                 <g:else>
@@ -107,7 +121,8 @@
                 </g:else>
 
                 <br/>
-                <g:link action="create" controller="computerTranscript" params="[audioFile:audioFileInstance.id]">Add Computer Transcript</g:link>
+                <g:link action="create" controller="computerTranscript"
+                        params="[audioFile: audioFileInstance.id]">Add Computer Transcript</g:link>
             </span>
         </li>
 
@@ -132,7 +147,8 @@
                     -------
                 </g:else>
                 <br/>
-                <g:link action="create" controller="humanTranscript" params="[audioFile:audioFileInstance.id]">Add Human Transcript</g:link>
+                <g:link action="create" controller="humanTranscript"
+                        params="[audioFile: audioFileInstance.id]">Add Human Transcript</g:link>
             </span>
 
         </li>
@@ -148,11 +164,10 @@
                 vs
                 %{--<g:select name="patch2" from="${availableTranscripts}"/>--}%
                 <g:select name="patch2" from="${availableTranscripts}" optionValue="display" optionKey="id"/>
+                <div id="diff-box">
+                    Not implemented yet
+                </div>
             </span>
-            <br/>
-            <div id="diff-box">
-
-            </div>
         </li>
 
         <li class="fieldcontain">
