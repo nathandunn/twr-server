@@ -64,10 +64,10 @@
                 </td>
                 <td>
 
-                    ${passageInstance.audioFiles.humanTranscripts.size()}
+                    ${passageInstance.humanTranscriptCount}
                 </td>
                 <td>
-                    ${passageInstance.audioFiles.computerTranscripts.size()}
+                    ${passageInstance.computerTranscriptCount}
                 </td>
 
             </tr>
