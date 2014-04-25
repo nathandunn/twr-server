@@ -44,4 +44,24 @@ class Passage {
             return tokens[wordNumber-1]
         }
     }
+
+    Integer getComputerTranscriptCount(){
+        int i = 0
+        for(AudioFile audioFile in audioFiles){
+            audioFile.computerTranscripts.each {
+                ++i
+            }
+        }
+        return i
+    }
+
+    Integer getHumanTranscriptCount(){
+        int i = 0
+        for(AudioFile audioFile in audioFiles){
+            audioFile.humanTranscripts.each {
+                ++i
+            }
+        }
+        return i
+    }
 }
