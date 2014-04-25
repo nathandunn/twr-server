@@ -62,7 +62,7 @@
 
                     <span class="property-value" aria-labelledby="note-label">
                         <g:each in="${computerTranscripts}" var="transcript">
-                            <g:link action="show" id="${transcript.id}">
+                            <g:link action="show" id="${transcript.id}" controller="computerTranscript">
                                 ${transcript.audioFile.fileName}
                             </g:link>
                             &bull;
