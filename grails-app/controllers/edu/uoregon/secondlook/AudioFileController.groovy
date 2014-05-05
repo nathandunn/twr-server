@@ -14,6 +14,29 @@ class AudioFileController {
         respond AudioFile.list(params), model: [audioFileInstanceCount: AudioFile.count()]
     }
 
+    def getTranscripts(Integer humanId, Integer computerId) {
+        String humanTranscript = HumanTranscript.findById(humanId)?.processedTranscript
+        String computerTranscript = ComputerTranscript.findById(computerId).transcript
+
+        String returnString = ""
+        if (computerTranscript) {
+            String timingsFile = computerTranscript
+            timingsFile.eachLine { line ->
+                String[] cols = line.split(" ")
+                if (cols.length == 5) {
+                    returnString += cols[4].toUpperCase() + " "
+                }
+            }
+        }
+
+        println "${returnString.trim()} vs ${humanTranscript}"
+
+        render(contentType: "text/json") {
+            [computerTranscript: returnString.trim(), humanTranscript: humanTranscript]
+        }
+//        render model:[computerTranscript:returnString.trim(),humanTranscript:humanTranscript] as JSON
+    }
+
     def show(AudioFile audioFileInstance) {
         List<Object> availableTranscripts = new ArrayList<>()
 
@@ -55,6 +78,7 @@ class AudioFileController {
 //        }
 
         respond audioFileInstance, model: [availableTranscripts: availableTranscripts, computerTranscripts: computerTranscriptMap]
+//        respond audioFileInstance, model: [availableHumanTranscripts: availableTranscripts, computerTranscripts: computerTranscriptMap]
     }
 
     def create() {
