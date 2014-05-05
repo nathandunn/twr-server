@@ -5,6 +5,8 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'audioFile.label', default: 'AudioFile')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
+    <g:javascript src="diff_match_patch_uncompressed.js"/>
+    <r:require modules="jquery"/>
 </head>
 
 <body>
@@ -80,6 +82,7 @@
                     bean="${audioFileInstance}" field="callbackUrl"/></span>
 
         </li>
+
 
 
         <li class="fieldcontain">
@@ -158,12 +161,17 @@
                 Diffs
             </span>
 
+
+
+
             <span class="property-value" aria-labelledby="note-label">
                 %{--<g:fieldValue bean="${audioFileInstance}" field="note"/>--}%
-                <g:select name="patch1" from="${availableTranscripts}" optionValue="display" optionKey="id"/>
+                <g:select id="patch1" name="patch1" from="${audioFileInstance.humanTranscripts}" optionValue="display"
+                          optionKey="id"/>
                 vs
                 %{--<g:select name="patch2" from="${availableTranscripts}"/>--}%
-                <g:select name="patch2" from="${availableTranscripts}" optionValue="display" optionKey="id"/>
+                <g:select id="patch2" name="patch2" from="${audioFileInstance.computerTranscripts}"
+                          optionValue="display" optionKey="id"/>
                 <div id="diff-box">
                     Not implemented yet
                 </div>
@@ -201,5 +209,36 @@
         </fieldset>
     </g:form>
 </div>
+<script>
+
+    function applyDiffs(humanId, computerId) {
+//        $('#diff-box').text('hum: ' + humanId + ' comp:' + computerId);
+
+        %{--'<g:createLink action="getTranscripts" controller="audioFile" />'--}%
+
+        $.post("${createLink( action:'getTranscripts',controller: 'audioFile')}?humanId="+humanId+"&computerId="+computerId+""
+                , function (data) {
+//                    alert(data['computerTranscript']);
+                    var dmp = new diff_match_patch();
+//                    $('#diff-box').text(data.computerTranscript + ' vs '  + data.humanTranscript);
+//                    var diffString = dmp.diff_commonSuffix(data.computerTranscript,data.humanTranscript);
+                    var diffString = dmp.diff_main(data.computerTranscript,data.humanTranscript)
+                    $('#diff-box').html(dmp.diff_prettyHtml(diffString));
+//                    alert('computer: '+values['computerTranscript']);
+//                    alert('human: '+values.humanTranscript);
+                });
+
+    }
+
+    $('#patch1').change(function () {
+        var val = $('#patch2').find(":selected").val();
+        applyDiffs(this.value, val);
+    });
+    $('#patch2').change(function () {
+        var val = $('#patch1').find(":selected").val();
+        applyDiffs(val, this.value);
+    });
+</script>
+
 </body>
 </html>
