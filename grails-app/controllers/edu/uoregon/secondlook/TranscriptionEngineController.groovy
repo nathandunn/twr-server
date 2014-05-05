@@ -18,7 +18,17 @@ class TranscriptionEngineController {
     }
 
     def show(TranscriptionEngine transcriptionEngineInstance) {
-        respond transcriptionEngineInstance, [model:[computerTranscripts:ComputerTranscript.findAllByTranscriptionEngine(transcriptionEngineInstance)]]
+
+//        Integer averageTwrDifference = computerProcessingQueueService.findTwrDifference(transcriptionEngineInstance)
+		Integer averageErrorDifference = computerProcessingQueueService.findErrorDifference(transcriptionEngineInstance)
+
+//                        ,averageHumanTwr:computerProcessingQueueService.calculateAverageHumanTwrForTranscriptionEngine(transcriptionEngineInstance)
+
+        respond transcriptionEngineInstance,
+                [model:[computerTranscripts:ComputerTranscript.findAllByTranscriptionEngine(transcriptionEngineInstance)
+                        ,averageComputerTwr:computerProcessingQueueService.calculateAverageComputerTwrForTranscriptionEngine(transcriptionEngineInstance)
+                        ,averageHumanTwr:computerProcessingQueueService.calculateAverageHumanTwrForTranscriptionEngine(transcriptionEngineInstance)
+                        ,averageErrorDifference:averageErrorDifference]]
     }
 
 

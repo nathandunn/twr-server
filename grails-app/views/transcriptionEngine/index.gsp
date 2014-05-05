@@ -29,7 +29,9 @@
 						%{--<g:sortableColumn property="lookup" title="${message(code: 'transcriptionEngine.lookup.label', default: 'Lookup')}" />--}%
 					%{----}%
 						<g:sortableColumn property="name" title="${message(code: 'transcriptionEngine.name.label', default: 'Name')}" />
-					
+
+                        <th>Average TWR (Human vs Computer)</th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -37,6 +39,7 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${transcriptionEngineInstance.id}">${transcriptionEngineInstance.name}</g:link></td>
+
 					%{----}%
 						%{--<td>${fieldValue(bean: transcriptionEngineInstance, field: "lookup")}</td>--}%
 					%{----}%
