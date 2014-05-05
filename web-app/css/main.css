@@ -654,3 +654,8 @@ a.skip {
     /*float: right;*/
     /*display: inline-block;*/
 }
+
+.not-implemented {
+    color: orangered;
+    font-weight: bold;
+}

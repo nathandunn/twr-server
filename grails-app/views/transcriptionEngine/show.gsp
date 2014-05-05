@@ -81,7 +81,7 @@
             <span id="defaultEngine-label" class="property-label">
                 Average Error
             </span>
-            <span class="property-value" aria-labelledby="defaultEngine-label">
+            <span class="property-value not-implemented" aria-labelledby="defaultEngine-label">
                 ${averageErrorDifference}
             </span>
         </li>
