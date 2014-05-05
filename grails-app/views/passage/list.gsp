@@ -63,7 +63,6 @@
                     ${passageInstance.audioFiles.size()}
                 </td>
                 <td>
-
                     ${passageInstance.humanTranscriptCount}
                 </td>
                 <td>

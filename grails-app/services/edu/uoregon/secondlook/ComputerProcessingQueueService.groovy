@@ -2,7 +2,6 @@ package edu.uoregon.secondlook
 
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
-import groovy.transform.CompileStatic
 
 //@CompileStatic
 class ComputerProcessingQueueService {
@@ -31,16 +30,15 @@ class ComputerProcessingQueueService {
                         computerTranscript: computerTranscript
                         , entryDate: new Date()
                         , status: ProcessingStatus.DELIVERED
-                ).save(insert: true,failOnError: true)
+                ).save(insert: true, failOnError: true)
                 println "created one ${processingQueue}"
-            }
-            else{
+            } else {
                 processingQueue.status = ProcessingStatus.DELIVERED
-                processingQueue.save(flush:true)
+                processingQueue.save(flush: true)
             }
             computerTranscript.processingQueue = processingQueue
             computerTranscript.status = TranscriptionStatus.SUBMITTED
-            computerTranscript.save(flush: true,failOnError: true)
+            computerTranscript.save(flush: true, failOnError: true)
             println "saved a computer transcript ${computerTranscript}"
 //            return transcription.status
 
@@ -76,28 +74,26 @@ class ComputerProcessingQueueService {
             processingQueue.save(flush: true)
 
 
-            if(computerTranscript.audioFile.callbackUrl){
+            if (computerTranscript.audioFile.callbackUrl) {
                 println "doing callback url "
                 RestResponse resp = doCallback(computerTranscript)
                 println "geting response ?"
                 println "status ${resp.status}"
 
-                if(resp.status == 200){
+                if (resp.status == 200) {
                     computerTranscript.status = TranscriptionStatus.CALLBACK_OK
-                }
-                else{
+                } else {
                     computerTranscript.status = TranscriptionStatus.CALLBACK_ERROR
                 }
                 println "response text ${resp.text}"
 
-                computerTranscript.save(flush:true)
+                computerTranscript.save(flush: true)
 
                 println "saved status ${computerTranscript.status}"
 
 //        println "return vlue ${resp.json.submitted}"
 //                assert resp.json.submitted!=null
-            }
-            else{
+            } else {
                 println "no callbcak url so not calling ${computerTranscript.audioFile.fileName} ${computerTranscript.id}"
             }
         }
@@ -109,7 +105,7 @@ class ComputerProcessingQueueService {
 //        def resultOutput = future.get()
     }
 
-    def doCallback(ComputerTranscript transcription){
+    def doCallback(ComputerTranscript transcription) {
         RestBuilder rest = new RestBuilder()
         RestResponse resp = rest.post(transcription.audioFile.callbackUrl) {
             contentType "multipart/form-data"
@@ -141,7 +137,7 @@ class ComputerProcessingQueueService {
         println "passage ${passage?.name}"
 
         String dateString = new Date().format("yyyyMMddHHmmss")
-        String uniqueId = computerTranscript.audioFile.externalStudentId +"-"+ passage.externalId +"-"+ dateString
+        String uniqueId = computerTranscript.audioFile.externalStudentId + "-" + passage.externalId + "-" + dateString
         println "unique ID: ${uniqueId}"
         String processingDirectory = baseProcessingDirectory + "/" + uniqueId + "/"
         computerTranscript.processingDirectory = processingDirectory
@@ -180,7 +176,7 @@ class ComputerProcessingQueueService {
             computerTranscript.status = TranscriptionStatus.ERROR
             computerTranscript.save()
             processingQueue.status = ProcessingStatus.ERROR
-            processingQueue.save(flush:true)
+            processingQueue.save(flush: true)
             return ""
         }
 
@@ -223,10 +219,9 @@ class ComputerProcessingQueueService {
         //String execString = [decodeBinary,processingDirectory,8].join(" ")
 
         String execString
-        if(computerTranscript?.transcriptionEngine?.lookup){
+        if (computerTranscript?.transcriptionEngine?.lookup) {
             execString = [computerTranscript.transcriptionEngine.lookup, processingDirectory].join(" ")
-        }
-        else{
+        } else {
             execString = [decodeBinary, processingDirectory].join(" ")
         }
 //        String execString = ["ls"].join(" ")
@@ -255,11 +250,61 @@ class ComputerProcessingQueueService {
             return resultFile.text
         } else {
             println "Timings file does not exist ${timingResultFile}"
-            processingQueue.status=ProcessingStatus.ERROR
+            processingQueue.status = ProcessingStatus.ERROR
             processingQueue.save(flush: true)
             computerTranscript.status = TranscriptionStatus.ERROR
             computerTranscript.save(flush: true)
             return ""
         }
+    }
+
+    Float findTwrDifference(TranscriptionEngine transcriptionEngine) {
+
+        Float averageHumanTwr = calculateAverageHumanTwrForTranscriptionEngine(transcriptionEngine)
+        Float averageComputerTwr = calculateAverageComputerTwrForTranscriptionEngine(transcriptionEngine)
+
+        return Math.abs(averageHumanTwr - averageComputerTwr)
+    }
+
+    Float calculateAverageComputerTwrForTranscriptionEngine(TranscriptionEngine transcriptionEngine) {
+        List<ComputerTranscript> computerTranscriptList = ComputerTranscript.findAllByTranscriptionEngine(transcriptionEngine)
+
+        Integer computerTranscriptsTwr = 0
+        Integer computerTranscriptCount = 0
+        for (ComputerTranscript computerTranscript in computerTranscriptList) {
+            if(computerTranscript.audioFile.humanTranscripts){
+                if(computerTranscript.twr){
+                    ++computerTranscriptCount
+                    computerTranscriptsTwr += computerTranscript.twr
+                }
+            }
+        }
+
+        return computerTranscriptsTwr / (float) computerTranscriptCount
+    }
+
+    Float calculateAverageHumanTwrForTranscriptionEngine(TranscriptionEngine transcriptionEngine) {
+
+        List<AudioFile> audioFileList = AudioFile.executeQuery("select distinct af from ComputerTranscript ct join ct.audioFile af " +
+                " where ct.transcriptionEngine = :transcriptionEngine and af.humanTranscripts is not empty  and af.computerTranscripts is not empty ", ["transcriptionEngine": transcriptionEngine])
+
+        Integer humanTranscriptsTwr = 0
+        Integer humanTranscriptCount = 0
+        for (AudioFile audioFile in audioFileList) {
+            if(audioFile.computerTranscripts && audioFile.humanTranscripts){
+                for(HumanTranscript humanTranscript in audioFile.humanTranscripts){
+                    if(humanTranscript.twr){
+                        ++humanTranscriptCount
+                        humanTranscriptsTwr += humanTranscript.twr
+                    }
+                }
+            }
+        }
+
+        return humanTranscriptsTwr / (float) humanTranscriptCount
+    }
+
+    Integer findErrorDifference(TranscriptionEngine transcriptionEngine) {
+        return 12
     }
 }
