@@ -53,20 +53,49 @@
 
             <span class="property-value" aria-labelledby="name-label">
                 <g:if test="${passageInstance.audioFiles}">
-                   <g:each in="${passageInstance.audioFiles}" var="audioFile" status="st">
-                       ${audioFile?.humanTranscripts.size()==0 ? '<b color="red">' : ''}
-                       <g:link action="show" controller="audioFile" id="${audioFile.id}">${audioFile.fileName}
-                           (${audioFile?.humanTranscripts.size()} / ${audioFile?.computerTranscripts.size()})</g:link>
-                       ${audioFile?.humanTranscripts.size()==0 ? '</b>' : ''}
-                       <g:if test="${st.intValue()<passageInstance.audioFiles.size()-1}">
-                           &bull;
-                       </g:if>
+                    <g:each in="${passageInstance.audioFiles}" var="audioFile" status="st">
+                        ${audioFile?.humanTranscripts.size() == 0 ? '<b color="red">' : ''}
+                        <g:link action="show" controller="audioFile" id="${audioFile.id}">${audioFile.fileName}
+                            (${audioFile?.humanTranscripts.size()} / ${audioFile?.computerTranscripts.size()})</g:link>
+                        ${audioFile?.humanTranscripts.size() == 0 ? '</b>' : ''}
+                        <g:if test="${st.intValue() < passageInstance.audioFiles.size() - 1}">
+                            &bull;
+                        </g:if>
 
-                   </g:each>
+                    </g:each>
                 </g:if>
                 <g:else>
                     ---------
                 </g:else>
+            </span>
+        </li>
+
+        <li class="fieldcontain">
+            <span id="transcriptionEngine-label" class="property-label">Transcription Engine Errors</span>
+
+            <span class="property-value" aria-labelledby="name-label">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Engine</th><th>Count (C,H)</th><th>Avg TWR |C-H|</th>
+                    </tr>
+                    </thead>
+                    <g:each in="${engineData}" var="engine">
+                        <tr>
+                            <td>
+                                <g:link action="show" controller="transcriptionEngine" id="${engine.key.id}">
+                                    ${engine.key.name}
+                                </g:link>
+                            </td>
+                            <td>
+                                ${engine.value.computerCount},${engine.value.humanCount}
+                            </td>
+                            <td>
+                                |${engine.value.computerTwr}- ${engine.value.humanTwr}| = ${engine.value.calculateTwrError}
+                            </td>
+                        </tr>
+                    </g:each>
+                </table>
             </span>
         </li>
 

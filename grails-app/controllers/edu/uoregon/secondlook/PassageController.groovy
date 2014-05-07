@@ -6,6 +6,8 @@ class PassageController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def computerProcessingQueueService
+
     def index() {
         redirect(action: "list", params: params)
     }
@@ -38,7 +40,14 @@ class PassageController {
             return
         }
 
-        [passageInstance: passageInstance]
+        Map<TranscriptionEngine,TranscriptionEngineStatistics> engineFloatMap = new TreeMap<>()
+
+        TranscriptionEngine.all.each { transcriptionEngine ->
+            TranscriptionEngineStatistics transcriptionEngineStatistics = computerProcessingQueueService.calculateTwrTranscriptionEngineAndPassage(transcriptionEngine,passageInstance)
+            engineFloatMap.put(transcriptionEngine,transcriptionEngineStatistics)
+        }
+
+        [passageInstance: passageInstance,engineData:engineFloatMap]
     }
 
     def edit(Long id) {

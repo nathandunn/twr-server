@@ -8,6 +8,7 @@ class ComputerProcessingQueueService {
 
     def totalWordReadService
 
+
 //    String baseProcessingDirectory ="/usr/share/tomcat/temp"
     String baseProcessingDirectory = System.getenv("CATALINA_TEMP") ?: "/usr/share/tomcat/temp"
     String decodeBinary = "/usr/share/kaldi-decode-childspeech/childspeech/s5-decode/run_decode.sh"
@@ -40,12 +41,6 @@ class ComputerProcessingQueueService {
             computerTranscript.status = TranscriptionStatus.SUBMITTED
             computerTranscript.save(flush: true, failOnError: true)
             println "saved a computer transcript ${computerTranscript}"
-//            return transcription.status
-
-//            println "Pre-processing transcript"
-//            processTranscriptAsync(processingQueue)
-//            println "POST-processing transcript"
-
         } else {
             println "no computer transcript found I guess"
             return null
@@ -266,6 +261,52 @@ class ComputerProcessingQueueService {
         return Math.abs(averageHumanTwr - averageComputerTwr)
     }
 
+    TranscriptionEngineStatistics calculateAverageComputerTwrForTranscriptionEngineAndPassage(TranscriptionEngine transcriptionEngine,Passage passage) {
+        List<ComputerTranscript> computerTranscriptList = ComputerTranscript.findAllByTranscriptionEngine(transcriptionEngine)
+
+        Integer computerTranscriptsTwr = 0
+        Integer computerTranscriptCount = 0
+        for (ComputerTranscript computerTranscript in computerTranscriptList) {
+            if(computerTranscript.audioFile.passage==passage  && computerTranscript.audioFile.humanTranscripts){
+                if(computerTranscript.twr){
+                    ++computerTranscriptCount
+                    computerTranscriptsTwr += computerTranscript.twr
+                }
+            }
+        }
+
+        TranscriptionEngineStatistics transcriptionEngineStatistics = new TranscriptionEngineStatistics()
+        transcriptionEngineStatistics.computerTwr = computerTranscriptsTwr / (float) computerTranscriptCount
+        transcriptionEngineStatistics.computerCount = computerTranscriptCount
+        return transcriptionEngineStatistics
+    }
+
+    TranscriptionEngineStatistics calculateAverageHumanTwrForTranscriptionEngineAndPassage(TranscriptionEngine transcriptionEngine,Passage passage) {
+
+        List<AudioFile> audioFileList = AudioFile.executeQuery("select distinct af from ComputerTranscript ct join ct.audioFile af " +
+                " where ct.transcriptionEngine = :transcriptionEngine and af.humanTranscripts is not empty  and af.computerTranscripts is not empty and af.passage = :passage"
+                , ["transcriptionEngine": transcriptionEngine,"passage":passage])
+
+        Integer humanTranscriptsTwr = 0
+        Integer humanTranscriptCount = 0
+        for (AudioFile audioFile in audioFileList) {
+            if(audioFile.computerTranscripts && audioFile.humanTranscripts){
+                for(HumanTranscript humanTranscript in audioFile.humanTranscripts){
+                    if(humanTranscript.twr){
+                        ++humanTranscriptCount
+                        humanTranscriptsTwr += humanTranscript.twr
+                    }
+                }
+            }
+        }
+
+        TranscriptionEngineStatistics transcriptionEngineStatistics = new TranscriptionEngineStatistics()
+        transcriptionEngineStatistics.humanTwr = humanTranscriptsTwr / (float) humanTranscriptCount
+        transcriptionEngineStatistics.humanCount = humanTranscriptCount
+        return transcriptionEngineStatistics
+    }
+
+
     Float calculateAverageComputerTwrForTranscriptionEngine(TranscriptionEngine transcriptionEngine) {
         List<ComputerTranscript> computerTranscriptList = ComputerTranscript.findAllByTranscriptionEngine(transcriptionEngine)
 
@@ -306,5 +347,44 @@ class ComputerProcessingQueueService {
 
     Integer findErrorDifference(TranscriptionEngine transcriptionEngine) {
         return 12
+    }
+
+    TranscriptionEngineStatistics calculateTwrTranscriptionEngineAndPassage(TranscriptionEngine transcriptionEngine, Passage passage) {
+        List<AudioFile> audioFileList = AudioFile.executeQuery("select distinct af from ComputerTranscript ct join ct.audioFile af " +
+                " where ct.transcriptionEngine = :transcriptionEngine and af.humanTranscripts is not empty  and af.computerTranscripts is not empty and af.passage = :passage"
+                , ["transcriptionEngine": transcriptionEngine,"passage":passage])
+
+        Integer humanTranscriptsTwr = 0
+        Integer humanTranscriptCount = 0
+        for (AudioFile audioFile in audioFileList) {
+            if(audioFile.computerTranscripts && audioFile.humanTranscripts){
+                for(HumanTranscript humanTranscript in audioFile.humanTranscripts){
+                    if(humanTranscript.twr){
+                        ++humanTranscriptCount
+                        humanTranscriptsTwr += humanTranscript.twr
+                    }
+                }
+            }
+        }
+
+        TranscriptionEngineStatistics transcriptionEngineStatistics = new TranscriptionEngineStatistics()
+        transcriptionEngineStatistics.humanTwr = humanTranscriptsTwr / (float) humanTranscriptCount
+        transcriptionEngineStatistics.humanCount = humanTranscriptCount
+
+        List<ComputerTranscript> computerTranscriptList = ComputerTranscript.findAllByTranscriptionEngine(transcriptionEngine)
+        Integer computerTranscriptsTwr = 0
+        Integer computerTranscriptCount = 0
+        for (ComputerTranscript computerTranscript in computerTranscriptList) {
+            if(computerTranscript.audioFile.passage==passage  && computerTranscript.audioFile.humanTranscripts){
+                if(computerTranscript.twr){
+                    ++computerTranscriptCount
+                    computerTranscriptsTwr += computerTranscript.twr
+                }
+            }
+        }
+
+        transcriptionEngineStatistics.computerTwr = computerTranscriptsTwr / (float) computerTranscriptCount
+        transcriptionEngineStatistics.computerCount = computerTranscriptCount
+        return transcriptionEngineStatistics
     }
 }
