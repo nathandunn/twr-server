@@ -35,7 +35,7 @@ class ComputerTranscript implements TranscriptDisplay{
     String passageErrors
     String note
     TranscriptionEngine transcriptionEngine
-//    AudioFile audioFile
+    AudioFile audioFile
     ProcessingQueue processingQueue
     String humanAnnotation
 

@@ -12,7 +12,7 @@ class ProcessingQueue {
     ]
 
     Transcription transcription
-//    ComputerTranscript computerTranscript
+    ComputerTranscript computerTranscript
     Date entryDate
     ProcessingStatus status
 }
