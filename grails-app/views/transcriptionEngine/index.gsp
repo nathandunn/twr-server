@@ -31,7 +31,7 @@
 						<g:sortableColumn property="name" title="${message(code: 'transcriptionEngine.name.label', default: 'Name')}" />
 
                         %{--<th>Average TWR (Human vs Computer)</th>--}%
-                        <th># Transcripts</th>
+                        <th># Computer Transcripts</th>
 
 					</tr>
 				</thead>
@@ -40,6 +40,12 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${transcriptionEngineInstance.id}">${transcriptionEngineInstance.name}</g:link></td>
+
+                        <td>
+                            ${edu.uoregon.secondlook.ComputerTranscript.countByTranscriptionEngine(transcriptionEngineInstance)}
+                        </td>
+
+
 
 					%{----}%
 						%{--<td>${fieldValue(bean: transcriptionEngineInstance, field: "lookup")}</td>--}%
