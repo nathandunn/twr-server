@@ -1,5 +1,5 @@
 #!/bin/bash
-
+gvm use grails 2.3.8
 
 grails clean 
 grails war 
