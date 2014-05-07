@@ -7,8 +7,12 @@ class ProcessingQueue {
         computerTranscript nullable: true
     }
 
+    static belongsTo = [
+            computerTranscript: ComputerTranscript
+    ]
+
     Transcription transcription
-    ComputerTranscript computerTranscript
+//    ComputerTranscript computerTranscript
     Date entryDate
     ProcessingStatus status
 }

@@ -24,6 +24,10 @@ class ComputerTranscript implements TranscriptDisplay{
         humanAnnotation type: "text"
     }
 
+    static belongsTo = [
+            audioFile: AudioFile
+    ]
+
     Date requestDate
     Date returnDate
     TranscriptionStatus status
@@ -31,7 +35,7 @@ class ComputerTranscript implements TranscriptDisplay{
     String passageErrors
     String note
     TranscriptionEngine transcriptionEngine
-    AudioFile audioFile
+//    AudioFile audioFile
     ProcessingQueue processingQueue
     String humanAnnotation
 
