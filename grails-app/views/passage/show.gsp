@@ -54,7 +54,10 @@
             <span class="property-value" aria-labelledby="name-label">
                 <g:if test="${passageInstance.audioFiles}">
                    <g:each in="${passageInstance.audioFiles}" var="audioFile" status="st">
-                       <g:link action="show" controller="audioFile" id="${audioFile.id}">${audioFile.fileName} (${audioFile?.humanTranscripts.size()} / ${audioFile?.computerTranscripts.size()})</g:link>
+                       ${audioFile?.humanTranscripts.size()==0 ? '<b color="red">' : ''}
+                       <g:link action="show" controller="audioFile" id="${audioFile.id}">${audioFile.fileName}
+                           (${audioFile?.humanTranscripts.size()} / ${audioFile?.computerTranscripts.size()})</g:link>
+                       ${audioFile?.humanTranscripts.size()==0 ? '</b>' : ''}
                        <g:if test="${st.intValue()<passageInstance.audioFiles.size()-1}">
                            &bull;
                        </g:if>

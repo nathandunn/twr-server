@@ -30,7 +30,8 @@
 					%{----}%
 						<g:sortableColumn property="name" title="${message(code: 'transcriptionEngine.name.label', default: 'Name')}" />
 
-                        <th>Average TWR (Human vs Computer)</th>
+                        %{--<th>Average TWR (Human vs Computer)</th>--}%
+                        <th># Transcripts</th>
 
 					</tr>
 				</thead>

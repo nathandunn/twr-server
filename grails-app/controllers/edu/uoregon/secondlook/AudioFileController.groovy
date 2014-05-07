@@ -14,6 +14,21 @@ class AudioFileController {
         respond AudioFile.list(params), model: [audioFileInstanceCount: AudioFile.count()]
     }
 
+    def audioNeedingTranscription(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        List<AudioFile> audioFileList = AudioFile.createCriteria().list(params){
+            isEmpty('humanTranscripts')
+            isNotEmpty('computerTranscripts')
+        }
+        Integer audioFileCount = AudioFile.createCriteria().count {
+            isEmpty('humanTranscripts')
+            isNotEmpty('computerTranscripts')
+        }
+//        Integer audioFileCount = 10
+        render view: "index", model: [audioFileInstanceList:audioFileList,audioFileInstanceCount: audioFileCount]
+    }
+
+
     def getTranscripts(Integer humanId, Integer computerId) {
         String humanTranscript = HumanTranscript.findById(humanId)?.processedTranscript
         String computerTranscript = ComputerTranscript.findById(computerId).transcript
