@@ -16,7 +16,7 @@ class AudioFileController {
 
     def audioNeedingTranscription(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        List<AudioFile> audioFileList = AudioFile.createCriteria().list(params){
+        List<AudioFile> audioFileList = AudioFile.createCriteria().list(params) {
             isEmpty('humanTranscripts')
             isNotEmpty('computerTranscripts')
         }
@@ -25,7 +25,7 @@ class AudioFileController {
             isNotEmpty('computerTranscripts')
         }
 //        Integer audioFileCount = 10
-        render view: "index", model: [audioFileInstanceList:audioFileList,audioFileInstanceCount: audioFileCount]
+        render view: "index", model: [audioFileInstanceList: audioFileList, audioFileInstanceCount: audioFileCount]
     }
 
 
@@ -168,18 +168,90 @@ class AudioFileController {
             return
         }
 
-        audioFileInstance.computerTranscripts.each {
-            audioFileInstance.removeFromComputerTranscripts(it)
-            audioFileInstance.save(flush: true)
-            it.audioFile = null
-            it.save(flush: true)
-        }
-//        audioFileInstance.humanTranscripts.del
-//        audioFileInstance.computerTranscripts = nu
-        audioFileInstance.passage = null
-        audioFileInstance.save(flush: true)
+//        audioFileInstance.passage = null
+//        audioFileInstance.save(flush: true)
+//        List<Long> computerTranscriptIds = []
+//        List<Long> processingQueueIds = []
+//
+//        audioFileInstance.computerTranscripts.each { ComputerTranscript computerTranscript ->
+//            computerTranscriptIds.add(computerTranscript.id)
+//        }
 
-        audioFileInstance.delete flush: true
+
+        List<ProcessingQueue> processingQueueList = ProcessingQueue.executeQuery("select pq from ProcessingQueue pq where pq.computerTranscript.audioFile = :audioFile ",[audioFile:audioFileInstance])
+        ProcessingQueue.deleteAll(processingQueueList)
+        ComputerTranscript.deleteAll(audioFileInstance.computerTranscripts)
+        audioFileInstance.delete(flush: true)
+
+
+//        def session = sessionFactory.getCurrentSession()
+        def results = session.createSQLQuery("")
+
+//        println "queueList: ${processingQueueList.size()}"
+//        processingQueueList.each {
+//            processingQueueIds.add(it.id)
+//        }
+//
+//        println "computerTranscriptIds: ${computerTranscriptIds.size()}"
+//        println "processingQueueIds: ${processingQueueIds.size()}"
+//
+//        if(processingQueueIds){
+//            println "deltetion ${ProcessingQueue.executeUpdate("delete from ProcessingQueue  where id in :ids",[ids:processingQueueIds])}"
+//        }
+//        audioFileInstance.save(flush:true)
+//
+//        if(computerTranscriptIds){
+//            println "deleting ${computerTranscriptIds}"
+////            println "deletetions: ${ComputerTranscript.executeUpdate("delete from ComputerTranscript  where id in :ids",[ids:computerTranscriptIds])}"
+//            println "deletetions: ${ComputerTranscript.executeUpdate("delete from ComputerTranscript  where id in :ids",[ids:computerTranscriptIds])}"
+//        }
+//        audioFileInstance.save(flush:true)
+
+
+//        Set<ComputerTranscript> computerTranscripts = audioFileInstance.computerTranscripts
+//        List<ComputerTranscript> tmp = new ArrayList<>()
+//        tmp.addAll()
+//        tmp.each { it ->
+////            it.audioFile = null
+////            it.delete()
+//            audioFileInstance.removeFromComputerTranscripts(it)
+//            if(it.processingQueue){
+//                it.processingQueue.computerTranscript = null
+//                it.processingQueue.save(flush: true)
+//                it.processingQueue.delete(flush:true)
+//                it.processingQueue = null
+//                it.save(flush:true)
+//            }
+//            it.delete(flush: true)
+//            audioFileInstance.save(flush: true,failOnError: true)
+////            it.save(flush:true,failOnError: true)
+//        }
+//        List<ComputerTranscript> computerTranscriptList =  ComputerTranscript.findAllByAudioFile(audioFileInstance)
+//        println "count: ${computerTranscriptList.size()}"
+//        audioFileInstance.computerTranscripts.clear()
+//        ComputerTranscript.deleteAll(tmp,flush:true)
+
+//        computerTranscripts.each {
+//            audioFileInstance.removeFromComputerTranscripts(it)
+//            it.audioFile = null
+//            it.save()
+//        }
+//        audioFileInstance.computerTranscripts.clear()
+//        ComputerTranscript.deleteAll(computerTranscripts as Set , flush:true)
+//        audioFileInstance.save(flush: true)
+
+
+//        Set<HumanTranscript> humanTranscripts = audioFileInstance.humanTranscripts
+//        humanTranscripts.each {
+////            audioFileInstance.removeFromHumanTranscripts(it)
+//            it.audioFile = null
+//            it.save()
+//        }
+//        audioFileInstance.humanTranscripts.clear()
+//        audioFileInstance.humanTranscripts = null
+//        audioFileInstance.save flush: true
+
+//        audioFileInstance.delete flush: true
 
         request.withFormat {
             form multipartForm {
