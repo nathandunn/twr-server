@@ -1,6 +1,6 @@
 package edu.uoregon.secondlook
 
-class TranscriptionEngine {
+class TranscriptionEngine implements Comparable<TranscriptionEngine>{
 
     static constraints = {
         note nullable: true
@@ -16,4 +16,9 @@ class TranscriptionEngine {
     String lookup
     String note
     Boolean defaultEngine
+
+    @Override
+    int compareTo(TranscriptionEngine o) {
+        return id.compareTo(o.id)
+    }
 }
