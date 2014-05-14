@@ -123,7 +123,8 @@ class ComputerTranscriptController {
 //        passageText = passageText.replaceAll("\n"," ")
         passageText = passageText.replaceAll("\\s{2,}", " ")
         Integer oldTwr = transcription.twr
-        Integer twr = TWR.findTWR(passageText, transcription.transcript)
+        //Integer twr = TWR.findTWR(passageText, transcription.transcript)
+        Integer twr = ItemLevelMatching.matchItems(passageText, transcription.transcript).length
         transcription.twr = twr
         transcription.save(flush: true, insert: false)
         flash.message = "Recalculated TWR ${oldTwr} -> ${transcription.twr} for Transcrption ${transcription.audioFile.fileName}"
