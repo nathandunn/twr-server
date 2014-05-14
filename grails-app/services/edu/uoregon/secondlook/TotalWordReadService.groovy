@@ -24,7 +24,8 @@ class TotalWordReadService {
         passageText = passageText.replaceAll("\\s{2,}"," ")
         println "passage ${passageText}"
         if(transcript){
-            return TWR.findTWR(passageText,transcript)
+            //return TWR.findTWR(passageText,transcript)
+			return ItemLevelMatching.matchItems(passageText, transcript).length
         }
         else{
             return -1
@@ -42,7 +43,8 @@ class TotalWordReadService {
 //        passageText = passageText.replaceAll("\n"," ")
         passageText = passageText.replaceAll("\\s{2,}"," ")
         println "passage ${passageText}"
-        return TWR.findTWR(passageText,transcript)
+        //return TWR.findTWR(passageText,transcript)
+		return ItemLevelMatching.matchItems(passageText, transcript).length
     }
 
     String processTranscript(String inputHtmlTranscript) {
