@@ -13,6 +13,7 @@ class TotalWordReadService {
 //    private static String[] intResults = ["02","05","06","07","08","09","11","12","13","15","16","19","23","24","25","33","38","45","47","48","52","55","56","57","61","62","66","68","70","73","76","77","79","81","87","89","91","92","94","97","100","101","102","104","113"]
 
     // TODO: use an actual method
+    @Transactional
     Integer calculateTotalWordsReadFromComputerTranscript(ComputerTranscript computerTranscript){
         println "calc twr ${computerTranscript}"
         String transcript = computerTranscript.transcript
@@ -34,6 +35,7 @@ class TotalWordReadService {
 
 
     // TODO: use an actual method
+    @Transactional
     Integer calculateTotalWordsRead(Transcription transcription){
         println "calc twr ${transcription}" 
         String transcript = transcription.transcript

@@ -111,7 +111,8 @@ class ComputerTranscriptController {
             '*' { render status: NOT_FOUND }
         }
     }
-
+    
+    @Transactional
     def recalculateTwr(Long id) {
         ComputerTranscript transcription = ComputerTranscript.get(id)
         if (!transcription) {
