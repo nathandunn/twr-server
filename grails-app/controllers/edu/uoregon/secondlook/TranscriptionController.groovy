@@ -144,7 +144,6 @@ class TranscriptionController {
         return fileName
     }
     
-    @Transactional
     def recalculateTwr(Long id) {
         Transcription transcription = Transcription.get(id)
         if (!transcription) {
